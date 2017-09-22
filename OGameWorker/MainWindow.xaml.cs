@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HtmlAgilityPack;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.RequestBuilder;
 
@@ -31,6 +35,11 @@ namespace OGameWorker
         {
             var client = new OGameHttpClient("s147-pl.ogame.gameforge.com");
             var requestBuilder = new OGameWorkerRequestBuilder(client);
+            var login = client.SendHttpRequest(requestBuilder.BuildLoginRequest("mail.rafixwpt@gmail.com", "raf109aello"));
+            if (login.StatusCode == HttpStatusCode.OK)
+            {
+                var overviewHtml = client.SendHttpRequest(requestBuilder.BuildOverviewRequest()).ResponseHtmlDocument.Value;
+            }
         }
     }
 }

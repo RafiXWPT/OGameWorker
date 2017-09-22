@@ -19,7 +19,7 @@ namespace Worker.HttpModule.RequestBuilder
 
         public HttpRequestMessage BuildOverviewRequest()
         {
-            var url = $"{_client.ServerAddress}/game/index.php?page=overview";
+            var url = $"{_client.ServerUrl}/game/index.php?page=overview";
             return new GetHttpRequest().Create(url);
         }
 
@@ -31,7 +31,7 @@ namespace Worker.HttpModule.RequestBuilder
                 {"kid", "" },
                 {"login", username},
                 {"pass", password},
-                {"uni", _client.ServerAddress}
+                {"uni", _client.Server}
             };
 
             return new PostHttpRequest().Create(url, content);
