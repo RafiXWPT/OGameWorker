@@ -32,6 +32,7 @@ namespace Worker.HttpModule.Helpers
             return basicMessage;
         }
 
-        public abstract HttpRequestMessage BuildRequestMessage(string url, Dictionary<string,string> values);
+        public abstract HttpRequestMessage Create(string url);
+        public abstract HttpRequestMessage Create(string url, Dictionary<string,string> values);
     }
 }

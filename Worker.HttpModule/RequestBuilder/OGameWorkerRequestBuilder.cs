@@ -17,6 +17,12 @@ namespace Worker.HttpModule.RequestBuilder
             _client = client;
         }
 
+        public HttpRequestMessage BuildOverviewRequest()
+        {
+            var url = $"{_client.ServerAddress}/game/index.php?page=overview";
+            return new GetHttpRequest().Create(url);
+        }
+
         public HttpRequestMessage BuildLoginRequest(string username, string password)
         {
             var url = "https://pl.ogame.gameforge.com:443/main/login";
@@ -28,7 +34,7 @@ namespace Worker.HttpModule.RequestBuilder
                 {"uni", _client.ServerAddress}
             };
 
-            return new PostHttpRequest().BuildRequestMessage(url, content);
+            return new PostHttpRequest().Create(url, content);
         }
     }
 }

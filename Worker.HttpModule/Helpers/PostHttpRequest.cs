@@ -9,7 +9,12 @@ namespace Worker.HttpModule.Helpers
 {
     class PostHttpRequest : BaseHttpRequest
     {
-        public override HttpRequestMessage BuildRequestMessage(string url, Dictionary<string, string> content)
+        public override HttpRequestMessage Create(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override HttpRequestMessage Create(string url, Dictionary<string, string> content)
         {
             var requestMessage = CreateBasicMessage(HttpMethod.Post, url);
             requestMessage.Content = new FormUrlEncodedContent(content);
