@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\BaseHttpRequest.cs" />
+    <Compile Include="Helpers\GetHttpRequest.cs" />
+    <Compile Include="Helpers\PostHttpRequest.cs" />
+    <Compile Include="Clients\OGameHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
