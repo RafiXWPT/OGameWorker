@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.HttpModule", "Worker
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.Common", "Worker.Common\Worker.Common.csproj", "{2AC7E85A-04F8-4734-A44A-2A9171B27CC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.EntityFramework", "Worker.EntityFramework\Worker.EntityFramework.csproj", "{AF268E9D-994C-429F-9846-8BB151C564CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2AC7E85A-04F8-4734-A44A-2A9171B27CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AC7E85A-04F8-4734-A44A-2A9171B27CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AC7E85A-04F8-4734-A44A-2A9171B27CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF268E9D-994C-429F-9846-8BB151C564CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF268E9D-994C-429F-9846-8BB151C564CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF268E9D-994C-429F-9846-8BB151C564CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF268E9D-994C-429F-9846-8BB151C564CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
