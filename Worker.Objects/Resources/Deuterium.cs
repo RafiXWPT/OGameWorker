@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Worker.Objects.Resources
 {
-    class Deuter
+    class Deuterium
     {
         public double Amount { get; set; }
     }
