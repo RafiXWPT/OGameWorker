@@ -6,10 +6,13 @@ namespace Worker.HttpModule.Clients
     {
         private readonly object _lockObject = new object();
         private readonly HttpClient _httpClient;
+        public string ServerAddress { get; }
 
-        public OGameHttpClient()
+
+        public OGameHttpClient(string serverUrl)
         {
             _httpClient = new HttpClient();
+            ServerAddress = serverUrl;
         }
 
         public HttpResponseMessage SendHttpRequest(HttpRequestMessage message)

@@ -9,7 +9,7 @@ namespace Worker.HttpModule.Helpers
 {
     class GetHttpRequest : BaseHttpRequest
     {
-        public override HttpRequestMessage BuildRequestMessage(string url, Dictionary<string, string> values)
+        public override HttpRequestMessage BuildRequestMessage(string url, Dictionary<string, string> content)
         {
             var requestMessage = CreateBasicMessage(HttpMethod.Get, url);
             return requestMessage;

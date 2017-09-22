@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Worker.HttpModule.Clients;
 
 namespace OGameWorker
 {
@@ -27,7 +28,7 @@ namespace OGameWorker
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var client = new OGameHttpClient("s147-pl.ogame.gameforge.com");
         }
     }
 }
