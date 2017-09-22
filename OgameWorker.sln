@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.EntityFramework", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGameWorker", "OGameWorker\OGameWorker.csproj", "{6E73D511-81B9-4E05-9CEE-C2355F224BFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.Parser", "Worker.Parser\Worker.Parser.csproj", "{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6E73D511-81B9-4E05-9CEE-C2355F224BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E73D511-81B9-4E05-9CEE-C2355F224BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E73D511-81B9-4E05-9CEE-C2355F224BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
