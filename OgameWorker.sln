@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.Objects", "Worker.Objects\Worker.Objects.csproj", "{0C0EC2A7-0307-4B5F-92C2-54021A94F069}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker.HttpModule", "Worker.HttpModule\Worker.HttpModule.csproj", "{D7B3EE5E-98D5-41E6-A987-B58877119EFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0C0EC2A7-0307-4B5F-92C2-54021A94F069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C0EC2A7-0307-4B5F-92C2-54021A94F069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C0EC2A7-0307-4B5F-92C2-54021A94F069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B3EE5E-98D5-41E6-A987-B58877119EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B3EE5E-98D5-41E6-A987-B58877119EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B3EE5E-98D5-41E6-A987-B58877119EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B3EE5E-98D5-41E6-A987-B58877119EFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
