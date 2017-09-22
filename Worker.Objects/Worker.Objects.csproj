@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Galaxy\Moon.cs" />
+    <Compile Include="Galaxy\Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BasicResource.cs" />
     <Compile Include="Resources\Crystal.cs" />
