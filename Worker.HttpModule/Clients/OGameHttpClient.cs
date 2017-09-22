@@ -15,9 +15,18 @@ namespace Worker.HttpModule.Clients
             ServerAddress = serverUrl;
         }
 
-        public HttpResponseMessage SendHttpRequest(HttpRequestMessage message)
+        public MessageContainer SendHttpRequest(HttpRequestMessage request)
         {
-           return _httpClient.SendAsync(message).Result;
+            return SendHttpRequestInternal(request);
+        }
+
+        private MessageContainer SendHttpRequestInternal(HttpRequestMessage request)
+        {
+            lock (_lockObject)
+            {
+                var response = _httpClient.SendAsync(request).Result;
+                return new MessageContainer(request, response);
+            }
         }
     }
 }

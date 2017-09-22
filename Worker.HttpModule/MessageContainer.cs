@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-namespace Worker.HttpModule.MessageContainer
+namespace Worker.HttpModule
 {
     public class MessageContainer
     {
