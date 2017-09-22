@@ -93,5 +93,23 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Worker.Common\Worker.Common.csproj">
+      <Project>{2ac7e85a-04f8-4734-a44a-2a9171b27cc4}</Project>
+      <Name>Worker.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worker.EntityFramework\Worker.EntityFramework.csproj">
+      <Project>{af268e9d-994c-429f-9846-8bb151c564cf}</Project>
+      <Name>Worker.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worker.HttpModule\Worker.HttpModule.csproj">
+      <Project>{d7b3ee5e-98d5-41e6-a987-b58877119eff}</Project>
+      <Name>Worker.HttpModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worker.Objects\Worker.Objects.csproj">
+      <Project>{0c0ec2a7-0307-4b5f-92c2-54021a94f069}</Project>
+      <Name>Worker.Objects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
