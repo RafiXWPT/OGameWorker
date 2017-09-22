@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using HtmlAgilityPack;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.RequestBuilder;
+using Worker.Parser.Resources;
 
 namespace OGameWorker
 {
@@ -31,14 +32,15 @@ namespace OGameWorker
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var client = new OGameHttpClient("s147-pl.ogame.gameforge.com");
             var requestBuilder = new OGameWorkerRequestBuilder(client);
             var login = client.SendHttpRequest(requestBuilder.BuildLoginRequest("mail.rafixwpt@gmail.com", "raf109aello"));
             if (login.StatusCode == HttpStatusCode.OK)
             {
-                var overviewHtml = client.SendHttpRequest(requestBuilder.BuildOverviewRequest()).ResponseHtmlDocument.Value;
+                var messageContainer = client.SendHttpRequest(requestBuilder.BuildOverviewRequest());
+                var metal = await new ResourceParser().GetMetal(messageContainer.ResponseHtmlDocument);
             }
         }
     }

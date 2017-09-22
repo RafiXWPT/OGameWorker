@@ -114,6 +114,10 @@
       <Project>{0c0ec2a7-0307-4b5f-92c2-54021a94f069}</Project>
       <Name>Worker.Objects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Worker.Parser\Worker.Parser.csproj">
+      <Project>{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}</Project>
+      <Name>Worker.Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,26 +16,24 @@ namespace Worker.HttpModule
         public HttpRequestMessage RequestMessage { get; }
         public HttpResponseMessage ResponseMessage { get; }
         public HttpStatusCode StatusCode => ResponseMessage.StatusCode;
-        public Lazy<HtmlDocument> ResponseHtmlDocument { get; }
-        public bool IsHtml => ResponseHtmlDocument.Value != null;
+        public HtmlDocument ResponseHtmlDocument { get; }
+        public bool IsHtml => ResponseHtmlDocument != null;
 
         public MessageContainer(HttpRequestMessage requestMessage, HttpResponseMessage responseMessage)
         {
             RequestMessage = requestMessage;
             ResponseMessage = responseMessage;
-            ResponseHtmlDocument = new Lazy<HtmlDocument>(() =>
+            if (ResponseMessage.Content.Headers.ContentType.MediaType != "text/html")
             {
-                if (ResponseMessage.Content.Headers.ContentType.MediaType != "text/html")
-                {
-                    return null;
-                }
-
+                ResponseHtmlDocument = null;
+            }
+            else
+            {
                 Stream contentStream = AsyncReadStream(ResponseMessage.Content).Result;
                 HtmlDocument doc = new HtmlDocument();
                 doc.Load(contentStream);
-
-                return doc;
-            });
+                ResponseHtmlDocument = doc;
+            }
         }
 
         private async Task<Stream> AsyncReadStream(HttpContent content)
