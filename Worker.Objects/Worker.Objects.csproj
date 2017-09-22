@@ -41,9 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\BasicResource.cs" />
     <Compile Include="Resources\Crystal.cs" />
     <Compile Include="Resources\Deuterium.cs" />
-    <Compile Include="Resources\IResource.cs" />
+    <Compile Include="Resources\Energy.cs" />
     <Compile Include="Resources\Metal.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

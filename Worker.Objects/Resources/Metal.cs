@@ -7,16 +7,12 @@ using System.Threading.Tasks;
 
 namespace Worker.Objects.Resources
 {
-    public class Metal : IResource
+    public class Metal : BasicResource
     {
-        public double BasicProduction => 150;
-        public double Amount { get; set; }
+        public override double BasicProduction => 150;
 
-        public Metal(string amount) : this(Convert.ToDouble(amount, new CultureInfo("en-US"))) { }
+        public Metal(string amount) : base(amount) { }
 
-        public Metal(double amount)
-        {
-            Amount = amount;
-        }
+        public Metal(double amount) : base(amount) { }
     }
 }
