@@ -40,6 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buildings\BuildingBase.cs" />
+    <Compile Include="Buildings\ResourceBuildings\CrystalMine.cs" />
+    <Compile Include="Buildings\ResourceBuildings\CrystalWarehouse.cs" />
+    <Compile Include="Buildings\ResourceBuildings\DeuteriumExtractor.cs" />
+    <Compile Include="Buildings\ResourceBuildings\DeuteriumWarehouse.cs" />
+    <Compile Include="Buildings\ResourceBuildings\FusionPowerPlant.cs" />
+    <Compile Include="Buildings\ResourceBuildings\MetalMine.cs" />
+    <Compile Include="Buildings\ResourceBuildings\MetalWarehouse.cs" />
+    <Compile Include="Buildings\ResourceBuildings\SolarPowerPlant.cs" />
+    <Compile Include="Buildings\ResourceBuildings\SolarSatellite.cs" />
+    <Compile Include="Buildings\StationBuildings\ResearchLabolatory.cs" />
+    <Compile Include="Buildings\StationBuildings\RobotFactory.cs" />
+    <Compile Include="Buildings\StationBuildings\RocketSilo.cs" />
+    <Compile Include="Buildings\StationBuildings\Shipyard.cs" />
     <Compile Include="Galaxy\Moon.cs" />
     <Compile Include="Galaxy\Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,5 +63,6 @@
     <Compile Include="Resources\Energy.cs" />
     <Compile Include="Resources\Metal.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

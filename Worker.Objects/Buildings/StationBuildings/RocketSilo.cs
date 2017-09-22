@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Worker.Objects.Galaxy;
+
+namespace Worker.Objects.Buildings.StationBuildings
+{
+    public class RocketSilo : BuildingBase
+    {
+        public RocketSilo(Planet belongsTo, int currentLevel) : base(belongsTo, currentLevel)
+        {
+        }
+    }
+}
