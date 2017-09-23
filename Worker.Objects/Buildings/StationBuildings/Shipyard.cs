@@ -9,8 +9,10 @@ namespace Worker.Objects.Buildings.StationBuildings
 {
     public class Shipyard : BuildingBase
     {
-        public Shipyard(Planet belongsTo, int currentLevel) : base(belongsTo, currentLevel)
+        public Shipyard(Planet belongsTo, int currentLevel, bool techReached) : base(belongsTo, currentLevel, techReached)
         {
         }
+
+        public override BuildingType BuildingType => BuildingType.Shipyard;
     }
 }

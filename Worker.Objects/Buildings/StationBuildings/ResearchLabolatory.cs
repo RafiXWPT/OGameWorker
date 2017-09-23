@@ -9,8 +9,10 @@ namespace Worker.Objects.Buildings.StationBuildings
 {
     public class ResearchLabolatory : BuildingBase
     {
-        public ResearchLabolatory(Planet belongsTo, int currentLevel) : base(belongsTo, currentLevel)
+        public ResearchLabolatory(Planet belongsTo, int currentLevel, bool techReached) : base(belongsTo, currentLevel, techReached)
         {
         }
+
+        public override BuildingType BuildingType => BuildingType.ResearchLabolatory;
     }
 }
