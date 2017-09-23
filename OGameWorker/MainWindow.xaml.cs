@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using HtmlAgilityPack;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.RequestBuilder;
+using Worker.Parser.Buildings;
 using Worker.Parser.Planets;
 using Worker.Parser.Resources;
 
@@ -43,6 +44,8 @@ namespace OGameWorker
                 var messageContainer = client.SendHttpRequest(requestBuilder.BuildOverviewRequest());
                 var metal = await new ResourceParser().GetMetal(messageContainer.ResponseHtmlDocument);
                 var planets = await new PlanetsParser().GetPlayerPlanets(messageContainer.ResponseHtmlDocument);
+                var planetResources = client.SendHttpRequest(requestBuilder.BuildResourceRequest(planets.First().Id));
+                var planetBuildings = await new BuildingsParser().GetResourceBuildings(planetResources.ResponseHtmlDocument, planets.First());
             }
         }
     }

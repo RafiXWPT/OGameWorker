@@ -23,6 +23,36 @@ namespace Worker.HttpModule.RequestBuilder
             return new GetHttpRequest().Create(url);
         }
 
+        public HttpRequestMessage BuildResourceRequest(int planetId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=resources&cp={planetId}";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildResearchRequest(int planetId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=research&cp={planetId}";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildStationRequest(int planetId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=station&cp={planetId}";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildShipyardRequest(int planetId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=shipyard&cp={planetId}";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildDefenseRequest(int planetId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=defense&cp={planetId}";
+            return new GetHttpRequest().Create(url);
+        }
+
         public HttpRequestMessage BuildLoginRequest(string username, string password)
         {
             var url = "https://pl.ogame.gameforge.com:443/main/login";
