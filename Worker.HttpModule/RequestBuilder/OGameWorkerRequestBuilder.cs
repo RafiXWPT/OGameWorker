@@ -17,9 +17,9 @@ namespace Worker.HttpModule.RequestBuilder
             _client = client;
         }
 
-        public HttpRequestMessage BuildOverviewRequest()
+        public HttpRequestMessage BuildOverviewRequest(int planetId = 0)
         {
-            var url = $"{_client.ServerUrl}/game/index.php?page=overview";
+            var url = planetId == 0 ? $"{_client.ServerUrl}/game/index.php?page=overview" : $"{_client.ServerUrl}/game/index.php?page=overview&cp={planetId}";
             return new GetHttpRequest().Create(url);
         }
 

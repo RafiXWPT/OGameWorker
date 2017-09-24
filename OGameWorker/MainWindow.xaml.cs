@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using HtmlAgilityPack;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.RequestBuilder;
+using Worker.Objects;
 using Worker.Parser.Buildings;
 using Worker.Parser.Planets;
 using Worker.Parser.Resources;
@@ -41,13 +42,18 @@ namespace OGameWorker
             var login = client.SendHttpRequest(requestBuilder.BuildLoginRequest("mail.rafixwpt@gmail.com", "raf109aello"));
             if (login.StatusCode == HttpStatusCode.OK)
             {
-                var messageContainer = client.SendHttpRequest(requestBuilder.BuildOverviewRequest());
-                var metal = await new ResourceParser().GetMetal(messageContainer.ResponseHtmlDocument);
-                var planets = await new PlanetsParser().GetPlayerPlanets(messageContainer.ResponseHtmlDocument);
-                var planetResources = client.SendHttpRequest(requestBuilder.BuildResourceRequest(planets.First().Id));
-                var planetStation = client.SendHttpRequest(requestBuilder.BuildStationRequest(planets.First().Id));
-                var planetResourceBuildings = await new BuildingsParser().GetResourceBuildings(planetResources.ResponseHtmlDocument, planets.First());
-                var planetStationBuildings = await new BuildingsParser().GetStationBuildings(planetStation.ResponseHtmlDocument, planets.First());
+                var initialView = client.SendHttpRequest(requestBuilder.BuildOverviewRequest());
+                ObjectContainer.Instance.PlayerPlanets = await new PlanetsParser().GetPlayerPlanets(initialView.ResponseHtmlDocument);
+                ObjectContainer.Instance.PlayerBuildings.Clear();
+                foreach (var planet in ObjectContainer.Instance.PlayerPlanets)
+                {
+                    var planetResources = client.SendHttpRequest(requestBuilder.BuildResourceRequest(planet.Id));
+                    var planetResourceBuildings = await new BuildingsParser().GetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
+                    var planetStation = client.SendHttpRequest(requestBuilder.BuildStationRequest(planet.Id));
+                    var planetStationBuildings = await new BuildingsParser().GetStationBuildings(planetStation.ResponseHtmlDocument, planet);
+                    ObjectContainer.Instance.PlayerBuildings.AddRange(planetResourceBuildings);
+                    ObjectContainer.Instance.PlayerBuildings.AddRange(planetStationBuildings);
+                }
             }
         }
     }

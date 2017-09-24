@@ -1,4 +1,5 @@
-﻿using Worker.Objects.Galaxy;
+﻿using System;
+using Worker.Objects.Galaxy;
 
 namespace Worker.Objects.Buildings.Resource
 {
@@ -9,5 +10,12 @@ namespace Worker.Objects.Buildings.Resource
         }
 
         public override BuildingType BuildingType => BuildingType.SolarSatellite;
+        public override int BaseMetalCost => 0;
+        public override int BaseCrystalCost => 0;
+        public override int BaseDeuteriumCost => 0;
+        public override int EnergyConsumption => 0;
+        public override double CostIncreaseFactor => 0;
+
+        public int EnergyProduction => (int)Math.Floor((BelongsTo.Temperature.Average+160)/6);
     }
 }

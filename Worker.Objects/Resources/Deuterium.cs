@@ -9,10 +9,10 @@ namespace Worker.Objects.Resources
 {
     public class Deuterium : BasicResource
     {
-        public override double BasicProduction => 0;
+        public override int BasicProduction => 0;
 
         public Deuterium(string amount) : base(amount) { }
 
-        public Deuterium(double amount) : base(amount) { }
+        public Deuterium(int amount) : base(amount) { }
     }
 }

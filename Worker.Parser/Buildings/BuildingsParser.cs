@@ -65,8 +65,8 @@ namespace Worker.Parser.Buildings
                     return new DeuteriumExtractor(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.SolarPowerPlant:
                     return new SolarPowerPlant(planet, buildingLevel, techReached, canBuild);
-                case BuildingType.FusionPowerPlant:
-                    return new FusionPowerPlant(planet, buildingLevel, techReached, canBuild);
+                case BuildingType.FusionReactor:
+                    return new FusionReactor(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.SolarSatellite:
                     return new SolarSatellite(planet, buildingLevel, techReached, canBuild);
                 default:
@@ -83,8 +83,8 @@ namespace Worker.Parser.Buildings
             var canBuild = techReached && canBuildStatus != "disabled";
             switch (type)
             {
-                case BuildingType.RobotFactory:
-                    return new RobotFactory(planet, buildingLevel, techReached, canBuild);
+                case BuildingType.RoboticsFactory:
+                    return new RoboticsFactory(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.Shipyard:
                     return new Shipyard(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.ResearchLabolatory:

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Helpers;
 
 namespace Worker.Objects.Buildings
 {
@@ -13,12 +15,12 @@ namespace Worker.Objects.Buildings
         CrystalMine = 2,
         DeuteriumExtractor = 3,
         SolarPowerPlant = 4,
-        FusionPowerPlant = 12,
+        FusionReactor = 12,
         SolarSatellite = 212,
-        MetalWarehouse = 22,
-        CrystalWarehouse = 23,
-        DeuteriumWarehouse = 24,
-        RobotFactory = 14,
+        MetalStorage = 22,
+        CrystalStorage = 23,
+        DeuteriumTank = 24,
+        RoboticsFactory = 14,
         Shipyard = 21,
         ResearchLabolatory = 31,
         RocketSilo = 44
@@ -32,7 +34,7 @@ namespace Worker.Objects.Buildings
             BuildingType.CrystalMine,
             BuildingType.DeuteriumExtractor,
             BuildingType.SolarPowerPlant,
-            BuildingType.FusionPowerPlant,
+            BuildingType.FusionReactor,
             BuildingType.SolarSatellite
         };
     }
@@ -41,7 +43,7 @@ namespace Worker.Objects.Buildings
     {
         public static List<BuildingType> List { get; } = new List<BuildingType>
         {
-            BuildingType.RobotFactory,
+            BuildingType.RoboticsFactory,
             BuildingType.Shipyard,
             BuildingType.ResearchLabolatory
         };
@@ -51,17 +53,22 @@ namespace Worker.Objects.Buildings
     {
         public static List<BuildingType> List { get; } = new List<BuildingType>
         {
-            BuildingType.MetalWarehouse,
-            BuildingType.CrystalWarehouse,
-            BuildingType.DeuteriumWarehouse
+            BuildingType.MetalStorage,
+            BuildingType.CrystalStorage,
+            BuildingType.DeuteriumTank
         };
     }
 
     public abstract class BuildingBase
     {
+        public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
         public abstract BuildingType BuildingType { get; }
-        public Planet BelongsTo { get; set; }
-        public int CurrentLevel { get; set; }
+        public abstract int BaseMetalCost { get; }
+        public abstract int BaseCrystalCost { get; }
+        public abstract int BaseDeuteriumCost { get; }
+        public abstract int EnergyConsumption { get; }
+        public abstract double CostIncreaseFactor { get; }
+
         public bool TechReached { get; set; }
         private bool _canBuild;
 
@@ -71,10 +78,14 @@ namespace Worker.Objects.Buildings
             set => _canBuild = value;
         }
 
-        public double MetalCost { get; set; }
-        public double CrystalCost { get; set; }
-        public double DeuteriumCost { get; set; }
-        public TimeSpan UpgradeTimeDuration { get; set; }
+        public Planet BelongsTo { get; set; }
+        public int CurrentLevel { get; set; }
+
+
+        public int MetalCost => (int)(BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int CrystalCost => (int)(BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int DeuteriumCost => (int)(BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public TimeSpan UpgradeTimeDuration => ObjectContainer.Instance.PlayerBuildings.Any() ? TimeSpan.FromHours((MetalCost + CrystalCost) / (UniverseSpeed * 2500 * (1 + PlanetCoreBuildingsHelper.GetPlanetRoboticsFactory(BelongsTo).CurrentLevel) * Math.Pow(2, 0))) : TimeSpan.MaxValue;
 
         protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
         {

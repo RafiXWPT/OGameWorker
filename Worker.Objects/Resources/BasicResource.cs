@@ -9,12 +9,12 @@ namespace Worker.Objects.Resources
 {
     public abstract class BasicResource
     {
-        public abstract double BasicProduction { get; }
+        public abstract int BasicProduction { get; }
         public double Amount { get; set; }
 
-        protected BasicResource(string amount) : this(Convert.ToDouble(amount, new CultureInfo("en-US"))) { }
+        protected BasicResource(string amount) : this(Convert.ToInt32(amount, new CultureInfo("en-US"))) { }
 
-        protected BasicResource(double amount)
+        protected BasicResource(int amount)
         {
             Amount = amount;
         }

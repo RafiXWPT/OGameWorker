@@ -8,10 +8,10 @@ namespace Worker.Objects.Resources
 {
     public class Energy : BasicResource
     {
-        public override double BasicProduction => 0;
+        public override int BasicProduction => 0;
 
         public Energy(string amount) : base(amount) { }
 
-        public Energy(double amount) : base(amount) { }
+        public Energy(int amount) : base(amount) { }
     }
 }

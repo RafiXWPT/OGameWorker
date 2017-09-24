@@ -19,11 +19,11 @@ namespace Worker.Parser.Resources
             switch (type)
             {
                 case ResourceType.Metal:
-                    return await Task.Run(() => document.GetElementbyId("metal_box").InnerText.Trim());
+                    return await Task.Run(() => document.GetElementbyId("metal_box").InnerText.Trim().Replace(".", string.Empty));
                 case ResourceType.Crystal:
-                    return await Task.Run(() => document.GetElementbyId("crystal_box").InnerText.Trim());
+                    return await Task.Run(() => document.GetElementbyId("crystal_box").InnerText.Trim().Replace(".", string.Empty));
                 case ResourceType.Deuterium:
-                    return await Task.Run(() => document.GetElementbyId("deuterium_box").InnerText.Trim());
+                    return await Task.Run(() => document.GetElementbyId("deuterium_box").InnerText.Trim().Replace(".", string.Empty));
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
