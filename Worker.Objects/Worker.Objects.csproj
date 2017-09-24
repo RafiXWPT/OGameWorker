@@ -41,19 +41,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Buildings\BuildingBase.cs" />
-    <Compile Include="Buildings\ResourceBuildings\CrystalMine.cs" />
-    <Compile Include="Buildings\ResourceBuildings\CrystalWarehouse.cs" />
-    <Compile Include="Buildings\ResourceBuildings\DeuteriumExtractor.cs" />
-    <Compile Include="Buildings\ResourceBuildings\DeuteriumWarehouse.cs" />
-    <Compile Include="Buildings\ResourceBuildings\FusionPowerPlant.cs" />
-    <Compile Include="Buildings\ResourceBuildings\MetalMine.cs" />
-    <Compile Include="Buildings\ResourceBuildings\MetalWarehouse.cs" />
-    <Compile Include="Buildings\ResourceBuildings\SolarPowerPlant.cs" />
-    <Compile Include="Buildings\ResourceBuildings\SolarSatellite.cs" />
-    <Compile Include="Buildings\StationBuildings\ResearchLabolatory.cs" />
-    <Compile Include="Buildings\StationBuildings\RobotFactory.cs" />
-    <Compile Include="Buildings\StationBuildings\RocketSilo.cs" />
-    <Compile Include="Buildings\StationBuildings\Shipyard.cs" />
+    <Compile Include="Buildings\Resource\CrystalMine.cs" />
+    <Compile Include="Buildings\Warehouse\CrystalWarehouse.cs" />
+    <Compile Include="Buildings\Resource\DeuteriumExtractor.cs" />
+    <Compile Include="Buildings\Warehouse\DeuteriumWarehouse.cs" />
+    <Compile Include="Buildings\Resource\FusionPowerPlant.cs" />
+    <Compile Include="Buildings\Resource\MetalMine.cs" />
+    <Compile Include="Buildings\Warehouse\MetalWarehouse.cs" />
+    <Compile Include="Buildings\Resource\SolarPowerPlant.cs" />
+    <Compile Include="Buildings\Resource\SolarSatellite.cs" />
+    <Compile Include="Buildings\Station\ResearchLabolatory.cs" />
+    <Compile Include="Buildings\Station\RobotFactory.cs" />
+    <Compile Include="Buildings\Station\RocketSilo.cs" />
+    <Compile Include="Buildings\Station\Shipyard.cs" />
     <Compile Include="Galaxy\Moon.cs" />
     <Compile Include="Galaxy\Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

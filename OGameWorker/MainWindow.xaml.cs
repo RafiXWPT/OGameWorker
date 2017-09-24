@@ -45,7 +45,9 @@ namespace OGameWorker
                 var metal = await new ResourceParser().GetMetal(messageContainer.ResponseHtmlDocument);
                 var planets = await new PlanetsParser().GetPlayerPlanets(messageContainer.ResponseHtmlDocument);
                 var planetResources = client.SendHttpRequest(requestBuilder.BuildResourceRequest(planets.First().Id));
-                var planetBuildings = await new BuildingsParser().GetResourceBuildings(planetResources.ResponseHtmlDocument, planets.First());
+                var planetStation = client.SendHttpRequest(requestBuilder.BuildStationRequest(planets.First().Id));
+                var planetResourceBuildings = await new BuildingsParser().GetResourceBuildings(planetResources.ResponseHtmlDocument, planets.First());
+                var planetStationBuildings = await new BuildingsParser().GetStationBuildings(planetStation.ResponseHtmlDocument, planets.First());
             }
         }
     }

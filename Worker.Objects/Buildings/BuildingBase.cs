@@ -24,23 +24,64 @@ namespace Worker.Objects.Buildings
         RocketSilo = 44
     }
 
+    public static class ResourceBuildings
+    {
+        public static List<BuildingType> List { get; } = new List<BuildingType>
+        {
+            BuildingType.MetalMine,
+            BuildingType.CrystalMine,
+            BuildingType.DeuteriumExtractor,
+            BuildingType.SolarPowerPlant,
+            BuildingType.FusionPowerPlant,
+            BuildingType.SolarSatellite
+        };
+    }
+
+    public static class StationBuildings
+    {
+        public static List<BuildingType> List { get; } = new List<BuildingType>
+        {
+            BuildingType.RobotFactory,
+            BuildingType.Shipyard,
+            BuildingType.ResearchLabolatory
+        };
+    }
+
+    public static class WarehouseBuildings
+    {
+        public static List<BuildingType> List { get; } = new List<BuildingType>
+        {
+            BuildingType.MetalWarehouse,
+            BuildingType.CrystalWarehouse,
+            BuildingType.DeuteriumWarehouse
+        };
+    }
+
     public abstract class BuildingBase
     {
         public abstract BuildingType BuildingType { get; }
         public Planet BelongsTo { get; set; }
         public int CurrentLevel { get; set; }
-        public bool CanBuild { get; set; }
+        public bool TechReached { get; set; }
+        private bool _canBuild;
+
+        public bool CanBuild
+        {
+            get => TechReached && _canBuild;
+            set => _canBuild = value;
+        }
+
         public double MetalCost { get; set; }
         public double CrystalCost { get; set; }
         public double DeuteriumCost { get; set; }
         public TimeSpan UpgradeTimeDuration { get; set; }
-        private bool _techReached;
 
-        protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached)
+        protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
         {
             BelongsTo = belongsTo;
             CurrentLevel = currentLevel;
-            _techReached = techReached;
+            TechReached = techReached;
+            CanBuild = canBuild;
         }
     }
 }

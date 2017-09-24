@@ -1,10 +1,10 @@
 ﻿using Worker.Objects.Galaxy;
 
-namespace Worker.Objects.Buildings.ResourceBuildings
+namespace Worker.Objects.Buildings.Warehouse
 {
     public class DeuteriumWarehouse : BuildingBase
     {
-        public DeuteriumWarehouse(Planet belongsTo, int currentLevel, bool techReached) : base(belongsTo, currentLevel, techReached)
+        public DeuteriumWarehouse(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, currentLevel, techReached, canBuild)
         {
         }
 
