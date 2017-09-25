@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -35,6 +36,8 @@ namespace Worker.HttpModule
                 ResponseHtmlDocument = doc;
             }
         }
+
+        public static MessageContainer Fail() => new MessageContainer(null, new HttpResponseMessage(HttpStatusCode.BadRequest));
 
         private async Task<Stream> AsyncReadStream(HttpContent content)
         {

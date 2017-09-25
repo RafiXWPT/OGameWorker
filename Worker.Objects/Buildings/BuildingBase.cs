@@ -49,7 +49,7 @@ namespace Worker.Objects.Buildings
         };
     }
 
-    public static class WarehouseBuildings
+    public static class StorageBuildings
     {
         public static List<BuildingType> List { get; } = new List<BuildingType>
         {
@@ -85,7 +85,13 @@ namespace Worker.Objects.Buildings
         public int MetalCost => (int)(BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
         public int CrystalCost => (int)(BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
         public int DeuteriumCost => (int)(BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public TimeSpan UpgradeTimeDuration => ObjectContainer.Instance.PlayerBuildings.Any() ? TimeSpan.FromHours((MetalCost + CrystalCost) / (UniverseSpeed * 2500 * (1 + PlanetCoreBuildingsHelper.GetPlanetRoboticsFactory(BelongsTo).CurrentLevel) * Math.Pow(2, 0))) : TimeSpan.MaxValue;
+
+        public TimeSpan UpgradeTimeDuration => ObjectContainer.Instance.PlayerBuildings.Any()
+            ? TimeSpan.FromHours((MetalCost + CrystalCost) /
+                                 (UniverseSpeed * 2500 *
+                                  (1 + PlanetCoreBuildingsHelper.GetPlanetRoboticsFactory(BelongsTo).CurrentLevel) *
+                                  Math.Pow(2, 0)))
+            : TimeSpan.MaxValue;
 
         protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
         {

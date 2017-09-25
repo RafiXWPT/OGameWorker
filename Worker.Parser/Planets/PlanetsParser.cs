@@ -13,11 +13,14 @@ namespace Worker.Parser.Planets
     {
         public async Task<List<Planet>> GetPlayerPlanets(HtmlDocument document)
         {
-            var playerHtmlPlanets = await Task.Run(() => document.GetElementbyId("planetList").Descendants("div").Where(c => c.Attributes.Any(a => a.Value.Contains("smallplanet"))).ToList());
-            var playerPlanets = await Task.Run(() =>
+            return await Task.Run(() =>
             {
-                var planetList = new List<Planet>();
+                var playerHtmlPlanets = document.GetElementbyId("planetList")
+                    .Descendants("div")
+                    .Where(c => c.Attributes.Any(a => a.Value.Contains("smallplanet")))
+                    .ToList();
 
+                var planetList = new List<Planet>();
                 foreach (var planet in playerHtmlPlanets)
                 {
                     var planetId = Convert.ToInt32(planet.Id.Replace("planet-", string.Empty));
@@ -54,8 +57,6 @@ namespace Worker.Parser.Planets
 
                 return planetList;
             });       
-
-            return playerPlanets;
         }
     }
 }

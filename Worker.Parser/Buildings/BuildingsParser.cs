@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Buildings;
 using Worker.Objects.Buildings.Resource;
 using Worker.Objects.Buildings.Station;
+using Worker.Objects.Buildings.Warehouse;
 using Worker.Objects.Galaxy;
 
 namespace Worker.Parser.Buildings
@@ -69,6 +71,12 @@ namespace Worker.Parser.Buildings
                     return new FusionReactor(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.SolarSatellite:
                     return new SolarSatellite(planet, buildingLevel, techReached, canBuild);
+                case BuildingType.MetalStorage:
+                    return new MetalStorage(planet, buildingLevel, techReached, canBuild);
+                case BuildingType.CrystalStorage:
+                    return new CrystalStorage(planet, buildingLevel, techReached, canBuild);
+                case BuildingType.DeuteriumTank:
+                    return new DeuteriumTank(planet, buildingLevel, techReached, canBuild);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -94,9 +102,30 @@ namespace Worker.Parser.Buildings
             }
         }
 
+        public async Task<string> GetUpgradeBuildingUrl(HtmlDocument document, BuildingType type)
+        {
+            return await Task.Run(() =>
+            {
+                var upgradeBuildingHtml =
+                    document
+                    .DocumentNode
+                    .Descendants("div")
+                    .First(n => n
+                        .Attributes
+                        .Any(a => a.Value.Contains($"supply{(int) type}")))
+                    .Descendants("a")
+                        .First(n => n
+                        .Attributes
+                        .Any(a => a.OriginalName == "onclick"))
+                    .GetAttributeValue("onclick", null);
+
+                return Regex.Match(upgradeBuildingHtml, @"\'([^']*)\'").Groups[1].Value;
+            });
+        }
+
         public async Task<List<BuildingBase>> GetResourceBuildings(HtmlDocument document, Planet planet)
         {
-            var planetResourceBuildings = await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var planetBuildings = new List<BuildingBase>();
                 var buildingsNode = document.GetElementbyId("building").Descendants("div");
@@ -104,15 +133,20 @@ namespace Worker.Parser.Buildings
                 {
                     planetBuildings.Add(GetResourceBuilding(buildingType, buildingsNode, planet));
                 }
+
+                var storageNode = document.GetElementbyId("storage").Descendants("div");
+                foreach (var buildingType in StorageBuildings.List)
+                {
+                    planetBuildings.Add(GetResourceBuilding(buildingType, storageNode, planet));
+                }
+
                 return planetBuildings;
             });
-
-            return planetResourceBuildings;
         }
 
         public async Task<List<BuildingBase>> GetStationBuildings(HtmlDocument document, Planet planet)
         {
-            var planetStationBuildings = await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var planetBuildings = new List<BuildingBase>();
                 var buildingsNode = document.GetElementbyId("stationbuilding").Descendants("div");
@@ -122,8 +156,6 @@ namespace Worker.Parser.Buildings
                 }
                 return planetBuildings;
             });
-
-            return planetStationBuildings;
         }
     }
 }

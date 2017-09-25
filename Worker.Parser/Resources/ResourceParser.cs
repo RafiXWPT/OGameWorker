@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Worker.Objects.Galaxy;
 using Worker.Objects.Resources;
 
 namespace Worker.Parser.Resources
@@ -27,6 +28,14 @@ namespace Worker.Parser.Resources
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+        }
+
+        public async Task<Planet> GetPlanetResources(Planet planet, HtmlDocument document)
+        {
+            planet.Metal = await GetMetal(document);
+            planet.Crystal = await GetCrystal(document);
+            planet.Deuterium = await GetDeuterium(document);
+            return planet;
         }
 
         public async Task<Metal> GetMetal(HtmlDocument document)

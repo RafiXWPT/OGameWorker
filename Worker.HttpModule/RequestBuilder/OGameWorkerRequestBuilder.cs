@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Helpers;
+using Worker.Objects.Buildings;
 
 namespace Worker.HttpModule.RequestBuilder
 {
@@ -65,6 +66,11 @@ namespace Worker.HttpModule.RequestBuilder
             };
 
             return new PostHttpRequest().Create(url, content);
+        }
+
+        public HttpRequestMessage BuildUpgradeBuildingRequest(string upgradeUrl)
+        {
+            return new GetHttpRequest().Create(upgradeUrl);
         }
     }
 }

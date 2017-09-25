@@ -19,6 +19,7 @@ using HtmlAgilityPack;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.RequestBuilder;
 using Worker.Objects;
+using Worker.Objects.Buildings;
 using Worker.Parser.Buildings;
 using Worker.Parser.Planets;
 using Worker.Parser.Resources;
@@ -38,23 +39,13 @@ namespace OGameWorker
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var client = new OGameHttpClient("s147-pl.ogame.gameforge.com");
-            var requestBuilder = new OGameWorkerRequestBuilder(client);
-            var login = client.SendHttpRequest(requestBuilder.BuildLoginRequest("mail.rafixwpt@gmail.com", "raf109aello"));
-            if (login.StatusCode == HttpStatusCode.OK)
+            var loginMethod = await client.LogIn();
+            if (loginMethod.StatusCode == HttpStatusCode.OK)
             {
-                var initialView = client.SendHttpRequest(requestBuilder.BuildOverviewRequest());
-                ObjectContainer.Instance.PlayerPlanets = await new PlanetsParser().GetPlayerPlanets(initialView.ResponseHtmlDocument);
-                ObjectContainer.Instance.PlayerBuildings.Clear();
-                foreach (var planet in ObjectContainer.Instance.PlayerPlanets)
-                {
-                    var planetResources = client.SendHttpRequest(requestBuilder.BuildResourceRequest(planet.Id));
-                    var planetResourceBuildings = await new BuildingsParser().GetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
-                    var planetStation = client.SendHttpRequest(requestBuilder.BuildStationRequest(planet.Id));
-                    var planetStationBuildings = await new BuildingsParser().GetStationBuildings(planetStation.ResponseHtmlDocument, planet);
-                    ObjectContainer.Instance.PlayerBuildings.AddRange(planetResourceBuildings);
-                    ObjectContainer.Instance.PlayerBuildings.AddRange(planetStationBuildings);
-                }
+                await client.RefreshObjectContainer();
             }
+
+            var oc = ObjectContainer.Instance;
         }
     }
 }
