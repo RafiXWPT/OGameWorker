@@ -58,6 +58,10 @@
     <Compile Include="Galaxy\Moon.cs" />
     <Compile Include="Galaxy\Planet.cs" />
     <Compile Include="Helpers\PlanetCoreBuildingsHelper.cs" />
+    <Compile Include="Missions\FriendlyMission.cs" />
+    <Compile Include="Missions\HostileMission.cs" />
+    <Compile Include="Missions\MissionBase.cs" />
+    <Compile Include="Missions\NeutralMission.cs" />
     <Compile Include="ObjectContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BasicResource.cs" />

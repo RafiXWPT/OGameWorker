@@ -36,9 +36,11 @@ namespace Worker.Objects.Galaxy
             .Where(b => b.BelongsTo.Id == Id)
             .ToList();
 
-        public Planet(int id, string name, PlanetTemperature temperature, PlanetPosition position) : this(id, name, temperature, position, new Metal(0), new Crystal(0), new Deuterium(0)) { }
+        public Planet(string name, PlanetPosition position) : this(0, name, position, new PlanetTemperature()) { }
 
-        public Planet(int id, string name, PlanetTemperature temperature, PlanetPosition position, Metal metal, Crystal crystal, Deuterium deuterium)
+        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature) : this(id, name, position, temperature, new Metal(0), new Crystal(0), new Deuterium(0)) { }
+
+        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature, Metal metal, Crystal crystal, Deuterium deuterium)
         {
             Id = id;
             Name = name;

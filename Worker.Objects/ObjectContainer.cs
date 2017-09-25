@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Missions;
 
 namespace Worker.Objects
 {
@@ -13,6 +14,7 @@ namespace Worker.Objects
 
         private ObjectContainer() { }
 
+        public List<MissionBase> Missions { get; set; } = new List<MissionBase>();
         public List<Planet> PlayerPlanets { get; set; } = new List<Planet>();
         public List<BuildingBase> PlayerBuildings { get; set; } = new List<BuildingBase>();
 

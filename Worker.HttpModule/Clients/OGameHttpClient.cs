@@ -8,9 +8,6 @@ using Worker.HttpModule.RequestBuilder;
 using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
-using Worker.Parser.Buildings;
-using Worker.Parser.Planets;
-using Worker.Parser.Resources;
 
 namespace Worker.HttpModule.Clients
 {
@@ -39,6 +36,12 @@ namespace Worker.HttpModule.Clients
         public async Task<MessageContainer> LogIn()
         {
             return await SendHttpRequest(Builder.BuildLoginRequest("mail.rafixwpt@gmail.com", "raf109aello"));
+        }
+
+        public async Task RefreshMissions()
+        {
+            var missionsView = await SendHttpRequest(Builder.BuildMovementRequest());
+            await DataProvider.UpdateMissions(missionsView.ResponseHtmlDocument);
         }
 
         public async Task RefreshObjectContainer()

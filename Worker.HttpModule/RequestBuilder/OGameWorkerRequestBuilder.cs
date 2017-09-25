@@ -54,6 +54,12 @@ namespace Worker.HttpModule.RequestBuilder
             return new GetHttpRequest().Create(url);
         }
 
+        public HttpRequestMessage BuildMovementRequest()
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=eventList&ajax=1";
+            return new GetHttpRequest().Create(url);
+        }
+
         public HttpRequestMessage BuildLoginRequest(string username, string password)
         {
             var url = "https://pl.ogame.gameforge.com:443/main/login";

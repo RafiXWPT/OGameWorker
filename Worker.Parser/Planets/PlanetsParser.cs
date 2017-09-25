@@ -52,7 +52,7 @@ namespace Worker.Parser.Planets
                         Max = int.Parse(Regex.Match(temperatureParts[1], @"-?\d+").Value)
                     };
 
-                    planetList.Add(new Planet(planetId, planetName, planetTemperature, planetPosition));
+                    planetList.Add(new Planet(planetId, planetName, planetPosition, planetTemperature));
                 }
 
                 return planetList;

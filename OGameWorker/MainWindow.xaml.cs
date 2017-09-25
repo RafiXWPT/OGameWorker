@@ -43,6 +43,7 @@ namespace OGameWorker
             if (loginMethod.StatusCode == HttpStatusCode.OK)
             {
                 await client.RefreshObjectContainer();
+                await client.RefreshMissions();
             }
 
             var oc = ObjectContainer.Instance;
