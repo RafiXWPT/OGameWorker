@@ -69,6 +69,20 @@
     <Compile Include="Resources\Deuterium.cs" />
     <Compile Include="Resources\Energy.cs" />
     <Compile Include="Resources\Metal.cs" />
+    <Compile Include="Ships\Fighter\Battlecruiser.cs" />
+    <Compile Include="Ships\Fighter\Battleship.cs" />
+    <Compile Include="Ships\Fighter\Bomber.cs" />
+    <Compile Include="Ships\Fighter\Cruiser.cs" />
+    <Compile Include="Ships\Fighter\Deathstar.cs" />
+    <Compile Include="Ships\Fighter\Destroyer.cs" />
+    <Compile Include="Ships\Fighter\HeavyFighter.cs" />
+    <Compile Include="Ships\Fighter\LightFighter.cs" />
+    <Compile Include="Ships\Other\ColonyShip.cs" />
+    <Compile Include="Ships\Other\EspionageProbe.cs" />
+    <Compile Include="Ships\Recycle\Recycler.cs" />
+    <Compile Include="Ships\ShipBase.cs" />
+    <Compile Include="Ships\Transport\LargeCargo.cs" />
+    <Compile Include="Ships\Transport\SmallCargo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

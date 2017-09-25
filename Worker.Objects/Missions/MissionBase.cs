@@ -17,10 +17,15 @@ namespace Worker.Objects.Missions
     public enum MissionType
     {
         Attack = 1,
+        GuildAttack = 2,
         Transport = 3,
+        Stationize = 4,
+        Stop = 5,
         Espionage = 6,
-        Recycle,
-        Colonize
+        Colonize = 7,
+        Recycle = 8,
+        Destroy = 9,
+        Expedition = 15
     }
 
     public abstract class MissionBase
