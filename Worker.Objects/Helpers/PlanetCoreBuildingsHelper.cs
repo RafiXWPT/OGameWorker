@@ -9,12 +9,12 @@ namespace Worker.Objects.Helpers
     {
         public static Shipyard GetPlanetShipyard(Planet planet)
         {
-            return ObjectContainer.Instance.PlayerBuildings.FirstOrDefault(b => b.BelongsTo.Id == planet.Id && b.BuildingType == BuildingType.Shipyard) as Shipyard;
+            return ObjectContainer.Instance.GetBuilding(planet, BuildingType.Shipyard) as Shipyard;
         }
 
         public static RoboticsFactory GetPlanetRoboticsFactory(Planet planet)
         {
-            return ObjectContainer.Instance.PlayerBuildings.FirstOrDefault(b => b.BelongsTo.Id == planet.Id && b.BuildingType == BuildingType.RoboticsFactory) as RoboticsFactory;
+            return ObjectContainer.Instance.GetBuilding(planet, BuildingType.RoboticsFactory) as RoboticsFactory;
         }
     }
 }
