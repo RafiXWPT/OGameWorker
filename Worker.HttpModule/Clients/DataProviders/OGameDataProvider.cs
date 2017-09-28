@@ -8,10 +8,12 @@ using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Research;
+using Worker.Objects.Ships.Fighter;
 using Worker.Parser.Buildings;
 using Worker.Parser.Movement;
 using Worker.Parser.Planets;
 using Worker.Parser.Resources;
+using Worker.Parser.Ships;
 using Worker.Parser.Technologies;
 
 namespace Worker.HttpModule.Clients.DataProviders
@@ -23,6 +25,7 @@ namespace Worker.HttpModule.Clients.DataProviders
         public BuildingsParser BuildingsParser { get; }
         public TechnologiesParser TechnologiesParser { get; }
         public ResourcesParser ResourcesParser { get; }
+        public ShipsParser ShipsParser { get; }
 
         public OGameDataProvider()
         {
@@ -31,6 +34,7 @@ namespace Worker.HttpModule.Clients.DataProviders
             BuildingsParser = new BuildingsParser();
             ResourcesParser = new ResourcesParser();
             TechnologiesParser = new TechnologiesParser();
+            ShipsParser = new ShipsParser();
         }
 
         public async Task UpdateMissions(HtmlDocument document)
@@ -65,8 +69,15 @@ namespace Worker.HttpModule.Clients.DataProviders
         public async Task UpdatePlanetTechnologies(HtmlDocument document, Planet planet)
         {
             ObjectContainer.Instance.PlayerTechnologies.RemoveAll(t => t.BelongsTo.Id == planet.Id);
-            var planetBasicTechnologies = await TechnologiesParser.GetTechnologies(document, planet);
-            ObjectContainer.Instance.PlayerTechnologies.AddRange(planetBasicTechnologies);
+            var planetTechnologies = await TechnologiesParser.GetTechnologies(document, planet);
+            ObjectContainer.Instance.PlayerTechnologies.AddRange(planetTechnologies);
+        }
+
+        public async Task UpdatePlanetFleet(HtmlDocument document, Planet planet)
+        {
+            ObjectContainer.Instance.PlayerShips.RemoveAll(s => s.BelongsTo.Id == planet.Id);
+            var planetShips = await ShipsParser.GetShips(document, planet);
+            ObjectContainer.Instance.PlayerShips.AddRange(planetShips);
         }
     }
 }

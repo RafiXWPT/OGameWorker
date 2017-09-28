@@ -21,20 +21,21 @@ namespace Worker.Parser.Technologies
             return technologiesNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"research{(int) type}")));
         }
 
-        private int GetTechnologyLevel(HtmlNode technologyNode, TechnologyType type)
+        private int GetTechnologyLevel(HtmlNode technologyNode)
         {
             var levelValueString = technologyNode
-                ?.Descendants("span")
-                ?.First(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains("level")))
-                ?.InnerHtml
-                ?.Split(new[] { "</span>" }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+                .Descendants("span")
+                .First(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains("level")))
+                .InnerHtml.Trim();
 
-            if (levelValueString.Contains("span"))
+            if (int.TryParse(levelValueString, out int level))
             {
-                levelValueString = levelValueString.Split(new[] { "<span" }, StringSplitOptions.RemoveEmptyEntries)[0].Trim();
+                return level;
             }
 
-            return Convert.ToInt32(levelValueString);
+            levelValueString = levelValueString.Split(new[] { "</span>" }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+
+            return levelValueString.Contains("span") ? Convert.ToInt32(levelValueString.Split(new[] { "<span" }, StringSplitOptions.RemoveEmptyEntries)[0].Trim()) : 0;
         }
 
         private string CanUpgradeStatus(HtmlNode technologyNode)
@@ -45,7 +46,7 @@ namespace Worker.Parser.Technologies
         private TechnologyBase GetTechnology(TechnologyType type, IEnumerable<HtmlNode> technologiesNode, Planet planet)
         {
             var technologyNode = GetTechnologyNode(technologiesNode, type);
-            var technologyLevel = GetTechnologyLevel(technologyNode, type);
+            var technologyLevel = GetTechnologyLevel(technologyNode);
             var canUpgradeStatus = CanUpgradeStatus(technologyNode);
             var techReached = canUpgradeStatus != "off";
             var canUpgrade = techReached && canUpgradeStatus != "disabled";

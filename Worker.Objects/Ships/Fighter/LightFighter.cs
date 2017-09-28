@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Worker.Objects.Galaxy;
 
 namespace Worker.Objects.Ships.Fighter
 {
@@ -10,11 +11,15 @@ namespace Worker.Objects.Ships.Fighter
     {
         public override ShipAssignment ShipAssignment => ShipAssignment.Fight;
         public override ShipType ShipType => ShipType.LightFighter;
-        public override int MetalCost { get; }
-        public override int CrystalCost { get; }
-        public override int DeuteriumCost { get; }
-        public override int Capacity { get; }
-        public override int FuelConsumption { get; }
-        public override int Quantity { get; set; } = 1;
+        public override int MetalCost => 3000;
+        public override int CrystalCost => 1000;
+        public override int DeuteriumCost => 0;
+        public override int Capacity => 50;
+        public override int FuelConsumption => 20;
+        public override int StructuralIntegrity => 4000;
+
+        public LightFighter(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity, techReached, canBuild)
+        {
+        }
     }
 }

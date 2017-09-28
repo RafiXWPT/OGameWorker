@@ -59,6 +59,9 @@ namespace Worker.HttpModule.Clients
 
                 var planetTechnologies = await SendHttpRequest(Builder.BuildResearchRequest(planet.Id));
                 await DataProvider.UpdatePlanetTechnologies(planetTechnologies.ResponseHtmlDocument, planet);
+
+                var planetShipyard = await SendHttpRequest(Builder.BuildShipyardRequest(planet.Id));
+                await DataProvider.UpdatePlanetFleet(planetShipyard.ResponseHtmlDocument, planet);
             }
         }
 

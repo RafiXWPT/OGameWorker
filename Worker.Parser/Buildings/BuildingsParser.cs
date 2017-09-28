@@ -25,20 +25,21 @@ namespace Worker.Parser.Buildings
             return buildingsNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"station{(int) type}")));
         }
 
-        private int GetBuildingLevel(HtmlNode buildingNode, BuildingType type)
+        private int GetBuildingLevel(HtmlNode buildingNode)
         {
             var levelValueString = buildingNode
-                ?.Descendants("span")
-                ?.First(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains("level")))
-                ?.InnerHtml
-                ?.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+                .Descendants("span")
+                .First(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains("level")))
+                .InnerHtml.Trim();
 
-            if (levelValueString.Contains("span"))
+            if (int.TryParse(levelValueString, out int level))
             {
-                levelValueString = levelValueString.Split(new[] {"<span"}, StringSplitOptions.RemoveEmptyEntries)[0].Trim();
+                return level;
             }
 
-            return Convert.ToInt32(levelValueString);
+            levelValueString = levelValueString.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+
+            return levelValueString.Contains("span") ? Convert.ToInt32(levelValueString.Split(new[] {"<span"}, StringSplitOptions.RemoveEmptyEntries)[0].Trim()) : 0;
         }
 
         private string CanUpgradeStatus(HtmlNode buildingNode)
@@ -49,7 +50,7 @@ namespace Worker.Parser.Buildings
         private BuildingBase GetResourceBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
         {
             var buildingNode = GetResourceBuildingNode(buildingsNode, type);
-            var buildingLevel = GetBuildingLevel(buildingNode, type);
+            var buildingLevel = GetBuildingLevel(buildingNode);
             var canUpgradeStatus = CanUpgradeStatus(buildingNode);
             var techReached = canUpgradeStatus != "off";
             var canUpgrade = techReached && canUpgradeStatus != "disabled";
@@ -81,7 +82,7 @@ namespace Worker.Parser.Buildings
         private BuildingBase GetStationBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
         {
             var buildingNode = GetStationBuildingNode(buildingsNode, type);
-            var buildingLevel = GetBuildingLevel(buildingNode, type);
+            var buildingLevel = GetBuildingLevel(buildingNode);
             var canUpgradeStatus = CanUpgradeStatus(buildingNode);
             var techReached = canUpgradeStatus != "off";
             var canUpgrade = techReached && canUpgradeStatus != "disabled";
