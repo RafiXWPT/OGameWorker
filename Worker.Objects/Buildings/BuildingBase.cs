@@ -61,13 +61,14 @@ namespace Worker.Objects.Buildings
 
     public abstract class BuildingBase
     {
-        public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
         public abstract BuildingType BuildingType { get; }
         public abstract int BaseMetalCost { get; }
         public abstract int BaseCrystalCost { get; }
         public abstract int BaseDeuteriumCost { get; }
         public abstract int EnergyConsumption { get; }
         public abstract double CostIncreaseFactor { get; }
+
+        public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
 
         public bool TechReached { get; set; }
         private bool _canBuild;

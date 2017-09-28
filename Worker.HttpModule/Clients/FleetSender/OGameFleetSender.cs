@@ -30,16 +30,25 @@ namespace Worker.HttpModule.Clients.FleetSender
         private readonly Planet _destination;
         private readonly FleetSpeed _speed;
         private readonly MissionType _missionType;
+        private readonly int _metal;
+        private readonly int _crystal;
+        private readonly int _deuterium;
         private readonly List<ShipBase> _ships;
 
-        public OGameFleetSender(OGameHttpClient client, Planet destination, FleetSpeed speed, MissionType missionType, List<ShipBase> ships)
+        private OGameFleetSender(OGameHttpClient client, Planet destination, FleetSpeed speed, List<ShipBase> ships, MissionType missionType, int metal = 0, int crystal = 0, int deuterium = 0)
         {
             _client = client;
             _destination = destination;
             _speed = speed;
-            _missionType = missionType;
             _ships = ships;
+            _missionType = missionType;
+            _metal = metal;
+            _crystal = crystal;
+            _deuterium = deuterium;
         }
+
+        public static OGameFleetSender Attack(OGameHttpClient client, Planet destination, FleetSpeed speed, List<ShipBase> ships) => new OGameFleetSender(client, destination, speed, ships, MissionType.Attack);
+        public static OGameFleetSender Transport(OGameHttpClient client, Planet destination, FleetSpeed speed, List<ShipBase> ships, int metal, int crystal, int deuterium) => new OGameFleetSender(client, destination, speed, ships, MissionType.Transport, metal, crystal, deuterium);
 
         public async Task<bool> SendFleet()
         {

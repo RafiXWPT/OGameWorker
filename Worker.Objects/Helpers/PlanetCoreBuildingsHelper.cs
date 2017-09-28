@@ -16,5 +16,10 @@ namespace Worker.Objects.Helpers
         {
             return ObjectContainer.Instance.GetBuilding(planet, BuildingType.RoboticsFactory) as RoboticsFactory;
         }
+
+        public static ResearchLabolatory GetPlanetResearchLabolatory(Planet planet)
+        {
+            return ObjectContainer.Instance.GetBuilding(planet, BuildingType.ResearchLabolatory) as ResearchLabolatory;
+        }
     }
 }

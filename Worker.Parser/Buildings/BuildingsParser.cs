@@ -41,42 +41,38 @@ namespace Worker.Parser.Buildings
             return Convert.ToInt32(levelValueString);
         }
 
-        private string CanBuildStatus(HtmlNode buildingNode)
+        private string CanUpgradeStatus(HtmlNode buildingNode)
         {
-            return buildingNode
-                ?.ParentNode
-                ?.Attributes
-                ?.First(a => a.OriginalName == "class")
-                ?.Value;
+            return buildingNode?.ParentNode?.Attributes?.First(a => a.OriginalName == "class")?.Value;
         }
 
         private BuildingBase GetResourceBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
         {
             var buildingNode = GetResourceBuildingNode(buildingsNode, type);
             var buildingLevel = GetBuildingLevel(buildingNode, type);
-            var canBuildStatus = CanBuildStatus(buildingNode);
-            var techReached = canBuildStatus != "off";
-            var canBuild = techReached && canBuildStatus != "disabled";
+            var canUpgradeStatus = CanUpgradeStatus(buildingNode);
+            var techReached = canUpgradeStatus != "off";
+            var canUpgrade = techReached && canUpgradeStatus != "disabled";
             switch (type)
             {
                 case BuildingType.MetalMine:
-                    return new MetalMine(planet, buildingLevel, techReached, canBuild);
+                    return new MetalMine(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.CrystalMine:
-                    return new CrystalMine(planet, buildingLevel, techReached, canBuild);
+                    return new CrystalMine(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.DeuteriumExtractor:
-                    return new DeuteriumExtractor(planet, buildingLevel, techReached, canBuild);
+                    return new DeuteriumExtractor(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.SolarPowerPlant:
-                    return new SolarPowerPlant(planet, buildingLevel, techReached, canBuild);
+                    return new SolarPowerPlant(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.FusionReactor:
-                    return new FusionReactor(planet, buildingLevel, techReached, canBuild);
+                    return new FusionReactor(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.SolarSatellite:
-                    return new SolarSatellite(planet, buildingLevel, techReached, canBuild);
+                    return new SolarSatellite(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.MetalStorage:
-                    return new MetalStorage(planet, buildingLevel, techReached, canBuild);
+                    return new MetalStorage(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.CrystalStorage:
-                    return new CrystalStorage(planet, buildingLevel, techReached, canBuild);
+                    return new CrystalStorage(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.DeuteriumTank:
-                    return new DeuteriumTank(planet, buildingLevel, techReached, canBuild);
+                    return new DeuteriumTank(planet, buildingLevel, techReached, canUpgrade);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -86,17 +82,17 @@ namespace Worker.Parser.Buildings
         {
             var buildingNode = GetStationBuildingNode(buildingsNode, type);
             var buildingLevel = GetBuildingLevel(buildingNode, type);
-            var canBuildStatus = CanBuildStatus(buildingNode);
-            var techReached = canBuildStatus != "off";
-            var canBuild = techReached && canBuildStatus != "disabled";
+            var canUpgradeStatus = CanUpgradeStatus(buildingNode);
+            var techReached = canUpgradeStatus != "off";
+            var canUpgrade = techReached && canUpgradeStatus != "disabled";
             switch (type)
             {
                 case BuildingType.RoboticsFactory:
-                    return new RoboticsFactory(planet, buildingLevel, techReached, canBuild);
+                    return new RoboticsFactory(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.Shipyard:
-                    return new Shipyard(planet, buildingLevel, techReached, canBuild);
+                    return new Shipyard(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.ResearchLabolatory:
-                    return new ResearchLabolatory(planet, buildingLevel, techReached, canBuild);
+                    return new ResearchLabolatory(planet, buildingLevel, techReached, canUpgrade);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

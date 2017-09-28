@@ -13,7 +13,7 @@ namespace Worker.Parser.Resources
         Deuterium
     }
 
-    public class ResourceParser
+    public class ResourcesParser
     {
         private async Task<string> ParseResource(ResourceType type, HtmlDocument document)
         {

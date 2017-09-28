@@ -51,10 +51,14 @@ namespace Worker.HttpModule.Clients
             foreach (var planet in ObjectContainer.Instance.PlayerPlanets)
             {
                 var planetResources = await SendHttpRequest(Builder.BuildResourceRequest(planet.Id));
+                await DataProvider.UpdatePlanetResources(planetResources.ResponseHtmlDocument, planet);
                 await DataProvider.UpdatePlanetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
 
                 var planetStation = await SendHttpRequest(Builder.BuildStationRequest(planet.Id));
                 await DataProvider.UpdatePlanetStationBuildings(planetStation.ResponseHtmlDocument, planet);
+
+                var planetTechnologies = await SendHttpRequest(Builder.BuildResearchRequest(planet.Id));
+                await DataProvider.UpdatePlanetTechnologies(planetTechnologies.ResponseHtmlDocument, planet);
             }
         }
 
