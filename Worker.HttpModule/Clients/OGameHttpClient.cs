@@ -33,9 +33,9 @@ namespace Worker.HttpModule.Clients
             DataProvider = new OGameDataProvider();
         }
 
-        public async Task<MessageContainer> LogIn()
+        public async Task<MessageContainer> LogIn(string username, string password)
         {
-            return await SendHttpRequest(Builder.BuildLoginRequest("mail.rafixwpt@gmail.com", "raf109aello"));
+            return await SendHttpRequest(Builder.BuildLoginRequest(username, password));
         }
 
         public async Task RefreshMissions()
