@@ -11,24 +11,12 @@ namespace OGameWorker.Views.LogIn
     /// </summary>
     public partial class LogInWindow : Window
     {
+        private LogInViewModel ViewModel { get; }
         public LogInWindow()
         {
+            ViewModel = new LogInViewModel(this);
             InitializeComponent();
-        }
-
-        private async void LogInButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var server = Server.Text;
-            var username = Username.Text;
-            var password = Password.Text;
-            var client = new OGameHttpClient(server);
-            var result = await client.LogIn(username, password);
-
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                new MainWindow(client).Show();
-                this.Close();
-            }
+            DataContext = ViewModel;
         }
     }
 }
