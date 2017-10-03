@@ -4,7 +4,8 @@ namespace Worker.Objects.Research.Drive
 {
     public class CombustionDrive : TechnologyBase
     {
-        public CombustionDrive(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, currentLevel, techReached, canBuild)
+        public CombustionDrive(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+            currentLevel, techReached, canBuild)
         {
         }
 

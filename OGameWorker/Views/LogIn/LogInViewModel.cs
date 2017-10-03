@@ -10,9 +10,19 @@ namespace OGameWorker.Views.LogIn
     public class LogInViewModel : ReactiveObject
     {
         private readonly Window _logInWindow;
-        private string _username;
         private string _password;
         private string _server;
+        private string _username;
+
+        public LogInViewModel()
+        {
+        }
+
+        public LogInViewModel(Window logInWindow)
+        {
+            _logInWindow = logInWindow;
+            LogIn = ReactiveCommand.CreateFromTask(t => LogInTask());
+        }
 
         public string Username
         {
@@ -33,14 +43,6 @@ namespace OGameWorker.Views.LogIn
         }
 
         public ReactiveCommand LogIn { get; protected set; }
-
-        public LogInViewModel() { }
-
-        public LogInViewModel(Window logInWindow)
-        {
-            _logInWindow = logInWindow;
-            LogIn = ReactiveCommand.CreateFromTask(t => LogInTask());
-        }
 
         private async Task LogInTask()
         {

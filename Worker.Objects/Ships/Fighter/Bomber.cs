@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Worker.Objects.Galaxy;
+﻿using Worker.Objects.Galaxy;
 
 namespace Worker.Objects.Ships.Fighter
 {
     public class Bomber : ShipBase
     {
+        public Bomber(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity,
+            techReached, canBuild)
+        {
+        }
+
         public override ShipAssignment ShipAssignment => ShipAssignment.Fight;
         public override ShipType ShipType => ShipType.Bomber;
         public override int MetalCost => 50000;
@@ -17,10 +17,5 @@ namespace Worker.Objects.Ships.Fighter
         public override int Capacity => 500;
         public override int FuelConsumption => 1000;
         public override int StructuralIntegrity => 75000;
-
-
-        public Bomber(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity, techReached, canBuild)
-        {
-        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -17,29 +16,38 @@ namespace Worker.Parser.Buildings
     {
         private HtmlNode GetResourceBuildingNode(IEnumerable<HtmlNode> buildingsNode, BuildingType type)
         {
-            return buildingsNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"supply{(int) type}")));
+            return buildingsNode.FirstOrDefault(n => n.HasAttributes &&
+                                                     n.Attributes.Any(a => a.Value.Contains($"supply{(int) type}")));
         }
 
         private HtmlNode GetStationBuildingNode(IEnumerable<HtmlNode> buildingsNode, BuildingType type)
         {
-            return buildingsNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"station{(int) type}")));
+            return buildingsNode.FirstOrDefault(n => n.HasAttributes &&
+                                                     n.Attributes.Any(a => a.Value.Contains($"station{(int) type}")));
         }
 
         private int GetBuildingLevel(HtmlNode buildingNode)
         {
+            int level;
+
             var levelValueString = buildingNode
                 .Descendants("span")
                 .First(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains("level")))
                 .InnerHtml.Trim();
 
-            if (int.TryParse(levelValueString, out int level))
-            {
+            if (int.TryParse(levelValueString, out level))
                 return level;
-            }
 
-            levelValueString = levelValueString.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+            levelValueString = levelValueString.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1]
+                .Trim();
 
-            return levelValueString.Contains("span") ? Convert.ToInt32(levelValueString.Split(new[] {"<span"}, StringSplitOptions.RemoveEmptyEntries)[0].Trim()) : 0;
+            if (int.TryParse(levelValueString, out level))
+                return level;
+
+            return levelValueString.Contains("span")
+                ? Convert.ToInt32(levelValueString.Split(new[] {"<span"}, StringSplitOptions.RemoveEmptyEntries)[0]
+                    .Trim())
+                : 0;
         }
 
         private string CanUpgradeStatus(HtmlNode buildingNode)
@@ -105,16 +113,16 @@ namespace Worker.Parser.Buildings
             {
                 var upgradeBuildingHtml =
                     document
-                    .DocumentNode
-                    .Descendants("div")
-                    .First(n => n
-                        .Attributes
-                        .Any(a => a.Value.Contains($"supply{(int) type}")))
-                    .Descendants("a")
+                        .DocumentNode
+                        .Descendants("div")
                         .First(n => n
-                        .Attributes
-                        .Any(a => a.OriginalName == "onclick"))
-                    .GetAttributeValue("onclick", null);
+                            .Attributes
+                            .Any(a => a.Value.Contains($"supply{(int) type}")))
+                        .Descendants("a")
+                        .First(n => n
+                            .Attributes
+                            .Any(a => a.OriginalName == "onclick"))
+                        .GetAttributeValue("onclick", null);
 
                 return Regex.Match(upgradeBuildingHtml, @"\'([^']*)\'").Groups[1].Value;
             });
@@ -127,15 +135,11 @@ namespace Worker.Parser.Buildings
                 var planetBuildings = new List<BuildingBase>();
                 var buildingsNode = document.GetElementbyId("building").Descendants("div");
                 foreach (var buildingType in ResourceBuildings.List)
-                {
                     planetBuildings.Add(GetResourceBuilding(buildingType, buildingsNode, planet));
-                }
 
                 var storageNode = document.GetElementbyId("storage").Descendants("div");
                 foreach (var buildingType in StorageBuildings.List)
-                {
                     planetBuildings.Add(GetResourceBuilding(buildingType, storageNode, planet));
-                }
 
                 return planetBuildings;
             });
@@ -148,9 +152,7 @@ namespace Worker.Parser.Buildings
                 var planetBuildings = new List<BuildingBase>();
                 var buildingsNode = document.GetElementbyId("stationbuilding").Descendants("div");
                 foreach (var buildingType in StationBuildings.List)
-                {
                     planetBuildings.Add(GetStationBuilding(buildingType, buildingsNode, planet));
-                }
                 return planetBuildings;
             });
         }

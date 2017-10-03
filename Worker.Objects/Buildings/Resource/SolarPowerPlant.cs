@@ -5,7 +5,8 @@ namespace Worker.Objects.Buildings.Resource
 {
     public class SolarPowerPlant : BuildingBase
     {
-        public SolarPowerPlant(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, currentLevel, techReached, canBuild)
+        public SolarPowerPlant(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+            currentLevel, techReached, canBuild)
         {
         }
 
@@ -16,6 +17,6 @@ namespace Worker.Objects.Buildings.Resource
         public override int EnergyConsumption => 0;
         public override double CostIncreaseFactor => 1.5;
 
-        public int EnergyProduction => (int)(20 * CurrentLevel * Math.Pow(1.1, CurrentLevel));
+        public int EnergyProduction => (int) (20 * CurrentLevel * Math.Pow(1.1, CurrentLevel));
     }
 }

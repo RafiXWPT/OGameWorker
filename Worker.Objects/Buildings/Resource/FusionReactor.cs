@@ -5,7 +5,8 @@ namespace Worker.Objects.Buildings.Resource
 {
     public class FusionReactor : BuildingBase
     {
-        public FusionReactor(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, currentLevel, techReached, canBuild)
+        public FusionReactor(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+            currentLevel, techReached, canBuild)
         {
         }
 
@@ -16,7 +17,7 @@ namespace Worker.Objects.Buildings.Resource
         public override int EnergyConsumption => 0;
         public override double CostIncreaseFactor => 1.8;
 
-        public int EnergyProduction => (int)(30* CurrentLevel * Math.Pow(1.05 * (0.01 * 1), CurrentLevel));
-        public int DeuteriumConsumption => (int)(10 * CurrentLevel * Math.Pow(1.1, CurrentLevel));
+        public int EnergyProduction => (int) (30 * CurrentLevel * Math.Pow(1.05 * (0.01 * 1), CurrentLevel));
+        public int DeuteriumConsumption => (int) (10 * CurrentLevel * Math.Pow(1.1, CurrentLevel));
     }
 }

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Worker.Objects.Galaxy;
+﻿using Worker.Objects.Galaxy;
 
 namespace Worker.Objects.Ships.Other
 {
     public class SolarSatellite : ShipBase
     {
-        public SolarSatellite(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity, techReached, canBuild)
+        public SolarSatellite(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity,
+            techReached, canBuild)
         {
         }
 

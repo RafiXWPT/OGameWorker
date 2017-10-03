@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Worker.HttpModule.Helpers
 {
@@ -15,6 +11,6 @@ namespace Worker.HttpModule.Helpers
         }
 
         public abstract HttpRequestMessage Create(string url);
-        public abstract HttpRequestMessage Create(string url, Dictionary<string,string> values);
+        public abstract HttpRequestMessage Create(string url, Dictionary<string, string> values);
     }
 }

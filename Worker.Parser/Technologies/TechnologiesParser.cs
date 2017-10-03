@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -18,7 +17,9 @@ namespace Worker.Parser.Technologies
     {
         private HtmlNode GetTechnologyNode(IEnumerable<HtmlNode> technologiesNode, TechnologyType type)
         {
-            return technologiesNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"research{(int) type}")));
+            return technologiesNode.FirstOrDefault(n => n.HasAttributes &&
+                                                        n.Attributes.Any(
+                                                            a => a.Value.Contains($"research{(int) type}")));
         }
 
         private int GetTechnologyLevel(HtmlNode technologyNode)
@@ -29,13 +30,15 @@ namespace Worker.Parser.Technologies
                 .InnerHtml.Trim();
 
             if (int.TryParse(levelValueString, out int level))
-            {
                 return level;
-            }
 
-            levelValueString = levelValueString.Split(new[] { "</span>" }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
+            levelValueString = levelValueString.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1]
+                .Trim();
 
-            return levelValueString.Contains("span") ? Convert.ToInt32(levelValueString.Split(new[] { "<span" }, StringSplitOptions.RemoveEmptyEntries)[0].Trim()) : 0;
+            return levelValueString.Contains("span")
+                ? Convert.ToInt32(levelValueString.Split(new[] {"<span"}, StringSplitOptions.RemoveEmptyEntries)[0]
+                    .Trim())
+                : 0;
         }
 
         private string CanUpgradeStatus(HtmlNode technologyNode)
@@ -118,30 +121,22 @@ namespace Worker.Parser.Technologies
 
                 var basicTechnologiesNode = document.GetElementbyId("base1").Descendants("div");
                 foreach (var technologyType in BasicTechnologies.List)
-                {
                     planetTechnologies.Add(GetTechnology(technologyType, basicTechnologiesNode, planet));
-                }
 
                 var driveTechnologiesNode = document.GetElementbyId("base2").Descendants("div");
                 foreach (var technologyType in DriveTechnologies.List)
-                {
                     planetTechnologies.Add(GetTechnology(technologyType, driveTechnologiesNode, planet));
-                }
 
                 var advancedTechnologiesNode = document.GetElementbyId("base3").Descendants("div");
                 foreach (var technologyType in AdvancedTechnologies.List)
-                {
-                  planetTechnologies.Add(GetTechnology(technologyType, advancedTechnologiesNode, planet));  
-                }
+                    planetTechnologies.Add(GetTechnology(technologyType, advancedTechnologiesNode, planet));
 
                 var combatTechnologiesNode = document.GetElementbyId("base4").Descendants("div");
                 foreach (var technologyType in CombatTechnologies.List)
-                {
                     planetTechnologies.Add(GetTechnology(technologyType, combatTechnologiesNode, planet));
-                }
 
                 return planetTechnologies;
             });
-        } 
+        }
     }
 }

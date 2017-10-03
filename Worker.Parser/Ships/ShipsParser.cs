@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
@@ -17,12 +16,14 @@ namespace Worker.Parser.Ships
     {
         private HtmlNode GetMilitaryShipNode(IEnumerable<HtmlNode> shipsNode, ShipType type)
         {
-            return shipsNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"military{(int) type}")));
+            return shipsNode.FirstOrDefault(n => n.HasAttributes &&
+                                                 n.Attributes.Any(a => a.Value.Contains($"military{(int) type}")));
         }
 
         private HtmlNode GetCivilShipNode(IEnumerable<HtmlNode> shipsNode, ShipType type)
         {
-            return shipsNode.FirstOrDefault(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains($"civil{(int)type}")));
+            return shipsNode.FirstOrDefault(n => n.HasAttributes &&
+                                                 n.Attributes.Any(a => a.Value.Contains($"civil{(int) type}")));
         }
 
         private int GetShipsCount(HtmlNode shipNode)
@@ -32,7 +33,10 @@ namespace Worker.Parser.Ships
                 .First(n => n.HasAttributes && n.Attributes.Any(a => a.Value.Contains("level")))
                 .InnerHtml.Trim();
 
-            return int.TryParse(levelValueString, out int level) ? level : Convert.ToInt32(levelValueString.Split(new[] { "</span>" }, StringSplitOptions.RemoveEmptyEntries)[1].Trim());
+            return int.TryParse(levelValueString, out int level)
+                ? level
+                : Convert.ToInt32(levelValueString.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1]
+                    .Trim());
         }
 
         private string CanCreateStatus(HtmlNode shipNode)
@@ -103,15 +107,11 @@ namespace Worker.Parser.Ships
                 var planetShips = new List<ShipBase>();
                 var militaryShipsNode = document.GetElementbyId("military").Descendants("div");
                 foreach (var buildingType in MilitaryShips.List)
-                {
                     planetShips.Add(GetMilitaryShip(buildingType, militaryShipsNode, planet));
-                }
 
                 var civilShipsNode = document.GetElementbyId("civil").Descendants("div");
                 foreach (var buildingType in CivilShips.List)
-                {
                     planetShips.Add(GetCivilShip(buildingType, civilShipsNode, planet));
-                }
 
                 return planetShips;
             });

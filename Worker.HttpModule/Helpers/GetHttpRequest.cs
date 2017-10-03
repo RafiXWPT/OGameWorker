@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Worker.HttpModule.Helpers
 {
-    class GetHttpRequest : BaseHttpRequest
+    internal class GetHttpRequest : BaseHttpRequest
     {
         public override HttpRequestMessage Create(string url)
         {

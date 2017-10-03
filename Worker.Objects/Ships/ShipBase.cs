@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Helpers;
 
@@ -65,6 +62,16 @@ namespace Worker.Objects.Ships
 
     public abstract class ShipBase
     {
+        private bool _canBuild;
+
+        protected ShipBase(Planet planet, int quantity, bool techReached, bool canBuild)
+        {
+            BelongsTo = planet;
+            Quantity = quantity;
+            TechReached = techReached;
+            CanBuild = canBuild;
+        }
+
         public abstract ShipAssignment ShipAssignment { get; }
         public abstract ShipType ShipType { get; }
         public abstract int MetalCost { get; }
@@ -78,7 +85,6 @@ namespace Worker.Objects.Ships
         public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
 
         public bool TechReached { get; set; }
-        private bool _canBuild;
 
         public bool CanBuild
         {
@@ -88,14 +94,9 @@ namespace Worker.Objects.Ships
 
         public Planet BelongsTo { get; }
 
-        public TimeSpan CreatingTimeDuration => TimeSpan.FromHours(StructuralIntegrity / (UniverseSpeed * 2500 * (1 + PlanetCoreBuildingsHelper.GetPlanetShipyard(BelongsTo).CurrentLevel) * Math.Pow(2, 0)));
-
-        protected ShipBase(Planet planet, int quantity, bool techReached, bool canBuild)
-        {
-            BelongsTo = planet;
-            Quantity = quantity;
-            TechReached = techReached;
-            CanBuild = canBuild;
-        }
+        public TimeSpan CreatingTimeDuration => TimeSpan.FromHours(
+            StructuralIntegrity / (UniverseSpeed * 2500 *
+                                   (1 + PlanetCoreBuildingsHelper.GetPlanetShipyard(BelongsTo).CurrentLevel) *
+                                   Math.Pow(2, 0)));
     }
 }

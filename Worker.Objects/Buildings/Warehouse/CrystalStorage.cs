@@ -5,7 +5,8 @@ namespace Worker.Objects.Buildings.Warehouse
 {
     public class CrystalStorage : BuildingBase
     {
-        public CrystalStorage(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, currentLevel, techReached, canBuild)
+        public CrystalStorage(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+            currentLevel, techReached, canBuild)
         {
         }
 
@@ -21,6 +22,6 @@ namespace Worker.Objects.Buildings.Warehouse
 
         public override double CostIncreaseFactor => 2.0;
 
-        public int StorageCapacity => (int)(2.5 * Math.Pow(Math.E,(double)20*CurrentLevel/33) * 5000);
+        public int StorageCapacity => (int) (2.5 * Math.Pow(Math.E, (double) 20 * CurrentLevel / 33) * 5000);
     }
 }

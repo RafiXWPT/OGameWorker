@@ -20,11 +20,17 @@ namespace Worker.Parser.Resources
             switch (type)
             {
                 case ResourceType.Metal:
-                    return await Task.Run(() => document.GetElementbyId("metal_box").InnerText.Trim().Replace(".", string.Empty));
+                    return await Task.Run(() => document.GetElementbyId("metal_box")
+                        .InnerText.Trim()
+                        .Replace(".", string.Empty));
                 case ResourceType.Crystal:
-                    return await Task.Run(() => document.GetElementbyId("crystal_box").InnerText.Trim().Replace(".", string.Empty));
+                    return await Task.Run(() => document.GetElementbyId("crystal_box")
+                        .InnerText.Trim()
+                        .Replace(".", string.Empty));
                 case ResourceType.Deuterium:
-                    return await Task.Run(() => document.GetElementbyId("deuterium_box").InnerText.Trim().Replace(".", string.Empty));
+                    return await Task.Run(() => document.GetElementbyId("deuterium_box")
+                        .InnerText.Trim()
+                        .Replace(".", string.Empty));
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -41,7 +47,7 @@ namespace Worker.Parser.Resources
         public async Task<Metal> GetMetal(HtmlDocument document)
         {
             var resourceAmount = await ParseResource(ResourceType.Metal, document);
-            return new Metal(resourceAmount); 
+            return new Metal(resourceAmount);
         }
 
         public async Task<Crystal> GetCrystal(HtmlDocument document)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -30,7 +29,10 @@ namespace Worker.Parser.Planets
 
                     var planetCoordsParts = planet.Descendants("span")
                         .First(n => n.Attributes.Any(a => a.Value.Contains("planet-koords")))
-                        .InnerText.Trim().Replace("[", string.Empty).Replace("]", string.Empty).Split(':');
+                        .InnerText.Trim()
+                        .Replace("[", string.Empty)
+                        .Replace("]", string.Empty)
+                        .Split(':');
                     var planetPosition = new Planet.PlanetPosition
                     {
                         Galaxy = int.Parse(planetCoordsParts[0]),
@@ -45,7 +47,7 @@ namespace Worker.Parser.Planets
                         .Split(';')
                         .Where(v => v.EndsWith("&lt") && v != "&lt")
                         .First(v => v.Contains(" do "));
-                    var temperatureParts = planetInfoString.Split(new[] { "do" }, StringSplitOptions.RemoveEmptyEntries);
+                    var temperatureParts = planetInfoString.Split(new[] {"do"}, StringSplitOptions.RemoveEmptyEntries);
                     var planetTemperature = new Planet.PlanetTemperature
                     {
                         Min = int.Parse(Regex.Match(temperatureParts[0], @"-?\d+").Value),
@@ -56,7 +58,7 @@ namespace Worker.Parser.Planets
                 }
 
                 return planetList;
-            });       
+            });
         }
     }
 }

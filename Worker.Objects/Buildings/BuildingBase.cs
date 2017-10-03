@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Helpers;
 
@@ -61,6 +59,16 @@ namespace Worker.Objects.Buildings
 
     public abstract class BuildingBase
     {
+        private bool _canBuild;
+
+        protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
+        {
+            BelongsTo = belongsTo;
+            CurrentLevel = currentLevel;
+            TechReached = techReached;
+            CanBuild = canBuild;
+        }
+
         public abstract BuildingType BuildingType { get; }
         public abstract int BaseMetalCost { get; }
         public abstract int BaseCrystalCost { get; }
@@ -71,7 +79,6 @@ namespace Worker.Objects.Buildings
         public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
 
         public bool TechReached { get; set; }
-        private bool _canBuild;
 
         public bool CanBuild
         {
@@ -83,9 +90,9 @@ namespace Worker.Objects.Buildings
         public int CurrentLevel { get; set; }
 
 
-        public int MetalCost => (int)(BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public int CrystalCost => (int)(BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public int DeuteriumCost => (int)(BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int MetalCost => (int) (BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int CrystalCost => (int) (BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int DeuteriumCost => (int) (BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
 
         public TimeSpan UpgradeTimeDuration => ObjectContainer.Instance.PlayerBuildings.Any()
             ? TimeSpan.FromHours((MetalCost + CrystalCost) /
@@ -93,13 +100,5 @@ namespace Worker.Objects.Buildings
                                   (1 + PlanetCoreBuildingsHelper.GetPlanetRoboticsFactory(BelongsTo).CurrentLevel) *
                                   Math.Pow(2, 0)))
             : TimeSpan.MaxValue;
-
-        protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
-        {
-            BelongsTo = belongsTo;
-            CurrentLevel = currentLevel;
-            TechReached = techReached;
-            CanBuild = canBuild;
-        }
     }
 }

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
 using Worker.HttpModule.Helpers;
-using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;
 using Worker.Objects.Ships;
@@ -17,6 +13,7 @@ namespace Worker.HttpModule.RequestBuilder
     public class OGameWorkerRequestBuilder
     {
         private readonly OGameHttpClient _client;
+
         public OGameWorkerRequestBuilder(OGameHttpClient client)
         {
             _client = client;
@@ -24,7 +21,9 @@ namespace Worker.HttpModule.RequestBuilder
 
         public HttpRequestMessage BuildOverviewRequest(int planetId = 0)
         {
-            var url = planetId == 0 ? $"{_client.ServerUrl}/game/index.php?page=overview" : $"{_client.ServerUrl}/game/index.php?page=overview&cp={planetId}";
+            var url = planetId == 0
+                ? $"{_client.ServerUrl}/game/index.php?page=overview"
+                : $"{_client.ServerUrl}/game/index.php?page=overview&cp={planetId}";
             return new GetHttpRequest().Create(url);
         }
 
@@ -67,9 +66,9 @@ namespace Worker.HttpModule.RequestBuilder
         public HttpRequestMessage BuildLoginRequest(string username, string password)
         {
             var url = "https://pl.ogame.gameforge.com:443/main/login";
-            var content = new Dictionary<string,string>
+            var content = new Dictionary<string, string>
             {
-                {"kid", "" },
+                {"kid", ""},
                 {"login", username},
                 {"pass", password},
                 {"uni", _client.Server}
@@ -95,64 +94,63 @@ namespace Worker.HttpModule.RequestBuilder
             return new GetHttpRequest().Create(url);
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest2(Planet destination, MissionType type, FleetSpeed speed, List<ShipBase> ships)
+        public HttpRequestMessage BuildFleetSendingRequest2(Planet destination, MissionType type, FleetSpeed speed,
+            List<ShipBase> ships)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=fleet2";
-            var values = new Dictionary<string,string>
+            var values = new Dictionary<string, string>
             {
-                {"galaxy", destination.Position.Galaxy.ToString() },
-                {"system", destination.Position.System.ToString() },
-                {"position", destination.Position.Planet.ToString() },
-                {"type", ((int)type).ToString() },
-                {"speed", ((int)speed).ToString()},
-                {"mission", "0"},
+                {"galaxy", destination.Position.Galaxy.ToString()},
+                {"system", destination.Position.System.ToString()},
+                {"position", destination.Position.Planet.ToString()},
+                {"type", ((int) type).ToString()},
+                {"speed", ((int) speed).ToString()},
+                {"mission", "0"}
             };
 
             foreach (var ship in ships)
-            {
-                values.Add($"am{(int)ship.ShipType}", ship.Quantity.ToString());
-            }
+                values.Add($"am{(int) ship.ShipType}", ship.Quantity.ToString());
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet1");
             return request;
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest3(Planet destination, MissionType type, FleetSpeed speed, List<ShipBase> ships)
+        public HttpRequestMessage BuildFleetSendingRequest3(Planet destination, MissionType type, FleetSpeed speed,
+            List<ShipBase> ships)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=fleet3";
-            var values = new Dictionary<string,string>
+            var values = new Dictionary<string, string>
             {
-                {"galaxy", destination.Position.Galaxy.ToString() },
-                {"system", destination.Position.System.ToString() },
-                {"position", destination.Position.Planet.ToString() },
-                {"type", ((int)type).ToString() },
-                {"speed", ((int)speed).ToString()},
+                {"galaxy", destination.Position.Galaxy.ToString()},
+                {"system", destination.Position.System.ToString()},
+                {"position", destination.Position.Planet.ToString()},
+                {"type", ((int) type).ToString()},
+                {"speed", ((int) speed).ToString()},
                 {"mission", "0"},
-                {"union", "0" },
+                {"union", "0"}
             };
 
             foreach (var ship in ships)
-            {
-                values.Add($"am{(int)ship.ShipType}", ship.Quantity.ToString());
-            }
+                values.Add($"am{(int) ship.ShipType}", ship.Quantity.ToString());
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet2");
             return request;
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest4(string token, Planet destination, MissionType type, FleetSpeed speed, List<ShipBase> ships)
+        public HttpRequestMessage BuildFleetSendingRequest4(string token, Planet destination, MissionType type,
+            FleetSpeed speed, List<ShipBase> ships)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=movement";
             var values = new Dictionary<string, string>
             {
                 {"token", token},
-                {"galaxy", destination.Position.Galaxy.ToString() },
-                {"system", destination.Position.System.ToString() },
-                {"position", destination.Position.Planet.ToString() },
-                {"type", ((int)type).ToString() },
-                {"speed", ((int)speed).ToString()},
+                {"galaxy", destination.Position.Galaxy.ToString()},
+                {"system", destination.Position.System.ToString()},
+                {"position", destination.Position.Planet.ToString()},
+                {"type", ((int) type).ToString()},
+                {"speed", ((int) speed).ToString()},
                 {"holdingtime", "1"},
                 {"mission", "1"},
                 {"union2", "0"},
@@ -167,9 +165,7 @@ namespace Worker.HttpModule.RequestBuilder
             };
 
             foreach (var ship in ships)
-            {
-                values.Add($"am{(int)ship.ShipType}", ship.Quantity.ToString());
-            }
+                values.Add($"am{(int) ship.ShipType}", ship.Quantity.ToString());
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet3");

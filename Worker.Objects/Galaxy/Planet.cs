@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Worker.Objects.Buildings;
 using Worker.Objects.Resources;
 
@@ -10,18 +7,25 @@ namespace Worker.Objects.Galaxy
 {
     public class Planet
     {
-        public struct PlanetTemperature
+        public Planet(string name, PlanetPosition position) : this(0, name, position, new PlanetTemperature())
         {
-            public int Min { get; set; }
-            public int Max { get; set; }
-            public double Average => (Min + Max) / 2.0;
         }
 
-        public struct PlanetPosition
+        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature) : this(id, name,
+            position, temperature, new Metal(0), new Crystal(0), new Deuterium(0))
         {
-            public int Galaxy { get; set; }
-            public int System { get; set; }
-            public int Planet { get; set; }
+        }
+
+        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature, Metal metal,
+            Crystal crystal, Deuterium deuterium)
+        {
+            Id = id;
+            Name = name;
+            Temperature = temperature;
+            Position = position;
+            Metal = metal;
+            Crystal = crystal;
+            Deuterium = deuterium;
         }
 
         public int Id { get; set; }
@@ -36,19 +40,18 @@ namespace Worker.Objects.Galaxy
             .Where(b => b.BelongsTo.Id == Id)
             .ToList();
 
-        public Planet(string name, PlanetPosition position) : this(0, name, position, new PlanetTemperature()) { }
-
-        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature) : this(id, name, position, temperature, new Metal(0), new Crystal(0), new Deuterium(0)) { }
-
-        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature, Metal metal, Crystal crystal, Deuterium deuterium)
+        public struct PlanetTemperature
         {
-            Id = id;
-            Name = name;
-            Temperature = temperature;
-            Position = position;
-            Metal = metal;
-            Crystal = crystal;
-            Deuterium = deuterium;
+            public int Min { get; set; }
+            public int Max { get; set; }
+            public double Average => (Min + Max) / 2.0;
+        }
+
+        public struct PlanetPosition
+        {
+            public int Galaxy { get; set; }
+            public int System { get; set; }
+            public int Planet { get; set; }
         }
     }
 }

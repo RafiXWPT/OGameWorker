@@ -73,31 +73,7 @@ namespace Worker.Objects.Research
 
     public abstract class TechnologyBase
     {
-        public abstract TechnologyType TechnologyType { get; }
-        public abstract int BaseMetalCost { get; }
-        public abstract int BaseCrystalCost { get; }
-        public abstract int BaseDeuteriumCost { get; }
-
-        public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
-        public double CostIncreaseFactor => 2.0;
-        public int CurrentLevel { get; }
-        public int MetalCost => (int)(BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public int CrystalCost => (int)(BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public int DeuteriumCost => (int)(BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public Planet BelongsTo { get; set; }
-
-        public bool TechReached { get; set; }
         private bool _canBuild;
-
-        public bool CanBuild
-        {
-            get => TechReached && _canBuild;
-            set => _canBuild = value;
-        }
-
-        public TimeSpan UpgradeTimeDuration => ObjectContainer.Instance.PlayerBuildings.Any()
-            ? TimeSpan.FromHours((double)(MetalCost + CrystalCost) / (UniverseSpeed * 1000 * (1 + PlanetCoreBuildingsHelper.GetPlanetResearchLabolatory(BelongsTo).CurrentLevel)))
-            : TimeSpan.MaxValue;
 
         protected TechnologyBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
         {
@@ -106,5 +82,32 @@ namespace Worker.Objects.Research
             TechReached = techReached;
             _canBuild = canBuild;
         }
+
+        public abstract TechnologyType TechnologyType { get; }
+        public abstract int BaseMetalCost { get; }
+        public abstract int BaseCrystalCost { get; }
+        public abstract int BaseDeuteriumCost { get; }
+
+        public int UniverseSpeed { get; } = Convert.ToInt32(ConfigurationManager.AppSettings["UNIVERSE_SPEED"]);
+        public double CostIncreaseFactor => 2.0;
+        public int CurrentLevel { get; }
+        public int MetalCost => (int) (BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int CrystalCost => (int) (BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public int DeuteriumCost => (int) (BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
+        public Planet BelongsTo { get; set; }
+
+        public bool TechReached { get; set; }
+
+        public bool CanBuild
+        {
+            get => TechReached && _canBuild;
+            set => _canBuild = value;
+        }
+
+        public TimeSpan UpgradeTimeDuration => ObjectContainer.Instance.PlayerBuildings.Any()
+            ? TimeSpan.FromHours((double) (MetalCost + CrystalCost) /
+                                 (UniverseSpeed * 1000 *
+                                  (1 + PlanetCoreBuildingsHelper.GetPlanetResearchLabolatory(BelongsTo).CurrentLevel)))
+            : TimeSpan.MaxValue;
     }
 }
