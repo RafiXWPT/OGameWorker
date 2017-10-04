@@ -54,12 +54,12 @@ namespace OGameWorker.Views.Main.Resources
         {
             _client = client;
             Observable.Interval(TimeSpan.FromSeconds(1))
+                .Where(i => ObjectContainer.Instance.CurrentSelectedPlanet != null)
                 .SubscribeOnDispatcher()
-                .Subscribe(
-                    t =>
-                    {
-                        UpdateResourcesLive();
-                    });
+                .Subscribe(token =>
+                {
+                    UpdateResourcesLive();
+                });
         }
 
         public void Synchronize(Planet currentPlanet)
@@ -72,19 +72,16 @@ namespace OGameWorker.Views.Main.Resources
         private void UpdateResourcesLive()
         {
             var currentPlanet = ObjectContainer.Instance.CurrentSelectedPlanet;
-            if (currentPlanet == null)
-                return;
-
             Metal = new Metal((int) Metal.Amount +
                               (((MetalMine) ObjectContainer.Instance.GetBuilding(currentPlanet, BuildingType.MetalMine))
-                              .MetalProduction + Metal.BaseProduction) / 3600);
+                               .MetalProduction + Metal.BaseProduction) / 3600);
             Crystal = new Crystal((int) Crystal.Amount +
                                   (((CrystalMine) ObjectContainer.Instance.GetBuilding(currentPlanet,
-                                      BuildingType.CrystalMine)).CrystalProduction + Crystal.BaseProduction) / 3600);
+                                       BuildingType.CrystalMine)).CrystalProduction + Crystal.BaseProduction) / 3600);
             Deuterium = new Deuterium((int) Deuterium.Amount +
                                       (((DeuteriumExtractor) ObjectContainer.Instance.GetBuilding(currentPlanet,
-                                          BuildingType.DeuteriumExtractor)).DeuteriumProduction +
-                                      Deuterium.BaseProduction) / 3600);
+                                           BuildingType.DeuteriumExtractor)).DeuteriumProduction +
+                                       Deuterium.BaseProduction) / 3600);
         }
 
     }

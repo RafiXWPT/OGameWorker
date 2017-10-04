@@ -15,6 +15,6 @@ namespace Worker.Objects.Resources
         }
 
         public abstract int BaseProduction { get; }
-        public double Amount { get; set; }
+        public int Amount { get; set; }
     }
 }

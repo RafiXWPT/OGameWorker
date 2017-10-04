@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
 using Worker.HttpModule.Helpers;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;
+using Worker.Objects.Resources;
 using Worker.Objects.Ships;
 
 namespace Worker.HttpModule.RequestBuilder
@@ -139,8 +141,7 @@ namespace Worker.HttpModule.RequestBuilder
             return request;
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest4(string token, Planet destination, MissionType type,
-            FleetSpeed speed, List<ShipBase> ships)
+        public HttpRequestMessage BuildFleetSendingRequest4(string token, Planet destination, MissionType type, FleetSpeed speed, List<ShipBase> ships, Metal metal, Crystal crystal, Deuterium deuterium)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=movement";
             var values = new Dictionary<string, string>
@@ -149,18 +150,18 @@ namespace Worker.HttpModule.RequestBuilder
                 {"galaxy", destination.Position.Galaxy.ToString()},
                 {"system", destination.Position.System.ToString()},
                 {"position", destination.Position.Planet.ToString()},
-                {"type", ((int) type).ToString()},
+                {"type", "1"},
                 {"speed", ((int) speed).ToString()},
                 {"holdingtime", "1"},
-                {"mission", "1"},
+                {"mission", ((int) type).ToString()},
                 {"union2", "0"},
                 {"holdingOrExpTime", "0"},
                 {"prioMetal", "1"},
                 {"prioCrystal", "2"},
                 {"prioDeuterium", "3"},
-                {"metal", "0"},
-                {"crystal", "0"},
-                {"deuterium", "0"},
+                {"metal", metal.Amount.ToString(CultureInfo.InvariantCulture)},
+                {"crystal", crystal.Amount.ToString(CultureInfo.InvariantCulture)},
+                {"deuterium", deuterium.Amount.ToString(CultureInfo.InvariantCulture)},
                 {"ajax", "1"}
             };
 

@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using OGameWorker.Code.Extensions.Reactive;
 using OGameWorker.Views.Main.Resources;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.FleetSender;
 using Worker.Objects;
 
 namespace OGameWorker.Views.Main
@@ -22,13 +28,12 @@ namespace OGameWorker.Views.Main
         {
             _client = client;
             ResourcesViewModel = new ResourcesViewModel(client);
+            var random = new Random();
             Observable.Interval(TimeSpan.FromMinutes(5))
                 .SubscribeOnDispatcher()
-                .Subscribe(
-                    async t =>
-                    {
-                       await RefreshObjectContainerTask();
-                    });
+                .DelayTask(() => TimeSpan.FromMinutes(random.Next(10, 20)))
+                .Select(i => RefreshObjectContainerTask())
+                .Subscribe();
 
             Init();
         }
@@ -38,6 +43,7 @@ namespace OGameWorker.Views.Main
             Task.Run(async () =>
             {
                 await RefreshObjectContainerTask();
+                await OGameFleetSender.SaveFleet(_client, ObjectContainer.Instance.PlayerPlanets.First());
             });
         }
 

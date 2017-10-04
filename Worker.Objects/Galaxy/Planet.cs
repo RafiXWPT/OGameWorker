@@ -2,6 +2,7 @@
 using System.Linq;
 using Worker.Objects.Buildings;
 using Worker.Objects.Resources;
+using Worker.Objects.Ships;
 
 namespace Worker.Objects.Galaxy
 {
@@ -35,9 +36,14 @@ namespace Worker.Objects.Galaxy
         public Metal Metal { get; set; }
         public Crystal Crystal { get; set; }
         public Deuterium Deuterium { get; set; }
+        public int TotalResources => (int)(Metal.Amount + Crystal.Amount + Deuterium.Amount);
 
         public List<BuildingBase> PlanetBuildings => ObjectContainer.Instance.PlayerBuildings
-            .Where(b => b.BelongsTo.Id == Id)
+            .Where(b => b.BelongsTo.Id == Id && b.CurrentLevel > 0)
+            .ToList();
+
+        public List<ShipBase> PlanetShips => ObjectContainer.Instance.PlayerShips
+            .Where(s => s.BelongsTo.Id == Id && s.Quantity > 0)
             .ToList();
 
         public struct PlanetTemperature
