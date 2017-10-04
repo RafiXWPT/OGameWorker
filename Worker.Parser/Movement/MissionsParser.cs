@@ -10,6 +10,11 @@ namespace Worker.Parser.Movement
 {
     public class MissionsParser
     {
+        private int GetMissionId(HtmlNode missionNode)
+        {
+            return Convert.ToInt32(missionNode.Id.Replace("eventRow-", string.Empty));
+        }
+
         private MissionType GetMissionType(HtmlNode missionNode)
         {
             return (MissionType) Convert.ToInt32(missionNode.Attributes
@@ -87,7 +92,9 @@ namespace Worker.Parser.Movement
                 foreach (var friendlyNode in friendlyNodes)
                     if (GetIsReturning(friendlyNode))
                         friendlyMissions.Add(
-                            new FriendlyMission(GetMissionType(friendlyNode),
+                            new FriendlyMission(
+                                GetMissionId(friendlyNode),
+                                GetMissionType(friendlyNode),
                                 GetArrivalTime(friendlyNode),
                                 new Planet(GetDestinationPlanetName(friendlyNode),
                                     GetDestinationPosition(friendlyNode)),
@@ -95,7 +102,9 @@ namespace Worker.Parser.Movement
                                 true));
                     else
                         friendlyMissions.Add(
-                            new FriendlyMission(GetMissionType(friendlyNode),
+                            new FriendlyMission(
+                                GetMissionId(friendlyNode),
+                                GetMissionType(friendlyNode),
                                 GetArrivalTime(friendlyNode),
                                 new Planet(GetSourcePlanetName(friendlyNode), GetSourcePlanetPosition(friendlyNode)),
                                 new Planet(GetDestinationPlanetName(friendlyNode),
@@ -118,14 +127,18 @@ namespace Worker.Parser.Movement
                 foreach (var neutralNode in neutralNodes)
                     if (GetIsReturning(neutralNode))
                         neutralMissions.Add(
-                            new NeutralMission(GetMissionType(neutralNode),
+                            new NeutralMission(
+                                GetMissionId(neutralNode),
+                                GetMissionType(neutralNode),
                                 GetArrivalTime(neutralNode),
                                 new Planet(GetDestinationPlanetName(neutralNode), GetDestinationPosition(neutralNode)),
                                 new Planet(GetSourcePlanetName(neutralNode), GetSourcePlanetPosition(neutralNode)),
                                 true));
                     else
                         neutralMissions.Add(
-                            new NeutralMission(GetMissionType(neutralNode),
+                            new NeutralMission(
+                                GetMissionId(neutralNode),
+                                GetMissionType(neutralNode),
                                 GetArrivalTime(neutralNode),
                                 new Planet(GetSourcePlanetName(neutralNode), GetSourcePlanetPosition(neutralNode)),
                                 new Planet(GetDestinationPlanetName(neutralNode), GetDestinationPosition(neutralNode)),
@@ -147,14 +160,18 @@ namespace Worker.Parser.Movement
                 foreach (var hostileNode in hostileNodes)
                     if (GetIsReturning(hostileNode))
                         hostileMissions.Add(
-                            new HostileMission(GetMissionType(hostileNode),
+                            new HostileMission(
+                                GetMissionId(hostileNode),
+                                GetMissionType(hostileNode),
                                 GetArrivalTime(hostileNode),
                                 new Planet(GetDestinationPlanetName(hostileNode), GetDestinationPosition(hostileNode)),
                                 new Planet(GetSourcePlanetName(hostileNode), GetSourcePlanetPosition(hostileNode)),
                                 true));
                     else
                         hostileMissions.Add(
-                            new HostileMission(GetMissionType(hostileNode),
+                            new HostileMission(
+                                GetMissionId(hostileNode),
+                                GetMissionType(hostileNode),
                                 GetArrivalTime(hostileNode),
                                 new Planet(GetSourcePlanetName(hostileNode), GetSourcePlanetPosition(hostileNode)),
                                 new Planet(GetDestinationPlanetName(hostileNode), GetDestinationPosition(hostileNode)),

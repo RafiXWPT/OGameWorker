@@ -5,8 +5,8 @@ namespace Worker.Objects.Missions
 {
     public class HostileMission : MissionBase
     {
-        public HostileMission(MissionType missionType, DateTime arrivalTime, Planet source, Planet destination,
-            bool isReturning) : base(missionType, arrivalTime, source, destination, isReturning)
+        public HostileMission(int missionId, MissionType missionType, DateTime arrivalTime, Planet source, Planet destination,
+            bool isReturning) : base(missionId, missionType, arrivalTime, source, destination, isReturning)
         {
         }
 

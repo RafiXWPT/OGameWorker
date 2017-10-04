@@ -84,10 +84,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Code\Extensions\Reactive\ReactiveExtensions.cs" />
+    <Compile Include="Code\WorkerQueue\QueueAction.cs" />
+    <Compile Include="Code\WorkerQueue\WorkerQueue.cs" />
     <Compile Include="Views\LogIn\LogInViewModel.cs" />
     <Compile Include="Views\LogIn\LogInWindow.xaml.cs">
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Main\Fleet\FleetViewModel.cs" />
     <Compile Include="Views\Main\MainWindowViewModel.cs" />
     <Compile Include="Views\Main\Resources\ResourcesViewModel.cs" />
     <Page Include="Views\Main\MainWindow.xaml">

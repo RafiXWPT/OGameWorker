@@ -48,6 +48,7 @@ namespace Worker.HttpModule.Clients
 
         public async Task RefreshObjectContainer()
         {
+            await RefreshMissions();
             var initialView = await SendHttpRequest(Builder.BuildOverviewRequest());
             await DataProvider.UpdatePlayerPlanets(initialView.ResponseHtmlDocument);
             foreach (var planet in ObjectContainer.Instance.PlayerPlanets)

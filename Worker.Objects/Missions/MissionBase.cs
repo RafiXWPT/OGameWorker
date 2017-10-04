@@ -26,9 +26,9 @@ namespace Worker.Objects.Missions
 
     public abstract class MissionBase
     {
-        protected MissionBase(MissionType missionType, DateTime arrivalTime, Planet source, Planet destination,
-            bool isReturning)
+        protected MissionBase(int missionId, MissionType missionType, DateTime arrivalTime, Planet source, Planet destination, bool isReturning)
         {
+            MissionId = missionId;
             MissionType = missionType;
             ArrivalTime = arrivalTime;
             Source = source;
@@ -36,6 +36,7 @@ namespace Worker.Objects.Missions
             IsReturning = isReturning;
         }
 
+        public int MissionId { get; }
         public abstract MovementType MovementType { get; }
         public MissionType MissionType { get; }
         public DateTime ArrivalTime { get; }

@@ -63,9 +63,10 @@ namespace Worker.HttpModule.Clients.FleetSender
 
         public static async Task<bool> SaveFleet(OGameHttpClient client, Planet toSave)
         {
+            await client.RefreshObjectContainer();
             var saveLocation = ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Id != toSave.Id);
-            if (saveLocation == null)
-                return false;
+            /*if (saveLocation == null)
+                return false;*/
             //4:105:4
             saveLocation = new Planet("mleko", new Planet.PlanetPosition {Galaxy = 4, System = 105, Planet = 4});
             var planetShips = toSave.PlanetShips;
