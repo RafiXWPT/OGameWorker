@@ -12,13 +12,11 @@ namespace Worker.Objects.Galaxy
         {
         }
 
-        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature) : this(id, name,
-            position, temperature, new Metal(0), new Crystal(0), new Deuterium(0))
+        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature) : this(id, name, position, temperature, new Metal(0), new Crystal(0), new Deuterium(0))
         {
         }
 
-        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature, Metal metal,
-            Crystal crystal, Deuterium deuterium)
+        public Planet(int id, string name, PlanetPosition position, PlanetTemperature temperature, Metal metal, Crystal crystal, Deuterium deuterium)
         {
             Id = id;
             Name = name;

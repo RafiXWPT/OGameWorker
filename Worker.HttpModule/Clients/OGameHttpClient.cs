@@ -65,19 +65,24 @@ namespace Worker.HttpModule.Clients
             await DataProvider.UpdatePlayerPlanets(initialView.ResponseHtmlDocument);
             foreach (var planet in ObjectContainer.Instance.PlayerPlanets)
             {
-                var planetResources = await SendHttpRequest(Builder.BuildResourceRequest(planet.Id), force);
-                await DataProvider.UpdatePlanetResources(planetResources.ResponseHtmlDocument, planet);
-                await DataProvider.UpdatePlanetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
-
-                var planetStation = await SendHttpRequest(Builder.BuildStationRequest(planet.Id), force);
-                await DataProvider.UpdatePlanetStationBuildings(planetStation.ResponseHtmlDocument, planet);
-
-                var planetTechnologies = await SendHttpRequest(Builder.BuildResearchRequest(planet.Id), force);
-                await DataProvider.UpdatePlanetTechnologies(planetTechnologies.ResponseHtmlDocument, planet);
-
-                var planetShipyard = await SendHttpRequest(Builder.BuildShipyardRequest(planet.Id), force);
-                await DataProvider.UpdatePlanetFleet(planetShipyard.ResponseHtmlDocument, planet);
+                await RefreshPlanet(planet, force);
             }
+        }
+
+        public async Task RefreshPlanet(Planet planet, bool force = false)
+        {
+            var planetResources = await SendHttpRequest(Builder.BuildResourceRequest(planet.Id), force);
+            await DataProvider.UpdatePlanetResources(planetResources.ResponseHtmlDocument, planet);
+            await DataProvider.UpdatePlanetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
+
+            var planetStation = await SendHttpRequest(Builder.BuildStationRequest(planet.Id), force);
+            await DataProvider.UpdatePlanetStationBuildings(planetStation.ResponseHtmlDocument, planet);
+
+            var planetTechnologies = await SendHttpRequest(Builder.BuildResearchRequest(planet.Id), force);
+            await DataProvider.UpdatePlanetTechnologies(planetTechnologies.ResponseHtmlDocument, planet);
+
+            var planetShipyard = await SendHttpRequest(Builder.BuildShipyardRequest(planet.Id), force);
+            await DataProvider.UpdatePlanetFleet(planetShipyard.ResponseHtmlDocument, planet);
         }
 
         public async Task<MessageContainer> UpgradeResourceBuilding(BuildingType type, Planet planet)

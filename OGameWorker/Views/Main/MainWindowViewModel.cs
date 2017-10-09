@@ -46,8 +46,6 @@ namespace OGameWorker.Views.Main
             Init();
         }
 
-
-
         private void Init()
         {
             Task.Run(async () =>
@@ -59,19 +57,8 @@ namespace OGameWorker.Views.Main
         private async Task RefreshObjectContainerTask(bool force)
         {
             await Client.RefreshObjectContainer(force);
-            var mleko1 = await Client.SendHttpRequest(Client.Builder.BuildTransportRequest1());
-            var mleko2 = await Client.SendHttpRequest(Client.Builder.BuildTransportRequest2());
-            var mleko3 = await Client.SendHttpRequest(Client.Builder.BuildTransportRequest3());
-            var token = mleko3.ResponseHtmlDocument.DocumentNode.Descendants("input")
-                .First(i => i.Attributes.Any(a => a.OriginalName == "name" && a.Value == "token"))
-                .GetAttributeValue("value", null);
-            var mleko4 = await Client.SendHttpRequest(Client.Builder.BuildTransportRequest4(token));
-            /*
             ObjectContainer.Instance.CurrentSelectedPlanet = ObjectContainer.Instance.PlayerPlanets.First();
             ResourcesViewModel.Synchronize(ObjectContainer.Instance.CurrentSelectedPlanet);
-            var mleko = await OGameFleetSender.Attack(Client, ObjectContainer.Instance.CurrentSelectedPlanet,
-                new Planet("", new Planet.PlanetPosition {Galaxy = 4, System = 105, Planet = 4}), FleetSpeed.Speed100,
-                new List<ShipBase> {new LightFighter(ObjectContainer.Instance.CurrentSelectedPlanet, 1, true, true)}).SendFleet();
             var hostileMissions = ObjectContainer.Instance.Missions.Where(m => m.MovementType == MovementType.Hostile).ToList();
             if (hostileMissions.Any())
             {
@@ -84,7 +71,7 @@ namespace OGameWorker.Views.Main
                             MissionId = mission.MissionId,
                             Action = async () =>
                             {
-                                var fleetSaveMission = await OGameFleetSender.SaveFleet(Client, mission.Destination);
+                                var fleetSaveMission = await OGameFleetSender.SaveFleet(Client, mission.DestinationId ?? 0);
                                 if (fleetSaveMission != null)
                                 {
                                     WorkerQueue.QueueAction(new QueueAction
@@ -106,7 +93,7 @@ namespace OGameWorker.Views.Main
                         });
                     }
                 }
-            }*/
+            }
         }
     }
 }

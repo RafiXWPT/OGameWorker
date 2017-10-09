@@ -70,13 +70,14 @@ namespace Worker.HttpModule.Clients.FleetSender
                 deuterium);
         }
 
-        public static async Task<MissionBase> SaveFleet(OGameHttpClient client, Planet toSave)
+        public static async Task<MissionBase> SaveFleet(OGameHttpClient client, int savePlanetId)
         {
-            await client.RefreshObjectContainer();
-            var planetToSave = ObjectContainer.Instance.PlayerPlanets.First(p => p.Name == toSave.Name);
-            var saveLocation = ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Name != toSave.Name);
+            var planetToSave = ObjectContainer.Instance.PlayerPlanets.First(p => p.Id == savePlanetId);
+            var saveLocation = ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Id != savePlanetId);
             if (saveLocation == null)
                 return null;
+
+            await client.RefreshPlanet(planetToSave);
 
             var planetShips = planetToSave.PlanetShips;
             var shipsCapacity = planetShips.Sum(x => x.Capacity*x.Quantity)*0.95;
@@ -85,18 +86,25 @@ namespace Worker.HttpModule.Clients.FleetSender
             Crystal crystalToSave;
             Deuterium deuteriumToSave;
 
+            planetToSave.Deuterium.Amount = (int)(planetToSave.Deuterium.Amount * 0.95);
+
             if (shipsCapacity > planetToSave.TotalResources)
             {
                 metalToSave = planetToSave.Metal;
                 crystalToSave = planetToSave.Crystal;
                 deuteriumToSave = planetToSave.Deuterium;
-                deuteriumToSave.Amount = (int)(deuteriumToSave.Amount * 0.9);
             }
             else
             {
                 metalToSave = new Metal((int)shipsCapacity * 1 / 6);
                 crystalToSave = new Crystal((int)shipsCapacity * 2 / 6);
                 deuteriumToSave = new Deuterium((int)shipsCapacity * 3 / 6);
+                if (metalToSave.Amount > planetToSave.Metal.Amount)
+                    metalToSave = planetToSave.Metal;
+                if (crystalToSave.Amount > planetToSave.Crystal.Amount)
+                    crystalToSave = planetToSave.Crystal;
+                if (deuteriumToSave.Amount > planetToSave.Deuterium.Amount)
+                    deuteriumToSave = planetToSave.Deuterium;
             }
 
 
@@ -108,16 +116,12 @@ namespace Worker.HttpModule.Clients.FleetSender
             var result = await Task.Run(async () =>
             {
                 await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest1());
-                await _client.SendHttpRequest(
-                    _client.Builder.BuildFleetSendingRequest2(_source, _missionType, _speed, _ships));
-                var sendFleetForm =
-                    await _client.SendHttpRequest(
-                        _client.Builder.BuildFleetSendingRequest3(_destination, _missionType, _speed, _ships));
+                await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest2(_source, _ships, _speed, _missionType));
+                var sendFleetForm = await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest3(_destination, _ships, _speed, _missionType));
                 var sendFleetToken = sendFleetForm.ResponseHtmlDocument.DocumentNode.Descendants("input")
                     .First(i => i.Attributes.Any(a => a.OriginalName == "name" && a.Value == "token"))
                     .GetAttributeValue("value", null);
-                return await _client.SendHttpRequest(
-                    _client.Builder.BuildFleetSendingRequest4(sendFleetToken, _destination, _missionType, _speed, _ships, _metal ?? new Metal(0), _crystal ?? new Crystal(0), _deuterium ?? new Deuterium(0)));
+                return await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest4(sendFleetToken, _destination, _ships, _speed, _missionType, _metal ?? new Metal(0), _crystal ?? new Crystal(0), _deuterium ?? new Deuterium(0)));
             });
 
             if (result.StatusCode != HttpStatusCode.OK)
@@ -131,7 +135,7 @@ namespace Worker.HttpModule.Clients.FleetSender
                 .Where(m => m.MissionType == MissionType.Stationize)
                 .ToList();
 
-            return missionsAfter.Where(mission => missionsBefore.All(m => m.MissionId != mission.MissionId)).FirstOrDefault(mission => mission.Destination == _destination);
+            return missionsAfter.Where(mission => missionsBefore.All(m => m.MissionId != mission.MissionId)).FirstOrDefault(mission => mission.DestinationId == _destination.Id);
         }
     }
 }
