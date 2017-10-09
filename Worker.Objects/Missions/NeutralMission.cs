@@ -5,8 +5,8 @@ namespace Worker.Objects.Missions
 {
     public class NeutralMission : MissionBase
     {
-        public NeutralMission(int missionId, MissionType missionType, DateTime arrivalTime, Planet source, Planet destination,
-            bool isReturning) : base(missionId, missionType, arrivalTime, source, destination, isReturning)
+        public NeutralMission(int missionId, MissionType missionType, int arrivalTimestamp, Planet source, Planet destination,
+            bool isReturning) : base(missionId, missionType, arrivalTimestamp, source, destination, isReturning)
         {
         }
 

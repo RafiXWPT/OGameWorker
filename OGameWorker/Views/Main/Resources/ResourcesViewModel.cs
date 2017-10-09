@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using OGameWorker.Code;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.Objects;
@@ -16,9 +17,8 @@ using Worker.Objects.Resources;
 
 namespace OGameWorker.Views.Main.Resources
 {
-    public class ResourcesViewModel : ReactiveObject
+    public class ResourcesViewModel : OGameWorkerBasicViewModel
     {
-        private readonly OGameHttpClient _client;
         private Metal _metal;
         private Crystal _crystal;
         private Deuterium _deuterium;
@@ -50,9 +50,8 @@ namespace OGameWorker.Views.Main.Resources
 
         public ResourcesViewModel() { }
 
-        public ResourcesViewModel(OGameHttpClient client)
+        public ResourcesViewModel(OGameHttpClient client) : base(client)
         {
-            _client = client;
             Observable.Interval(TimeSpan.FromSeconds(1))
                 .Where(i => ObjectContainer.Instance.CurrentSelectedPlanet != null)
                 .SubscribeOnDispatcher()
@@ -72,13 +71,13 @@ namespace OGameWorker.Views.Main.Resources
         private void UpdateResourcesLive()
         {
             var currentPlanet = ObjectContainer.Instance.CurrentSelectedPlanet;
-            Metal = new Metal((int) Metal.Amount +
+            Metal = new Metal(Metal.Amount +
                               (((MetalMine) ObjectContainer.Instance.GetBuilding(currentPlanet, BuildingType.MetalMine))
                                .MetalProduction + Metal.BaseProduction) / 3600);
-            Crystal = new Crystal((int) Crystal.Amount +
+            Crystal = new Crystal(Crystal.Amount +
                                   (((CrystalMine) ObjectContainer.Instance.GetBuilding(currentPlanet,
                                        BuildingType.CrystalMine)).CrystalProduction + Crystal.BaseProduction) / 3600);
-            Deuterium = new Deuterium((int) Deuterium.Amount +
+            Deuterium = new Deuterium(Deuterium.Amount +
                                       (((DeuteriumExtractor) ObjectContainer.Instance.GetBuilding(currentPlanet,
                                            BuildingType.DeuteriumExtractor)).DeuteriumProduction +
                                        Deuterium.BaseProduction) / 3600);

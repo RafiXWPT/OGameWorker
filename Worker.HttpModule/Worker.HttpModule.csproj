@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Clients\DataProviders\OGameDataProvider.cs" />
     <Compile Include="Clients\FleetSender\OGameFleetSender.cs" />
+    <Compile Include="Exceptions\OgameWorkerLoggedOutException.cs" />
     <Compile Include="Helpers\BaseHttpRequest.cs" />
     <Compile Include="Helpers\GetHttpRequest.cs" />
     <Compile Include="Helpers\PostHttpRequest.cs" />

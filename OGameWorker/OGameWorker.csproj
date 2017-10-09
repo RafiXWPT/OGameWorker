@@ -83,7 +83,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Code\ConfigurationHelper\OGameConfigurationReader.cs" />
     <Compile Include="Code\Extensions\Reactive\ReactiveExtensions.cs" />
+    <Compile Include="Code\LogOutWrapper.cs" />
+    <Compile Include="Code\OGameWorkerBasicViewModel.cs" />
     <Compile Include="Code\WorkerQueue\QueueAction.cs" />
     <Compile Include="Code\WorkerQueue\WorkerQueue.cs" />
     <Compile Include="Views\LogIn\LogInViewModel.cs" />

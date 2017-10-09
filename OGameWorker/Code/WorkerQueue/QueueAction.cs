@@ -9,7 +9,7 @@ namespace OGameWorker.Code.WorkerQueue
     public class QueueAction
     {
         public int MissionId { get; set; }
-        public Action Action { get; set; }
+        public Func<Task> Action { get; set; }
         public DateTime ExecutionTime { get; set; }
         public bool Completed { get; set; }
     }
