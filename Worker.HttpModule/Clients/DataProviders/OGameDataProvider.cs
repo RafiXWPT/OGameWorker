@@ -3,6 +3,7 @@ using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Missions;
 using Worker.Parser.Buildings;
 using Worker.Parser.Movement;
 using Worker.Parser.Planets;
@@ -17,6 +18,7 @@ namespace Worker.HttpModule.Clients.DataProviders
         public OGameDataProvider()
         {
             MissionsParser = new MissionsParser();
+            FleetMovementParser = new FleetMovementParser();
             PlanetsParser = new PlanetsParser();
             BuildingsParser = new BuildingsParser();
             ResourcesParser = new ResourcesParser();
@@ -25,11 +27,17 @@ namespace Worker.HttpModule.Clients.DataProviders
         }
 
         public MissionsParser MissionsParser { get; }
+        public FleetMovementParser FleetMovementParser { get; }
         public PlanetsParser PlanetsParser { get; }
         public BuildingsParser BuildingsParser { get; }
         public TechnologiesParser TechnologiesParser { get; }
         public ResourcesParser ResourcesParser { get; }
         public ShipsParser ShipsParser { get; }
+
+        public async Task<int> GetMissionReturnId(HtmlDocument document, MissionBase mission)
+        {
+            return await FleetMovementParser.GetReturnIdForMission(document, mission);
+        }
 
         public async Task UpdateMissions(HtmlDocument document)
         {

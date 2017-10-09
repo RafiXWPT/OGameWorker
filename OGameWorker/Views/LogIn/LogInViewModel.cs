@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using OGameWorker.Code;
+using OGameWorker.Code.ConfigurationHelper;
 using OGameWorker.Views.Main;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
@@ -14,14 +16,16 @@ namespace OGameWorker.Views.LogIn
         private string _server;
         private string _username;
 
-        public LogInViewModel()
-        {
-        }
+        public LogInViewModel() { }
 
         public LogInViewModel(Window logInWindow)
         {
             _logInWindow = logInWindow;
             LogIn = ReactiveCommand.CreateFromTask(t => LogInTask());
+
+            Server = OGameConfigurationReader.ReadValue("SAVED_SERVER");
+            Username = OGameConfigurationReader.ReadValue("SAVED_USERNAME");
+            Password = OGameConfigurationReader.ReadValue("SAVED_PASSWORD");
         }
 
         public string Username
@@ -49,11 +53,14 @@ namespace OGameWorker.Views.LogIn
             var server = Server;
             var username = Username;
             var password = Password;
-            var client = new OGameHttpClient(server);
+            var client = new OGameHttpClient(server, username, password);
             var result = await client.LogIn(username, password);
 
             if (result.StatusCode == HttpStatusCode.OK)
             {
+                OGameConfigurationReader.SaveValue("SAVED_SERVER", server);
+                OGameConfigurationReader.SaveValue("SAVED_USERNAME", username);
+                OGameConfigurationReader.SaveValue("SAVED_PASSWORD", password);
                 new MainWindow(client).Show();
                 _logInWindow.Close();
             }

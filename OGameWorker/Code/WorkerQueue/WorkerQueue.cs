@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace OGameWorker.Code.WorkerQueue
 {
-    public class WorkerQueue
+    public static class WorkerQueue
     {
-        public List<QueueAction> QueueActions;
-        protected Task Pending;
-        public bool Ready => Pending == null || Pending.IsCompleted || Pending.IsCanceled || Pending.IsFaulted;
+        private static readonly object Lock = new object();
+        public static List<QueueAction> QueueActions = new List<QueueAction>();
+        private static Task _pending;
+        public static bool Ready => _pending == null || _pending.IsCompleted || _pending.IsCanceled || _pending.IsFaulted;
 
-        public void QueueAction(QueueAction action)
+        public static void QueueAction(QueueAction action)
         {
             QueueActions.Add(action);
         }
 
-        public void ExecuteByTime()
+        public static void CheckQueue()
         {
             var actionsToRun = QueueActions.Where(a => a.ExecutionTime < DateTime.Now && !a.Completed);
             foreach (var action in actionsToRun)
@@ -27,14 +28,14 @@ namespace OGameWorker.Code.WorkerQueue
             }
         }
 
-        public Task Enqueue(QueueAction action)
+        public static Task Enqueue(QueueAction action)
         {
             if (action == null)
                 return Task.CompletedTask;
 
-            lock (this)
+            lock (Lock)
             {
-                return Pending = Ready ? Task.Factory.StartNew(action.Action) : Pending.ContinueWith(_ => action.Action());
+                return _pending = Ready ? Task.Run(action.Action) : _pending.ContinueWith(_ => action.Action());
             }
         }
     }

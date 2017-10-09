@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Worker.Objects.Galaxy;
 
 namespace Worker.Objects.Missions
@@ -26,11 +27,11 @@ namespace Worker.Objects.Missions
 
     public abstract class MissionBase
     {
-        protected MissionBase(int missionId, MissionType missionType, DateTime arrivalTime, Planet source, Planet destination, bool isReturning)
+        protected MissionBase(int missionId, MissionType missionType, int arrivalTimestamp, Planet source, Planet destination, bool isReturning)
         {
             MissionId = missionId;
             MissionType = missionType;
-            ArrivalTime = arrivalTime;
+            ArrivalTimestamp = arrivalTimestamp;
             Source = source;
             Destination = destination;
             IsReturning = isReturning;
@@ -39,9 +40,12 @@ namespace Worker.Objects.Missions
         public int MissionId { get; }
         public abstract MovementType MovementType { get; }
         public MissionType MissionType { get; }
-        public DateTime ArrivalTime { get; }
+        public int ArrivalTimestamp { get; }
+        public DateTime ArrivalTime => new DateTime(1970, 1, 1, 0, 0, 0, 0).AddHours(2).AddSeconds(ArrivalTimestamp);
         public Planet Source { get; }
+        public int? SourceId => ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Name == Source.Name)?.Id;
         public Planet Destination { get; }
+        public int? DestinationId => ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Name == Destination.Name)?.Id;
         public bool IsReturning { get; }
     }
 }

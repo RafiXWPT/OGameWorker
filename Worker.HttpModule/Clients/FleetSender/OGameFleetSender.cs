@@ -27,6 +27,7 @@ namespace Worker.HttpModule.Clients.FleetSender
     public class OGameFleetSender
     {
         private readonly OGameHttpClient _client;
+        private readonly Planet _source;
         private readonly Planet _destination;
         private readonly Metal _metal;
         private readonly Crystal _crystal;
@@ -35,10 +36,11 @@ namespace Worker.HttpModule.Clients.FleetSender
         private readonly List<ShipBase> _ships;
         private readonly FleetSpeed _speed;
 
-        private OGameFleetSender(OGameHttpClient client, Planet destination, FleetSpeed speed, List<ShipBase> ships,
+        private OGameFleetSender(OGameHttpClient client, Planet source, Planet destination, FleetSpeed speed, List<ShipBase> ships,
             MissionType missionType, Metal metal = null, Crystal crystal = null, Deuterium deuterium = null)
         {
             _client = client;
+            _source = source;
             _destination = destination;
             _metal = metal;
             _crystal = crystal;
@@ -48,68 +50,92 @@ namespace Worker.HttpModule.Clients.FleetSender
             _missionType = missionType;
         }
 
-        public static OGameFleetSender Attack(OGameHttpClient client, Planet destination, FleetSpeed speed,
+        public static OGameFleetSender Attack(OGameHttpClient client, Planet source, Planet destination, FleetSpeed speed,
             List<ShipBase> ships)
         {
-            return new OGameFleetSender(client, destination, speed, ships, MissionType.Attack);
+            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Attack);
         }
 
-        public static OGameFleetSender Transport(OGameHttpClient client, Planet destination, FleetSpeed speed,
+        public static OGameFleetSender Transport(OGameHttpClient client, Planet source, Planet destination, FleetSpeed speed,
             List<ShipBase> ships, Metal metal, Crystal crystal, Deuterium deuterium)
         {
-            return new OGameFleetSender(client, destination, speed, ships, MissionType.Transport, metal, crystal,
+            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Transport, metal, crystal,
                 deuterium);
         }
 
-        public static async Task<bool> SaveFleet(OGameHttpClient client, Planet toSave)
+        public static OGameFleetSender Stationize(OGameHttpClient client, Planet source, Planet destination, FleetSpeed speed,
+            List<ShipBase> ships, Metal metal, Crystal crystal, Deuterium deuterium)
         {
-            await client.RefreshObjectContainer();
-            var saveLocation = ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Id != toSave.Id);
-            /*if (saveLocation == null)
-                return false;*/
-            //4:105:4
-            saveLocation = new Planet("mleko", new Planet.PlanetPosition {Galaxy = 4, System = 105, Planet = 4});
-            var planetShips = toSave.PlanetShips;
+            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Stationize, metal, crystal,
+                deuterium);
+        }
+
+        public static async Task<MissionBase> SaveFleet(OGameHttpClient client, int savePlanetId)
+        {
+            var planetToSave = ObjectContainer.Instance.PlayerPlanets.First(p => p.Id == savePlanetId);
+            var saveLocation = ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Id != savePlanetId);
+            if (saveLocation == null)
+                return null;
+
+            await client.RefreshPlanet(planetToSave);
+
+            var planetShips = planetToSave.PlanetShips;
             var shipsCapacity = planetShips.Sum(x => x.Capacity*x.Quantity)*0.95;
 
             Metal metalToSave;
             Crystal crystalToSave;
             Deuterium deuteriumToSave;
 
-            if (shipsCapacity > toSave.TotalResources)
+            planetToSave.Deuterium.Amount = (int)(planetToSave.Deuterium.Amount * 0.95);
+
+            if (shipsCapacity > planetToSave.TotalResources)
             {
-                metalToSave = toSave.Metal;
-                crystalToSave = toSave.Crystal;
-                deuteriumToSave = toSave.Deuterium;
+                metalToSave = planetToSave.Metal;
+                crystalToSave = planetToSave.Crystal;
+                deuteriumToSave = planetToSave.Deuterium;
             }
             else
             {
                 metalToSave = new Metal((int)shipsCapacity * 1 / 6);
                 crystalToSave = new Crystal((int)shipsCapacity * 2 / 6);
                 deuteriumToSave = new Deuterium((int)shipsCapacity * 3 / 6);
+                if (metalToSave.Amount > planetToSave.Metal.Amount)
+                    metalToSave = planetToSave.Metal;
+                if (crystalToSave.Amount > planetToSave.Crystal.Amount)
+                    crystalToSave = planetToSave.Crystal;
+                if (deuteriumToSave.Amount > planetToSave.Deuterium.Amount)
+                    deuteriumToSave = planetToSave.Deuterium;
             }
 
-            return await Transport(client, saveLocation, FleetSpeed.Speed10, planetShips, metalToSave, crystalToSave, deuteriumToSave).SendFleet();
+
+            return await Stationize(client, planetToSave, saveLocation, FleetSpeed.Speed10, planetShips, metalToSave, crystalToSave, deuteriumToSave).SendFleet();
         }
 
-        public async Task<bool> SendFleet()
+        public async Task<MissionBase> SendFleet()
         {
             var result = await Task.Run(async () =>
             {
                 await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest1());
-                await _client.SendHttpRequest(
-                    _client.Builder.BuildFleetSendingRequest2(_destination, _missionType, _speed, _ships));
-                var sendFleetForm =
-                    await _client.SendHttpRequest(
-                        _client.Builder.BuildFleetSendingRequest3(_destination, _missionType, _speed, _ships));
+                await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest2(_source, _ships, _speed, _missionType));
+                var sendFleetForm = await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest3(_destination, _ships, _speed, _missionType));
                 var sendFleetToken = sendFleetForm.ResponseHtmlDocument.DocumentNode.Descendants("input")
                     .First(i => i.Attributes.Any(a => a.OriginalName == "name" && a.Value == "token"))
                     .GetAttributeValue("value", null);
-                return await _client.SendHttpRequest(
-                    _client.Builder.BuildFleetSendingRequest4(sendFleetToken, _destination, _missionType, _speed, _ships, _metal ?? new Metal(0), _crystal ?? new Crystal(0), _deuterium ?? new Deuterium(0)));
+                return await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest4(sendFleetToken, _destination, _ships, _speed, _missionType, _metal ?? new Metal(0), _crystal ?? new Crystal(0), _deuterium ?? new Deuterium(0)));
             });
 
-            return result.StatusCode == HttpStatusCode.OK;
+            if (result.StatusCode != HttpStatusCode.OK)
+                return null;
+
+            var missionsBefore = ObjectContainer.Instance.Missions
+                .Where(m => m.MissionType == MissionType.Stationize)
+                .ToList();
+            await _client.RefreshMissions(true);
+            var missionsAfter = ObjectContainer.Instance.Missions
+                .Where(m => m.MissionType == MissionType.Stationize)
+                .ToList();
+
+            return missionsAfter.Where(mission => missionsBefore.All(m => m.MissionId != mission.MissionId)).FirstOrDefault(mission => mission.DestinationId == _destination.Id);
         }
     }
 }

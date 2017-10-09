@@ -59,9 +59,21 @@ namespace Worker.HttpModule.RequestBuilder
             return new GetHttpRequest().Create(url);
         }
 
-        public HttpRequestMessage BuildMovementRequest()
+        public HttpRequestMessage BuildEventListRequest()
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=eventList&ajax=1";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildMovementRequest()
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=movement";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildReturnMissionRequest(int returnId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=movement&return={returnId}";
             return new GetHttpRequest().Create(url);
         }
 
@@ -79,98 +91,96 @@ namespace Worker.HttpModule.RequestBuilder
             return new PostHttpRequest().Create(url, content);
         }
 
-        public HttpRequestMessage BuildUpgradeBuildingRequest(string upgradeUrl)
-        {
-            return new GetHttpRequest().Create(upgradeUrl);
-        }
-
-        public HttpRequestMessage BuildPrepareFleetSendingRequest()
-        {
-            var url = $"{_client.ServerUrl}/game/index.php?page=fleet1";
-            return new GetHttpRequest().Create(url);
-        }
-
         public HttpRequestMessage BuildFleetSendingRequest1()
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=fleet1";
             return new GetHttpRequest().Create(url);
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest2(Planet destination, MissionType type, FleetSpeed speed,
-            List<ShipBase> ships)
+        public HttpRequestMessage BuildFleetSendingRequest2(Planet source, List<ShipBase> ships, FleetSpeed speed, MissionType missionType)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=fleet2";
             var values = new Dictionary<string, string>
             {
-                {"galaxy", destination.Position.Galaxy.ToString()},
-                {"system", destination.Position.System.ToString()},
-                {"position", destination.Position.Planet.ToString()},
-                {"type", ((int) type).ToString()},
-                {"speed", ((int) speed).ToString()},
+                {"galaxy", $"{source.Position.Galaxy}"},
+                {"system", $"{source.Position.System}"},
+                {"position", $"{source.Position.Planet}"},
+                {"type", $"{(int) missionType}"},
+                {"speed", $"{(int) speed}"},
                 {"mission", "0"}
             };
 
             foreach (var ship in ships)
-                values.Add($"am{(int) ship.ShipType}", ship.Quantity.ToString());
+                values.Add($"am{(int) ship.ShipType}", $"{ship.Quantity}");
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet1");
+            request.Headers.Add("Connection", "keep-alive");
+            request.Headers.Add("Upgrade-Insecure-Requests", "1");
             return request;
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest3(Planet destination, MissionType type, FleetSpeed speed,
-            List<ShipBase> ships)
+        public HttpRequestMessage BuildFleetSendingRequest3(Planet destination, List<ShipBase> ships, FleetSpeed speed, MissionType missionType)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=fleet3";
             var values = new Dictionary<string, string>
             {
-                {"galaxy", destination.Position.Galaxy.ToString()},
-                {"system", destination.Position.System.ToString()},
-                {"position", destination.Position.Planet.ToString()},
-                {"type", ((int) type).ToString()},
-                {"speed", ((int) speed).ToString()},
+                {"galaxy", $"{destination.Position.Galaxy}"},
+                {"system", $"{destination.Position.System}"},
+                {"position", $"{destination.Position.Planet}"},
+                {"type", $"{(int) missionType}"},
+                {"speed", $"{(int) speed}"},
                 {"mission", "0"},
                 {"union", "0"}
             };
 
             foreach (var ship in ships)
-                values.Add($"am{(int) ship.ShipType}", ship.Quantity.ToString());
+                values.Add($"am{(int)ship.ShipType}", $"{ship.Quantity}");
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet2");
+            request.Headers.Add("Connection", "keep-alive");
+            request.Headers.Add("Upgrade-Insecure-Requests", "1");
             return request;
         }
 
-        public HttpRequestMessage BuildFleetSendingRequest4(string token, Planet destination, MissionType type, FleetSpeed speed, List<ShipBase> ships, Metal metal, Crystal crystal, Deuterium deuterium)
+        public HttpRequestMessage BuildFleetSendingRequest4(string token, Planet destination, List<ShipBase> ships, FleetSpeed speed, MissionType missionType, Metal metal, Crystal crystal, Deuterium deuterium)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=movement";
             var values = new Dictionary<string, string>
             {
                 {"token", token},
-                {"galaxy", destination.Position.Galaxy.ToString()},
-                {"system", destination.Position.System.ToString()},
-                {"position", destination.Position.Planet.ToString()},
+                {"galaxy", $"{destination.Position.Galaxy}"},
+                {"system", $"{destination.Position.System}"},
+                {"position", $"{destination.Position.Planet}"},
                 {"type", "1"},
-                {"speed", ((int) speed).ToString()},
+                {"speed", $"{(int)speed}"},
                 {"holdingtime", "1"},
-                {"mission", ((int) type).ToString()},
+                {"mission", $"{(int)missionType}"},
                 {"union2", "0"},
                 {"holdingOrExpTime", "0"},
                 {"prioMetal", "1"},
                 {"prioCrystal", "2"},
                 {"prioDeuterium", "3"},
-                {"metal", metal.Amount.ToString(CultureInfo.InvariantCulture)},
-                {"crystal", crystal.Amount.ToString(CultureInfo.InvariantCulture)},
-                {"deuterium", deuterium.Amount.ToString(CultureInfo.InvariantCulture)},
+                {"metal", $"{metal.Amount}"},
+                {"crystal", $"{crystal.Amount}"},
+                {"deuterium", $"{deuterium.Amount}"},
                 {"ajax", "1"}
             };
 
             foreach (var ship in ships)
-                values.Add($"am{(int) ship.ShipType}", ship.Quantity.ToString());
+                values.Add($"am{(int)ship.ShipType}", $"{ship.Quantity}");
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet3");
+            request.Headers.Add("Connection", "keep-alive");
+            request.Headers.Add("Upgrade-Insecure-Requests", "1");
             return request;
         }
+
+        public HttpRequestMessage BuildUpgradeBuildingRequest(string upgradeUrl)
+        {
+            return new GetHttpRequest().Create(upgradeUrl);
+        }    
     }
 }
