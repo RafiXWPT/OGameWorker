@@ -8,6 +8,7 @@ using OGameWorker.Code;
 using OGameWorker.Code.Extensions.Reactive;
 using OGameWorker.Code.WorkerQueue;
 using OGameWorker.Views.Main.Resources;
+using OGameWorker.Views.Main.TopBar;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
 using Worker.Objects;
@@ -18,15 +19,17 @@ using Worker.Objects.Ships.Fighter;
 
 namespace OGameWorker.Views.Main
 {
-    public class MainWindowViewModel : OGameWorkerBasicViewModel
+    public class MainWindowViewModel : OGameWorkerBaseViewModel
     {
         public ResourcesViewModel ResourcesViewModel { get; }
+        public TopBarViewModel TopBarViewModel { get; }
 
         public MainWindowViewModel() { }
 
         public MainWindowViewModel(OGameHttpClient client) : base(client) 
         {
             ResourcesViewModel = new ResourcesViewModel(client);
+            TopBarViewModel = new TopBarViewModel(ResourcesViewModel);
 
             var random = new Random();
             Observable.Interval(TimeSpan.FromMinutes(5))
@@ -51,6 +54,7 @@ namespace OGameWorker.Views.Main
             Task.Run(async () =>
             {
                 await SafeHttpTask(RefreshObjectContainerTask(true));
+                TopBarViewModel.ReadOnly = false;
             });
         }
 
@@ -59,39 +63,45 @@ namespace OGameWorker.Views.Main
             await Client.RefreshObjectContainer(force);
             ObjectContainer.Instance.CurrentSelectedPlanet = ObjectContainer.Instance.PlayerPlanets.First();
             ResourcesViewModel.Synchronize(ObjectContainer.Instance.CurrentSelectedPlanet);
+            TopBarViewModel.UpdatePlayerPlanets(ObjectContainer.Instance.PlayerPlanets);
+            CheckHostileMissions(); 
+        }
+
+        private void CheckHostileMissions()
+        {
             var hostileMissions = ObjectContainer.Instance.Missions.Where(m => m.MovementType == MovementType.Hostile).ToList();
-            if (hostileMissions.Any())
+            if (!hostileMissions.Any())
+                return;
+
+            foreach (var mission in hostileMissions)
             {
-                foreach (var mission in hostileMissions)
+                if (WorkerQueue.QueueActions.All(a => a.MissionId != mission.MissionId))
                 {
-                    if (WorkerQueue.QueueActions.All(a => a.MissionId != mission.MissionId))
+                    WorkerQueue.QueueAction(new QueueAction
                     {
-                        WorkerQueue.QueueAction(new QueueAction
+                        MissionId = mission.MissionId,
+                        Action = async () =>
                         {
-                            MissionId = mission.MissionId,
-                            Action = async () =>
+                            var fleetSaveMission = await OGameFleetSender.SaveFleet(Client, mission.DestinationId ?? 0);
+                            if (fleetSaveMission != null)
                             {
-                                var fleetSaveMission = await OGameFleetSender.SaveFleet(Client, mission.DestinationId ?? 0);
-                                if (fleetSaveMission != null)
+                                WorkerQueue.QueueAction(new QueueAction
                                 {
-                                    WorkerQueue.QueueAction(new QueueAction
+                                    MissionId = fleetSaveMission.MissionId,
+                                    Action = async () =>
                                     {
-                                        MissionId = fleetSaveMission.MissionId,
-                                        Action = async () =>
-                                        {
-                                            await Client.ReturnMission(fleetSaveMission);
-                                        },
-                                        ExecutionTime = DateTime.Now.AddMinutes(10)
-                                    });
-                                }
-                                else
-                                {
-                                    throw new Exception("Utworzenie misji fleetSave nie powiodło się");
-                                }
-                            },
-                            ExecutionTime = mission.ArrivalTime.AddMinutes(-120)
-                        });
-                    }
+                                        await SafeHttpTask(Client.ReturnMission(fleetSaveMission));
+                                    },
+                                    ExecutionTime = DateTime.Now.AddMinutes(10)
+                                });
+                            }
+                            else
+                            {
+                                throw new Exception("Utworzenie misji fleetSave nie powiodło się");
+                            }
+                        },
+                        ExecutionTime = mission.ArrivalTime.AddMinutes(-5)
+                    });
                 }
             }
         }

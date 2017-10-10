@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Exceptions;
 
 namespace OGameWorker.Code
 {
-    public abstract class OGameWorkerBasicViewModel : ReactiveObject
+    public abstract class OGameWorkerBaseViewModel : ReactiveObject
     {
         protected readonly OGameHttpClient Client;
 
-        protected OGameWorkerBasicViewModel() { }
+        protected OGameWorkerBaseViewModel() { }
 
-        protected OGameWorkerBasicViewModel(OGameHttpClient client)
+        protected OGameWorkerBaseViewModel(OGameHttpClient client)
         {
             Client = client;
         }
@@ -32,6 +33,11 @@ namespace OGameWorker.Code
                 await Client.ReLogIn();
                 goto HANDLE;
             }
+        }
+
+        public void RunOnDispatcher(Action lambda)
+        {
+            Application.Current.Dispatcher.Invoke(lambda);
         }
     }
 }

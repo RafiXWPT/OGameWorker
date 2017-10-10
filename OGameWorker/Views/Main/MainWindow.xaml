@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:OGameWorker.Views.Main"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     Title="MainWindow"
     Width="525"
     Height="350"
@@ -12,23 +13,47 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
-    <Grid DataContext="{Binding ResourcesViewModel}">
-        <StackPanel Orientation="Horizontal">
-            <TextBox
-                x:Name="Metal"
-                BorderThickness="0"
-                IsReadOnly="True"
-                Text="{Binding Metal.Amount, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox
-                x:Name="Crystal"
-                BorderThickness="0"
-                IsReadOnly="True"
-                Text="{Binding Crystal.Amount, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox
-                x:Name="Deuterium"
-                BorderThickness="0"
-                IsReadOnly="True"
-                Text="{Binding Deuterium.Amount, UpdateSourceTrigger=PropertyChanged}" />
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <telerik:RadComboBox
+                Width="200"
+                Margin="10"
+                HorizontalAlignment="Left"
+                DataContext="{Binding TopBarViewModel}"
+                DisplayMemberPath="Name"
+                IsReadOnly="{Binding ReadOnly}"
+                ItemsSource="{Binding Path=PlayerPlanets}"
+                SelectedItem="{Binding SelectedPlanet, Mode=TwoWay}" />
+            <telerik:RadTabControl>
+                <telerik:RadTabControl.Items>
+                    <telerik:RadTabItem Header="Overview">
+                        <telerik:RadTabItem.Content>
+                            <StackPanel DataContext="{Binding ResourcesViewModel}" Orientation="Horizontal">
+                                <TextBox
+                                    x:Name="Metal"
+                                    BorderThickness="0"
+                                    IsReadOnly="True"
+                                    Text="{Binding Metal.Amount, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    x:Name="Crystal"
+                                    BorderThickness="0"
+                                    IsReadOnly="True"
+                                    Text="{Binding Crystal.Amount, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    x:Name="Deuterium"
+                                    BorderThickness="0"
+                                    IsReadOnly="True"
+                                    Text="{Binding Deuterium.Amount, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </telerik:RadTabItem.Content>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="Galaxy">
+                        <telerik:RadTabItem.Content>
+                            def
+                        </telerik:RadTabItem.Content>
+                    </telerik:RadTabItem>
+                </telerik:RadTabControl.Items>
+            </telerik:RadTabControl>
         </StackPanel>
     </Grid>
 </Window>

@@ -17,7 +17,7 @@ using Worker.Objects.Resources;
 
 namespace OGameWorker.Views.Main.Resources
 {
-    public class ResourcesViewModel : OGameWorkerBasicViewModel
+    public class ResourcesViewModel : OGameWorkerBaseViewModel
     {
         private Metal _metal;
         private Crystal _crystal;

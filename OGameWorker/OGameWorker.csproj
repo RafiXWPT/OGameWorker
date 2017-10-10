@@ -74,6 +74,20 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for WPF R3 2017\Binaries\WPF45\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking">
+      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for WPF R3 2017\Binaries\WPF45\Telerik.Windows.Controls.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for WPF R3 2017\Binaries\WPF45\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for WPF R3 2017\Binaries\WPF45\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -86,7 +100,7 @@
     <Compile Include="Code\ConfigurationHelper\OGameConfigurationReader.cs" />
     <Compile Include="Code\Extensions\Reactive\ReactiveExtensions.cs" />
     <Compile Include="Code\LogOutWrapper.cs" />
-    <Compile Include="Code\OGameWorkerBasicViewModel.cs" />
+    <Compile Include="Code\OGameWorkerBaseViewModel.cs" />
     <Compile Include="Code\WorkerQueue\QueueAction.cs" />
     <Compile Include="Code\WorkerQueue\WorkerQueue.cs" />
     <Compile Include="Views\LogIn\LogInViewModel.cs" />
@@ -96,6 +110,7 @@
     <Compile Include="Views\Main\Fleet\FleetViewModel.cs" />
     <Compile Include="Views\Main\MainWindowViewModel.cs" />
     <Compile Include="Views\Main\Resources\ResourcesViewModel.cs" />
+    <Compile Include="Views\Main\TopBar\TopBarViewModel.cs" />
     <Page Include="Views\Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -162,5 +177,6 @@
       <Name>Worker.Parser</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

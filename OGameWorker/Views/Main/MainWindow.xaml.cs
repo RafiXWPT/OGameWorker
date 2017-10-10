@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using OGameWorker.Views.Main.Resources;
 using Worker.HttpModule.Clients;
 using Worker.Objects;
