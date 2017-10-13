@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OGameWorker.Code;
 using OGameWorker.Code.Extensions.Reactive;
 using OGameWorker.Code.WorkerQueue;
+using OGameWorker.Views.Main.Galaxy;
 using OGameWorker.Views.Main.Resources;
 using OGameWorker.Views.Main.TopBar;
 using Worker.HttpModule.Clients;
@@ -23,6 +24,7 @@ namespace OGameWorker.Views.Main
     {
         public ResourcesViewModel ResourcesViewModel { get; }
         public TopBarViewModel TopBarViewModel { get; }
+        public GalaxyViewModel GalaxyViewModel { get; }
 
         public MainWindowViewModel() { }
 
@@ -30,6 +32,7 @@ namespace OGameWorker.Views.Main
         {
             ResourcesViewModel = new ResourcesViewModel(client);
             TopBarViewModel = new TopBarViewModel(ResourcesViewModel);
+            GalaxyViewModel = new GalaxyViewModel(client);
 
             var random = new Random();
             Observable.Interval(TimeSpan.FromMinutes(5))
@@ -54,6 +57,7 @@ namespace OGameWorker.Views.Main
             Task.Run(async () =>
             {
                 await SafeHttpTask(RefreshObjectContainerTask(true));
+                ObjectContainer.Instance.Initialized = true;
                 TopBarViewModel.ReadOnly = false;
             });
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -18,7 +19,7 @@ namespace Worker.HttpModule.Clients
         private readonly string _username;
         private readonly string _password;
         private readonly Random _waiter = new Random();
-        private readonly HttpClient _httpClient;
+        public readonly HttpClient _httpClient;
         private readonly SemaphoreSlim _lockObject = new SemaphoreSlim(1);
 
         public OGameHttpClient(string server, string username, string password)
@@ -105,6 +106,12 @@ namespace Worker.HttpModule.Clients
             var movement = await SendHttpRequest(Builder.BuildMovementRequest());
             var missionReturnId = await DataProvider.GetMissionReturnId(movement.ResponseHtmlDocument, mission);
             await SendHttpRequest(Builder.BuildReturnMissionRequest(missionReturnId));
+        }
+
+        public async Task<List<Planet>> GetGalaxyView(int galaxy, int system)
+        {
+            var galaxyView = await SendHttpRequest(Builder.BuildGalaxyViewRequest(galaxy, system));
+            return await DataProvider.ReadGalaxyPlanets(galaxyView.ResponseHtmlDocument, galaxy, system);
         }
 
         public async Task<MessageContainer> SendHttpRequest(HttpRequestMessage request, bool force = false)

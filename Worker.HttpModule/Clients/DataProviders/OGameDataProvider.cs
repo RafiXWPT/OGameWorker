@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;
 using Worker.Parser.Buildings;
+using Worker.Parser.Galaxy;
 using Worker.Parser.Movement;
 using Worker.Parser.Planets;
 using Worker.Parser.Resources;
@@ -24,6 +26,7 @@ namespace Worker.HttpModule.Clients.DataProviders
             ResourcesParser = new ResourcesParser();
             TechnologiesParser = new TechnologiesParser();
             ShipsParser = new ShipsParser();
+            GalaxyParser = new GalaxyParser();
         }
 
         public MissionsParser MissionsParser { get; }
@@ -33,6 +36,7 @@ namespace Worker.HttpModule.Clients.DataProviders
         public TechnologiesParser TechnologiesParser { get; }
         public ResourcesParser ResourcesParser { get; }
         public ShipsParser ShipsParser { get; }
+        public GalaxyParser GalaxyParser { get; }
 
         public async Task<int> GetMissionReturnId(HtmlDocument document, MissionBase mission)
         {
@@ -82,6 +86,11 @@ namespace Worker.HttpModule.Clients.DataProviders
             ObjectContainer.Instance.PlayerShips.RemoveAll(s => s.BelongsTo.Id == planet.Id);
             var planetShips = await ShipsParser.GetShips(document, planet);
             ObjectContainer.Instance.PlayerShips.AddRange(planetShips);
+        }
+
+        public async Task<List<Planet>> ReadGalaxyPlanets(HtmlDocument document, int galaxy, int system)
+        {
+            return await GalaxyParser.GetPlanets(document, galaxy, system);
         }
     }
 }

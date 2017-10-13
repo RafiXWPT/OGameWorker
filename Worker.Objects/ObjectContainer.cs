@@ -12,6 +12,7 @@ namespace Worker.Objects
     public class ObjectContainer
     {
         private static readonly Lazy<ObjectContainer> Lazy = new Lazy<ObjectContainer>(() => new ObjectContainer());
+        public bool Initialized { get; set; }
 
         private ObjectContainer()
         {

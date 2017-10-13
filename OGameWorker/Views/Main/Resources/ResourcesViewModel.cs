@@ -53,7 +53,7 @@ namespace OGameWorker.Views.Main.Resources
         public ResourcesViewModel(OGameHttpClient client) : base(client)
         {
             Observable.Interval(TimeSpan.FromSeconds(1))
-                .Where(i => ObjectContainer.Instance.CurrentSelectedPlanet != null)
+                .Where(i => ObjectContainer.Instance.Initialized && ObjectContainer.Instance.PlayerPlanets.Any())
                 .SubscribeOnDispatcher()
                 .Subscribe(token =>
                 {
@@ -70,17 +70,14 @@ namespace OGameWorker.Views.Main.Resources
 
         private void UpdateResourcesLive()
         {
-            var currentPlanet = ObjectContainer.Instance.CurrentSelectedPlanet;
-            Metal = new Metal(Metal.Amount +
-                              (((MetalMine) ObjectContainer.Instance.GetBuilding(currentPlanet, BuildingType.MetalMine))
-                               .MetalProduction + Metal.BaseProduction) / 3600);
-            Crystal = new Crystal(Crystal.Amount +
-                                  (((CrystalMine) ObjectContainer.Instance.GetBuilding(currentPlanet,
-                                       BuildingType.CrystalMine)).CrystalProduction + Crystal.BaseProduction) / 3600);
-            Deuterium = new Deuterium(Deuterium.Amount +
-                                      (((DeuteriumExtractor) ObjectContainer.Instance.GetBuilding(currentPlanet,
-                                           BuildingType.DeuteriumExtractor)).DeuteriumProduction +
-                                       Deuterium.BaseProduction) / 3600);
+            foreach (var planet in ObjectContainer.Instance.PlayerPlanets)
+            {
+                planet.Metal = new Metal(planet.Metal.Amount + (((MetalMine)ObjectContainer.Instance.GetBuilding(planet, BuildingType.MetalMine)).MetalProduction + planet.Metal.BaseProduction) / 3600);
+                planet.Crystal = new Crystal(planet.Crystal.Amount + (((CrystalMine)ObjectContainer.Instance.GetBuilding(planet, BuildingType.CrystalMine)).CrystalProduction + planet.Crystal.BaseProduction) / 3600);
+                planet.Deuterium = new Deuterium(planet.Deuterium.Amount + (((DeuteriumExtractor)ObjectContainer.Instance.GetBuilding(planet, BuildingType.DeuteriumExtractor)).DeuteriumProduction + planet.Deuterium.BaseProduction) / 3600);
+            }
+
+            Synchronize(ObjectContainer.Instance.CurrentSelectedPlanet);
         }
 
     }

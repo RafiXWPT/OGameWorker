@@ -13,6 +13,7 @@ namespace Worker.HttpModule.Helpers
         public override HttpRequestMessage Create(string url, Dictionary<string, string> content)
         {
             var requestMessage = CreateBasicMessage(HttpMethod.Get, url);
+            requestMessage.Headers.Add("Upgrade-Insecure-Requests", "1");
             return requestMessage;
         }
     }

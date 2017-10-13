@@ -8,7 +8,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     Title="MainWindow"
     Width="525"
-    Height="350"
+    Height="700"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:MainWindowViewModel />
@@ -47,9 +47,44 @@
                             </StackPanel>
                         </telerik:RadTabItem.Content>
                     </telerik:RadTabItem>
-                    <telerik:RadTabItem Header="Galaxy">
+                    <telerik:RadTabItem DataContext="{Binding GalaxyViewModel}" Header="Galaxy">
                         <telerik:RadTabItem.Content>
-                            def
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <telerik:RadNumericUpDown
+                                        Maximum="6"
+                                        Minimum="1"
+                                        NumberDecimalDigits="0"
+                                        Value="{Binding Galaxy}" />
+                                    <telerik:RadNumericUpDown
+                                        Maximum="499"
+                                        Minimum="1"
+                                        NumberDecimalDigits="0"
+                                        Value="{Binding System}" />
+                                    <telerik:RadNumericUpDown
+                                        Maximum="10"
+                                        Minimum="0"
+                                        NumberDecimalDigits="0"
+                                        Value="{Binding Span}" />
+                                    <telerik:RadButton Command="{Binding LoadGalaxyDataCommand}" />
+                                </StackPanel>
+                                <telerik:RadGridView
+                                    x:Name="GalaxyGrid"
+                                    MaxHeight="600"
+                                    AutoGenerateColumns="False"
+                                    IsBusy="{Binding IsBusy}"
+                                    ItemsSource="{Binding Planets}">
+                                    <telerik:RadGridView.Columns>
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding PlanetType}" Header="Planet Type" />
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}" Header="Planet Name" />
+                                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Position}" Header="Planet Position" />
+                                    </telerik:RadGridView.Columns>
+                                </telerik:RadGridView>
+                                <telerik:RadDataPager
+                                    x:Name="GalaxyPager"
+                                    PageSize="15"
+                                    Source="{Binding Items, ElementName=GalaxyGrid}" />
+                            </StackPanel>
                         </telerik:RadTabItem.Content>
                     </telerik:RadTabItem>
                 </telerik:RadTabControl.Items>

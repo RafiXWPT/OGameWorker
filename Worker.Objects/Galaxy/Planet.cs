@@ -6,6 +6,17 @@ using Worker.Objects.Ships;
 
 namespace Worker.Objects.Galaxy
 {
+    public enum PlanetType
+    {
+        Empty,
+        Self,
+        EnemyVacation,
+        EnemyNewbie,
+        EnemyWeak,
+        EnemyInactive,
+        EnemyStrong
+    }
+
     public class Planet
     {
         public Planet(string name, PlanetPosition position) : this(0, name, position, new PlanetTemperature())
@@ -28,6 +39,7 @@ namespace Worker.Objects.Galaxy
         }
 
         public int Id { get; set; }
+        public PlanetType? PlanetType { get; set; }
         public PlanetTemperature Temperature { get; set; }
         public PlanetPosition Position { get; set; }
         public string Name { get; set; }
@@ -56,6 +68,8 @@ namespace Worker.Objects.Galaxy
             public int Galaxy { get; set; }
             public int System { get; set; }
             public int Planet { get; set; }
+
+            public override string ToString() => $"[{Galaxy}:{System}:{Planet}]";
         }
     }
 }

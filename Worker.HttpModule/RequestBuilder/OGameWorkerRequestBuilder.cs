@@ -91,6 +91,23 @@ namespace Worker.HttpModule.RequestBuilder
             return new PostHttpRequest().Create(url, content);
         }
 
+        public HttpRequestMessage BuildUpgradeBuildingRequest(string upgradeUrl)
+        {
+            return new GetHttpRequest().Create(upgradeUrl);
+        }
+
+        public HttpRequestMessage BuildGalaxyViewRequest(int galaxy, int system)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=galaxyContent&ajax=1";
+            var values = new Dictionary<string,string>
+            {
+                {"galaxy", $"{galaxy}"},
+                {"system", $"{system}" }
+            };
+
+            return new PostHttpRequest().Create(url, values);
+        }
+
         public HttpRequestMessage BuildFleetSendingRequest1()
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=fleet1";
@@ -116,7 +133,7 @@ namespace Worker.HttpModule.RequestBuilder
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet1");
             request.Headers.Add("Connection", "keep-alive");
-            request.Headers.Add("Upgrade-Insecure-Requests", "1");
+
             return request;
         }
 
@@ -140,7 +157,6 @@ namespace Worker.HttpModule.RequestBuilder
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet2");
             request.Headers.Add("Connection", "keep-alive");
-            request.Headers.Add("Upgrade-Insecure-Requests", "1");
             return request;
         }
 
@@ -174,13 +190,7 @@ namespace Worker.HttpModule.RequestBuilder
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet3");
             request.Headers.Add("Connection", "keep-alive");
-            request.Headers.Add("Upgrade-Insecure-Requests", "1");
             return request;
-        }
-
-        public HttpRequestMessage BuildUpgradeBuildingRequest(string upgradeUrl)
-        {
-            return new GetHttpRequest().Create(upgradeUrl);
-        }    
+        }  
     }
 }
