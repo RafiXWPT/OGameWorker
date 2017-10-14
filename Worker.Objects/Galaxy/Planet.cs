@@ -19,6 +19,11 @@ namespace Worker.Objects.Galaxy
 
     public class Planet
     {
+        public static Planet FromGalaxyPlanetInfo(GalaxyPlanetInfo info)
+        {
+            return new Planet(info.PlanetName, info.PlanetPosition);
+        }
+
         public Planet(string name, PlanetPosition position) : this(0, name, position, new PlanetTemperature())
         {
         }

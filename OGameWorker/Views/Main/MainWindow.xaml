@@ -35,7 +35,7 @@
                     </telerik:RadTabItem>
                     <telerik:RadTabItem DataContext="{Binding GalaxyViewModel}" Header="Galaxy">
                         <telerik:RadTabItem.Content>
-                            <galaxyTabContent:GalaxyTabContent />
+                            <galaxyTabContent:GalaxyTabContent DataContext="{Binding}" />
                         </telerik:RadTabItem.Content>
                     </telerik:RadTabItem>
                 </telerik:RadTabControl.Items>

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Telerik.Windows.Controls;
+using Worker.Objects.Galaxy;
 
 namespace OGameWorker.Views.Main.Galaxy
 {
@@ -23,6 +25,12 @@ namespace OGameWorker.Views.Main.Galaxy
         public GalaxyTabContent()
         {
             InitializeComponent();
+        }
+
+        private async void SendEspionageProbesClick(object sender, RoutedEventArgs e)
+        {
+            var planet = ((e.Source as RadButton).DataContext as GalaxyPlanetInfo);
+            await (DataContext as GalaxyViewModel).SendEspionageProbesTask(planet);
         }
     }
 }

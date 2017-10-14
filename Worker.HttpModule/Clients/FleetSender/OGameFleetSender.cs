@@ -7,6 +7,7 @@ using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;
 using Worker.Objects.Resources;
 using Worker.Objects.Ships;
+using Worker.Objects.Ships.Other;
 
 namespace Worker.HttpModule.Clients.FleetSender
 {
@@ -59,15 +60,23 @@ namespace Worker.HttpModule.Clients.FleetSender
         public static OGameFleetSender Transport(OGameHttpClient client, Planet source, Planet destination, FleetSpeed speed,
             List<ShipBase> ships, Metal metal, Crystal crystal, Deuterium deuterium)
         {
-            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Transport, metal, crystal,
+            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Transport, metal,
+                crystal,
                 deuterium);
         }
 
         public static OGameFleetSender Stationize(OGameHttpClient client, Planet source, Planet destination, FleetSpeed speed,
             List<ShipBase> ships, Metal metal, Crystal crystal, Deuterium deuterium)
         {
-            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Stationize, metal, crystal,
+            return new OGameFleetSender(client, source, destination, speed, ships, MissionType.Stationize, metal,
+                crystal,
                 deuterium);
+        }
+
+        public static OGameFleetSender Espionage(OGameHttpClient client, Planet source, Planet destination)
+        {
+            return new OGameFleetSender(client, source, destination, FleetSpeed.Speed100,
+                new List<ShipBase> {new EspionageProbe(source, 1, true, true)}, MissionType.Espionage);
         }
 
         public static async Task<MissionBase> SaveFleet(OGameHttpClient client, int savePlanetId)
@@ -115,6 +124,7 @@ namespace Worker.HttpModule.Clients.FleetSender
         {
             var result = await Task.Run(async () =>
             {
+                await _client.SendHttpRequest(_client.Builder.BuildOverviewRequest(_source.Id));
                 await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest1());
                 await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest2(_source, _ships, _speed, _missionType));
                 var sendFleetForm = await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest3(_destination, _ships, _speed, _missionType));

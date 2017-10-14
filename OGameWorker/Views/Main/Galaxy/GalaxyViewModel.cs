@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using OGameWorker.Code;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.FleetSender;
+using Worker.Objects;
 using Worker.Objects.Galaxy;
 
 namespace OGameWorker.Views.Main.Galaxy
@@ -26,6 +28,7 @@ namespace OGameWorker.Views.Main.Galaxy
         public int Span { get; set; }
 
         public ReactiveCommand LoadGalaxyDataCommand { get; protected set; }
+        //public ReactiveCommand SendEspionageProbesCommand { get; protected set; }
 
         public GalaxyViewModel()
         {
@@ -34,11 +37,12 @@ namespace OGameWorker.Views.Main.Galaxy
 
         public GalaxyViewModel(OGameHttpClient client)
         {
-            LoadGalaxyDataCommand = ReactiveCommand.CreateFromTask(t => LoadGalaxyData(Galaxy, System, Span));
+            LoadGalaxyDataCommand = ReactiveCommand.CreateFromTask(t => LoadGalaxyDataTask(Galaxy, System, Span));
+            //SendEspionageProbesCommand = ReactiveCommand.CreateFromTask(t => SendEspionageProbesTask());
             _client = client;
         }
 
-        public async Task LoadGalaxyData(int galaxy, int startSystem, int span)
+        public async Task LoadGalaxyDataTask(int galaxy, int startSystem, int span)
         {
             await Task.Run(async () =>
             {
@@ -64,6 +68,23 @@ namespace OGameWorker.Views.Main.Galaxy
 
                 IsBusy = false;
             });
+        }
+
+        public void SendAttack(GalaxyPlanetInfo info)
+        {
+            
+        }
+
+        public void SendTransport(GalaxyPlanetInfo info)
+        {
+            
+        }
+
+        public async Task SendEspionageProbesTask(GalaxyPlanetInfo info)
+        {
+            await OGameFleetSender.Espionage(_client, ObjectContainer.Instance.CurrentSelectedPlanet,
+                    Planet.FromGalaxyPlanetInfo(info))
+                .SendFleet();
         }
     }
 }

@@ -8,7 +8,8 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
+
+    <StackPanel x:Name="StackPanelItem" Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             <telerik:RadNumericUpDown
                 Maximum="6"
@@ -34,10 +35,36 @@
             IsBusy="{Binding IsBusy}"
             ItemsSource="{Binding Planets}">
             <telerik:RadGridView.Columns>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding PlanetPosition}" Header="Position" />
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding PlanetName}" Header="Planet Name" />
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding PlayerName}" Header="Player Name" />
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding PlanetType}" Header="Planet Type" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding PlanetPosition}"
+                    Header="Position"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding PlanetName}"
+                    Header="Planet Name"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding PlayerName}"
+                    Header="Player Name"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding PlanetType}"
+                    Header="Planet Type"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn Header="Actions" IsReadOnly="True">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <telerik:RadButton
+                                    Click="SendEspionageProbesClick"
+                                    Content="S"
+                                    IsEnabled="{Binding Path=CanExecuteEspionage}" />
+                                <telerik:RadButton Content="A" IsEnabled="{Binding Path=CanExecuteAttack}" />
+                                <telerik:RadButton Content="T" IsEnabled="{Binding Path=CanExecuteTransport}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
             </telerik:RadGridView.Columns>
         </telerik:RadGridView>
         <telerik:RadDataPager
