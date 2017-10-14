@@ -20,7 +20,7 @@ namespace OGameWorker.Views.Main.Galaxy
     {
         public bool IsBusy { get; set; }
         private readonly OGameHttpClient _client;
-        public ObservableCollection<Planet> Planets { get; set; } = new ObservableCollection<Planet>();
+        public ObservableCollection<GalaxyPlanetInfo> Planets { get; set; } = new ObservableCollection<GalaxyPlanetInfo>();
         public int Galaxy { get; set; }
         public int System { get; set; }
         public int Span { get; set; }
@@ -46,7 +46,7 @@ namespace OGameWorker.Views.Main.Galaxy
 
                 var fromSystem = startSystem - span;
                 var toSystem = startSystem + span;
-                var inMemoryPlanets = new List<Planet>();
+                var inMemoryPlanets = new List<GalaxyPlanetInfo>();
                 for (var i = fromSystem; i < toSystem; i++)
                 {
                     var galaxyPlanets = await _client.GetGalaxyView(galaxy, i);

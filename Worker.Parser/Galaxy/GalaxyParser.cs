@@ -42,26 +42,45 @@ namespace Worker.Parser.Galaxy
             return PlanetType.Self;
         }
 
-        private Planet ParsePlanet(HtmlNode planetNode, int galaxy, int system, int planet)
+        private GalaxyPlanetInfo ParsePlanet(HtmlNode planetNode, int galaxy, int system, int planet)
         {
             var planetType = ParsePlanetType(planetNode);
             var planetName = planetType == PlanetType.Empty
                 ? ""
-                : planetNode.Descendants("td")
-                    .First(d => d.HasAttributes && d.Attributes.Any(a => a.Value.Contains("planetname")))
+                : planetNode.Descendants("td").ToList()[2]
+                    .InnerHtml.Replace("\\n", string.Empty)
+                    .Trim()
+                    .Split('<')
+                    .First()
+                    .Trim();
+            var playerName = planetType == PlanetType.Empty
+                ? ""
+                : planetNode.Descendants("td").ToList()[5]
+                    .Descendants("span").First()
                     .InnerHtml.Replace("\\n", string.Empty)
                     .Trim()
                     .Split('<')
                     .First();
 
-            return new Planet(planetName, new Planet.PlanetPosition {Galaxy = galaxy, System = system, Planet = planet}) {PlanetType = planetType};
+            return new GalaxyPlanetInfo()
+            {
+                PlanetType = planetType,
+                PlanetName = planetName,
+                PlayerName = playerName,
+                PlanetPosition = new Planet.PlanetPosition
+                {
+                    Galaxy = galaxy,
+                    System = system,
+                    Planet = planet
+                }
+            };
         }
 
-        public async Task<List<Planet>> GetPlanets(HtmlDocument document, int galaxy, int system)
+        public async Task<List<GalaxyPlanetInfo>> GetPlanets(HtmlDocument document, int galaxy, int system)
         {
             return await Task.Run(() =>
             {
-                var planets = new List<Planet>();
+                var planets = new List<GalaxyPlanetInfo>();
                 var galaxyRows = document.DocumentNode.Descendants("table").First().Descendants("tbody").First().Descendants("tr").ToArray();
                 for (var i = 0; i < 15; i++)
                 {

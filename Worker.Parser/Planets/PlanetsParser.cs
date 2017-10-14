@@ -33,6 +33,7 @@ namespace Worker.Parser.Planets
                         .Replace("[", string.Empty)
                         .Replace("]", string.Empty)
                         .Split(':');
+
                     var planetPosition = new Planet.PlanetPosition
                     {
                         Galaxy = int.Parse(planetCoordsParts[0]),

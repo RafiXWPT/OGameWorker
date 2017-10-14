@@ -88,7 +88,7 @@ namespace Worker.HttpModule.Clients.DataProviders
             ObjectContainer.Instance.PlayerShips.AddRange(planetShips);
         }
 
-        public async Task<List<Planet>> ReadGalaxyPlanets(HtmlDocument document, int galaxy, int system)
+        public async Task<List<GalaxyPlanetInfo>> ReadGalaxyPlanets(HtmlDocument document, int galaxy, int system)
         {
             return await GalaxyParser.GetPlanets(document, galaxy, system);
         }

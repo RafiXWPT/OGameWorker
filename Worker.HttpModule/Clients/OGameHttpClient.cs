@@ -108,7 +108,7 @@ namespace Worker.HttpModule.Clients
             await SendHttpRequest(Builder.BuildReturnMissionRequest(missionReturnId));
         }
 
-        public async Task<List<Planet>> GetGalaxyView(int galaxy, int system)
+        public async Task<List<GalaxyPlanetInfo>> GetGalaxyView(int galaxy, int system)
         {
             var galaxyView = await SendHttpRequest(Builder.BuildGalaxyViewRequest(galaxy, system));
             return await DataProvider.ReadGalaxyPlanets(galaxyView.ResponseHtmlDocument, galaxy, system);
