@@ -10,6 +10,7 @@ using Worker.HttpModule.RequestBuilder;
 using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 
 namespace Worker.HttpModule.Clients
@@ -19,20 +20,20 @@ namespace Worker.HttpModule.Clients
         private readonly string _username;
         private readonly string _password;
         private readonly Random _waiter = new Random();
-        public readonly HttpClient _httpClient;
+        public readonly HttpClient HttpClient;
         private readonly SemaphoreSlim _lockObject = new SemaphoreSlim(1);
 
         public OGameHttpClient(string server, string username, string password)
         {
             _username = username;
             _password = password;
-            _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-            _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            _httpClient.DefaultRequestHeaders.Add("Accept-Language", "pl-PL,pl;q=0.8,en-US;q=0.6,en;q=0.4,pt;q=0.2");
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
-            _httpClient.DefaultRequestHeaders.ExpectContinue = false;
+            HttpClient = new HttpClient();
+            HttpClient.DefaultRequestHeaders.Clear();
+            HttpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            HttpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+            HttpClient.DefaultRequestHeaders.Add("Accept-Language", "pl-PL,pl;q=0.8,en-US;q=0.6,en;q=0.4,pt;q=0.2");
+            HttpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
+            HttpClient.DefaultRequestHeaders.ExpectContinue = false;
             Server = server;
             Builder = new OGameWorkerRequestBuilder(this);
             DataProvider = new OGameDataProvider();
@@ -51,6 +52,37 @@ namespace Worker.HttpModule.Clients
         public async Task<MessageContainer> LogIn(string username, string password)
         {
             return await SendHttpRequest(Builder.BuildLoginRequest(username, password), true);
+        }
+
+        public async Task ClearMessages(bool force = false)
+        {
+            await SendHttpRequest(Builder.BuildClearFleetMessagesRequest(MessageType.Espionage), force);
+            await SendHttpRequest(Builder.BuildClearFleetMessagesRequest(MessageType.WarRepor), force);
+            await SendHttpRequest(Builder.BuildClearFleetMessagesRequest(MessageType.Transport), force);
+            await SendHttpRequest(Builder.BuildClearFleetMessagesRequest(MessageType.Other), force);
+        }
+
+        public async Task GetNewMessages(MessageType type)
+        {
+            var messages = await SendHttpRequest(Builder.BuildFleetMessagesRequest(type));
+            await DataProvider.GetNewMessages(messages.ResponseHtmlDocument, type);
+            var maxPages = await DataProvider.MessagesParser.GetMessageMaxPages(messages.ResponseHtmlDocument);
+            for (var i = 1; i < maxPages; i++)
+            {
+                await GetMoreMessages(i+1, type);
+            }
+        }
+
+        private async Task GetMoreMessages(int page, MessageType type)
+        {
+            var messages = await SendHttpRequest(Builder.BuildFleetMessagesRequest(type, page));
+            await DataProvider.GetNewMessages(messages.ResponseHtmlDocument, type);
+        }
+
+        public async Task ReadMessage(MessageBase messageWrapper)
+        {
+            var message = await SendHttpRequest(Builder.BuildMessageDetailsRequest(messageWrapper.MessageId));
+            await DataProvider.ReadMessage(message.ResponseHtmlDocument, messageWrapper);
         }
 
         public async Task RefreshMissions(bool force = false)
@@ -127,7 +159,7 @@ namespace Worker.HttpModule.Clients
             {
                 if(!force)
                     await Task.Delay(TimeSpan.FromSeconds(_waiter.Next(0, 5)));
-                var response = await _httpClient.SendAsync(request);
+                var response = await HttpClient.SendAsync(request);
                 messageContainer = new MessageContainer(request, response);
                 if (await HasLoggedOut(messageContainer))
                 {

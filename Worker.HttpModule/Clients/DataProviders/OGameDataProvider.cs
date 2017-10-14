@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Parser.Buildings;
 using Worker.Parser.Galaxy;
+using Worker.Parser.Messages;
 using Worker.Parser.Movement;
 using Worker.Parser.Planets;
 using Worker.Parser.Resources;
@@ -17,6 +22,8 @@ namespace Worker.HttpModule.Clients.DataProviders
 {
     public class OGameDataProvider
     {
+        private readonly SemaphoreSlim _lockObject = new SemaphoreSlim(1);
+
         public OGameDataProvider()
         {
             MissionsParser = new MissionsParser();
@@ -27,6 +34,7 @@ namespace Worker.HttpModule.Clients.DataProviders
             TechnologiesParser = new TechnologiesParser();
             ShipsParser = new ShipsParser();
             GalaxyParser = new GalaxyParser();
+            MessagesParser = new MessagesParser();
         }
 
         public MissionsParser MissionsParser { get; }
@@ -37,6 +45,7 @@ namespace Worker.HttpModule.Clients.DataProviders
         public ResourcesParser ResourcesParser { get; }
         public ShipsParser ShipsParser { get; }
         public GalaxyParser GalaxyParser { get; }
+        public MessagesParser MessagesParser { get; }
 
         public async Task<int> GetMissionReturnId(HtmlDocument document, MissionBase mission)
         {
@@ -91,6 +100,44 @@ namespace Worker.HttpModule.Clients.DataProviders
         public async Task<List<GalaxyPlanetInfo>> ReadGalaxyPlanets(HtmlDocument document, int galaxy, int system)
         {
             return await GalaxyParser.GetPlanets(document, galaxy, system);
+        }
+
+        public async Task GetNewMessages(HtmlDocument document, MessageType type)
+        {
+            await _lockObject.WaitAsync();
+            var newMessages = await MessagesParser.GetNewMessages(document, type);
+            ObjectContainer.Instance.Messages.AddRange(newMessages);
+            _lockObject.Release();
+        }
+
+        public async Task ReadMessage(HtmlDocument document, MessageBase messageWrapper)
+        {
+            var updatedMessage = await MessagesParser.ReadMessage(document, messageWrapper);
+            switch (messageWrapper.MessageType)
+            {
+                case MessageType.Espionage:
+                    var espionageReport = updatedMessage as EspionageReport;
+                    if (espionageReport == null)
+                        return;
+
+                    var planetToUpdate = ObjectContainer.Instance.GalaxyPlanets.First(p => p.PlanetId == espionageReport.Target.PlanetId);
+                    planetToUpdate.Metal = espionageReport.Metal;
+                    planetToUpdate.Crystal = espionageReport.Crystal;
+                    planetToUpdate.Deuterium = espionageReport.Deuterium;
+                    planetToUpdate.ScanStatus = ScanStatus.Scanned;
+                    messageWrapper.MessageStatus = MessageStatus.Readed;
+
+                    return;
+                case MessageType.WarRepor:
+                    return;
+                case MessageType.Transport:
+                    return;
+                case MessageType.Other:
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(messageWrapper.MessageType), messageWrapper.MessageType, null);
+            }
+            
         }
     }
 }

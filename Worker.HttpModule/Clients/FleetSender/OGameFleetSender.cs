@@ -126,26 +126,27 @@ namespace Worker.HttpModule.Clients.FleetSender
             {
                 await _client.SendHttpRequest(_client.Builder.BuildOverviewRequest(_source.Id));
                 await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest1());
-                await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest2(_source, _ships, _speed, _missionType));
-                var sendFleetForm = await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest3(_destination, _ships, _speed, _missionType));
+                await _client.SendHttpRequest(
+                    _client.Builder.BuildFleetSendingRequest2(_source, _ships, _speed, _missionType));
+                var sendFleetForm =
+                    await _client.SendHttpRequest(
+                        _client.Builder.BuildFleetSendingRequest3(_destination, _ships, _speed, _missionType));
                 var sendFleetToken = sendFleetForm.ResponseHtmlDocument.DocumentNode.Descendants("input")
                     .First(i => i.Attributes.Any(a => a.OriginalName == "name" && a.Value == "token"))
                     .GetAttributeValue("value", null);
-                return await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest4(sendFleetToken, _destination, _ships, _speed, _missionType, _metal ?? new Metal(0), _crystal ?? new Crystal(0), _deuterium ?? new Deuterium(0)));
+                return await _client.SendHttpRequest(_client.Builder.BuildFleetSendingRequest4(sendFleetToken,
+                    _destination, _ships, _speed, _missionType, _metal ?? new Metal(0), _crystal ?? new Crystal(0),
+                    _deuterium ?? new Deuterium(0)));
             });
 
             if (result.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            var missionsBefore = ObjectContainer.Instance.Missions
-                .Where(m => m.MissionType == MissionType.Stationize)
-                .ToList();
+            var missionsBefore = ObjectContainer.Instance.Missions.ToList();
             await _client.RefreshMissions(true);
-            var missionsAfter = ObjectContainer.Instance.Missions
-                .Where(m => m.MissionType == MissionType.Stationize)
-                .ToList();
+            var missionsAfter = ObjectContainer.Instance.Missions.ToList();
 
-            return missionsAfter.Where(mission => missionsBefore.All(m => m.MissionId != mission.MissionId)).FirstOrDefault(mission => mission.DestinationId == _destination.Id);
+            return missionsAfter.FirstOrDefault(mission => missionsBefore.All(m => m.MissionId != mission.MissionId));
         }
     }
 }

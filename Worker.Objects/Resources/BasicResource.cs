@@ -5,7 +5,10 @@ namespace Worker.Objects.Resources
 {
     public abstract class BasicResource
     {
-        protected BasicResource(string amount) : this(Convert.ToInt32(amount, new CultureInfo("en-US")))
+        protected BasicResource(string amount)
+            : this(amount.Contains("Mln")
+                ? Convert.ToInt32(amount.Replace("Mln", string.Empty).Replace(",", string.Empty)) * 10000
+                : Convert.ToInt32(amount, new CultureInfo("en-US")))
         {
         }
 

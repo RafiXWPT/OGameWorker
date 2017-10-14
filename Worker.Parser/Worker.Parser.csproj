@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Buildings\BuildingsParser.cs" />
     <Compile Include="Galaxy\GalaxyParser.cs" />
+    <Compile Include="Messages\MessagesParser.cs" />
     <Compile Include="Movement\FleetMovementParser.cs" />
     <Compile Include="Movement\MissionsParser.cs" />
     <Compile Include="Planets\PlanetsParser.cs" />

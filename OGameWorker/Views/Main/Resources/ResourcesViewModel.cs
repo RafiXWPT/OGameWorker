@@ -13,6 +13,7 @@ using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Buildings.Resource;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Messages;
 using Worker.Objects.Resources;
 
 namespace OGameWorker.Views.Main.Resources
@@ -63,6 +64,9 @@ namespace OGameWorker.Views.Main.Resources
 
         public void Synchronize(Planet currentPlanet)
         {
+            if (currentPlanet == null)
+                return;
+
             Metal = currentPlanet.Metal;
             Crystal = currentPlanet.Crystal;
             Deuterium = currentPlanet.Deuterium;

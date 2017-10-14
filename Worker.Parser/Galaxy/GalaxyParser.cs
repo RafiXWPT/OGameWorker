@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
@@ -45,6 +46,9 @@ namespace Worker.Parser.Galaxy
         private GalaxyPlanetInfo ParsePlanet(HtmlNode planetNode, int galaxy, int system, int planet)
         {
             var planetType = ParsePlanetType(planetNode);
+            var planetId = planetType == PlanetType.Empty
+                ? 0
+                : int.Parse(Regex.Match(planetNode.Descendants("td").ToList()[1].GetAttributeValue("data-planet-id", null), @"-?\d+").Value);
             var planetName = planetType == PlanetType.Empty
                 ? ""
                 : planetNode.Descendants("td").ToList()[2]
@@ -64,6 +68,7 @@ namespace Worker.Parser.Galaxy
 
             return new GalaxyPlanetInfo()
             {
+                PlanetId = planetId,
                 PlanetType = planetType,
                 PlanetName = planetName,
                 PlayerName = playerName,

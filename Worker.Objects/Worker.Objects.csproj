@@ -59,6 +59,8 @@
     <Compile Include="Galaxy\Planet.cs" />
     <Compile Include="Galaxy\GalaxyPlanetInfo.cs" />
     <Compile Include="Helpers\PlanetCoreBuildingsHelper.cs" />
+    <Compile Include="Messages\EspionageReport.cs" />
+    <Compile Include="Messages\MessageBase.cs" />
     <Compile Include="Missions\FriendlyMission.cs" />
     <Compile Include="Missions\HostileMission.cs" />
     <Compile Include="Missions\MissionBase.cs" />

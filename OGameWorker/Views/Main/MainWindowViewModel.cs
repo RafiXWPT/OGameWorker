@@ -10,6 +10,7 @@ using OGameWorker.Code.WorkerQueue;
 using OGameWorker.Views.Main.Galaxy;
 using OGameWorker.Views.Main.Resources;
 using OGameWorker.Views.Main.TopBar;
+using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
 using Worker.Objects;
@@ -34,10 +35,9 @@ namespace OGameWorker.Views.Main
             TopBarViewModel = new TopBarViewModel(ResourcesViewModel);
             GalaxyViewModel = new GalaxyViewModel(client);
 
-            var random = new Random();
             Observable.Interval(TimeSpan.FromMinutes(5))
                 .SubscribeOnDispatcher()
-                .DelayTask(() => TimeSpan.FromMinutes(random.Next(10, 20)))
+                .DelayTask(() => TimeSpan.FromMinutes(Random.Next(10, 20)))
                 .Select(i => SafeHttpTask(RefreshObjectContainerTask(false)))
                 .Subscribe();
 
@@ -56,6 +56,7 @@ namespace OGameWorker.Views.Main
         {
             Task.Run(async () =>
             {
+                await Client.ClearMessages(true);
                 await SafeHttpTask(RefreshObjectContainerTask(true));
                 ObjectContainer.Instance.Initialized = true;
                 TopBarViewModel.ReadOnly = false;
@@ -65,7 +66,6 @@ namespace OGameWorker.Views.Main
         private async Task RefreshObjectContainerTask(bool force)
         {
             await Client.RefreshObjectContainer(force);
-            ObjectContainer.Instance.CurrentSelectedPlanet = ObjectContainer.Instance.PlayerPlanets.First();
             ResourcesViewModel.Synchronize(ObjectContainer.Instance.CurrentSelectedPlanet);
             TopBarViewModel.UpdatePlayerPlanets(ObjectContainer.Instance.PlayerPlanets);
             CheckHostileMissions(); 
@@ -76,7 +76,7 @@ namespace OGameWorker.Views.Main
             var hostileMissions = ObjectContainer.Instance.Missions.Where(m => m.MovementType == MovementType.Hostile).ToList();
             if (!hostileMissions.Any())
                 return;
-
+            
             foreach (var mission in hostileMissions)
             {
                 if (WorkerQueue.QueueActions.All(a => a.MissionId != mission.MissionId))

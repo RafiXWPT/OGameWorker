@@ -27,6 +27,14 @@
                 NumberDecimalDigits="0"
                 Value="{Binding Span}" />
             <telerik:RadButton Command="{Binding LoadGalaxyDataCommand}" />
+            <telerik:RadButton
+                Command="{Binding EnableFarmBoxCommand}"
+                Content="ENABLE FARMING BOT"
+                IsEnabled="{Binding IsEnableFarmBotActive}" />
+            <telerik:RadButton
+                Command="{Binding DisableFarmBoxCommand}"
+                Content="DISABLE FARMING BOT"
+                IsEnabled="{Binding IsDisableFarmBotActive}" />
         </StackPanel>
         <telerik:RadGridView
             x:Name="GalaxyGrid"
@@ -50,6 +58,14 @@
                 <telerik:GridViewDataColumn
                     DataMemberBinding="{Binding PlanetType}"
                     Header="Planet Type"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding ScanStatus}"
+                    Header="ScanStatus"
+                    IsReadOnly="True" />
+                <telerik:GridViewDataColumn
+                    DataMemberBinding="{Binding PlanetResources}"
+                    Header="Resources"
                     IsReadOnly="True" />
                 <telerik:GridViewDataColumn Header="Actions" IsReadOnly="True">
                     <telerik:GridViewDataColumn.CellTemplate>

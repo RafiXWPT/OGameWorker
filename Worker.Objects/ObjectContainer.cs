@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Objects.Research;
 using Worker.Objects.Ships;
@@ -26,6 +28,9 @@ namespace Worker.Objects
         public List<BuildingBase> PlayerBuildings { get; set; } = new List<BuildingBase>();
         public List<TechnologyBase> PlayerTechnologies { get; set; } = new List<TechnologyBase>();
         public List<ShipBase> PlayerShips { get; set; } = new List<ShipBase>();
+
+        public ObservableCollection<GalaxyPlanetInfo> GalaxyPlanets { get; set; } = new ObservableCollection<GalaxyPlanetInfo>();
+        public List<MessageBase> Messages { get; set; } = new List<MessageBase>();
 
         public BuildingBase GetBuilding(Planet planet, BuildingType type)
         {

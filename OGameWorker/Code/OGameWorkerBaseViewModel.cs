@@ -13,6 +13,7 @@ namespace OGameWorker.Code
     public abstract class OGameWorkerBaseViewModel : ReactiveObject
     {
         protected readonly OGameHttpClient Client;
+        protected readonly Random Random = new Random();
 
         protected OGameWorkerBaseViewModel() { }
 

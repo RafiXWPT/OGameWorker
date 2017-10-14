@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net.Http;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
 using Worker.HttpModule.Helpers;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Objects.Resources;
 using Worker.Objects.Ships;
@@ -19,6 +19,44 @@ namespace Worker.HttpModule.RequestBuilder
         public OGameWorkerRequestBuilder(OGameHttpClient client)
         {
             _client = client;
+        }
+
+        public HttpRequestMessage BuildEventListRequest()
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=eventList&ajax=1";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildMessagesRequest()
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=messages";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildFleetMessagesRequest(MessageType type, int page = 1)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=messages&tab=2{(int)type}&pagination={page}&ajax=1";
+            return new GetHttpRequest().Create(url);
+        }
+
+        public HttpRequestMessage BuildClearFleetMessagesRequest(MessageType type)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=messages";
+            var values = new Dictionary<string,string>
+            {
+                { "tabid", $"2{(int)type}"},
+                {"messageId", "-1" },
+                {"action", "103" },
+                {"ajax", "1" }
+            };
+
+            return new PostHttpRequest().Create(url, values);
+        }
+
+        public HttpRequestMessage BuildMessageDetailsRequest(int messageId)
+        {
+            var url = $"{_client.ServerUrl}/game/index.php?page=messages&messageId={messageId}&ajax=1";
+            return new GetHttpRequest().Create(url);
         }
 
         public HttpRequestMessage BuildOverviewRequest(int planetId = 0)
@@ -56,12 +94,6 @@ namespace Worker.HttpModule.RequestBuilder
         public HttpRequestMessage BuildDefenseRequest(int planetId)
         {
             var url = $"{_client.ServerUrl}/game/index.php?page=defense&cp={planetId}";
-            return new GetHttpRequest().Create(url);
-        }
-
-        public HttpRequestMessage BuildEventListRequest()
-        {
-            var url = $"{_client.ServerUrl}/game/index.php?page=eventList&ajax=1";
             return new GetHttpRequest().Create(url);
         }
 

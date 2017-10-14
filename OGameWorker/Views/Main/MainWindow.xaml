@@ -38,6 +38,11 @@
                             <galaxyTabContent:GalaxyTabContent DataContext="{Binding}" />
                         </telerik:RadTabItem.Content>
                     </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="TMP">
+                        <telerik:RadTabItem.Content>
+                            <telerik:RadButton Command="{Binding}" />
+                        </telerik:RadTabItem.Content>
+                    </telerik:RadTabItem>
                 </telerik:RadTabControl.Items>
             </telerik:RadTabControl>
         </StackPanel>
