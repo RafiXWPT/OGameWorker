@@ -27,7 +27,7 @@ namespace Worker.Objects
         public List<Planet> PlayerPlanets { get; set; } = new List<Planet>();
         public List<BuildingBase> PlayerBuildings { get; set; } = new List<BuildingBase>();
         public List<TechnologyBase> PlayerTechnologies { get; set; } = new List<TechnologyBase>();
-        public List<ShipBase> PlayerShips { get; set; } = new List<ShipBase>();
+        public List<ShipBase> PlayerFleet { get; set; } = new List<ShipBase>();
 
         public ObservableCollection<GalaxyPlanetInfo> GalaxyPlanets { get; set; } = new ObservableCollection<GalaxyPlanetInfo>();
         public List<MessageBase> Messages { get; set; } = new List<MessageBase>();
@@ -44,7 +44,7 @@ namespace Worker.Objects
 
         public ShipBase GetShip(Planet planet, ShipType type)
         {
-            return PlayerShips.First(s => s.BelongsTo.Id == planet.Id && s.ShipType == type);
+            return PlayerFleet.First(s => s.BelongsTo.Id == planet.Id && s.ShipType == type);
         }
 
         public Planet GetPlanet(int planetId)

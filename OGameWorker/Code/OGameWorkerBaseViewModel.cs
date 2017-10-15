@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.HttpModule.Exceptions;
 
 namespace OGameWorker.Code

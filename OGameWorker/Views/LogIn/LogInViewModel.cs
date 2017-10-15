@@ -6,6 +6,7 @@ using OGameWorker.Code.ConfigurationHelper;
 using OGameWorker.Views.Main;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.OGameClient;
 
 namespace OGameWorker.Views.LogIn
 {

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using OGameWorker.Code;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Buildings;
 using Worker.Objects.Buildings.Resource;

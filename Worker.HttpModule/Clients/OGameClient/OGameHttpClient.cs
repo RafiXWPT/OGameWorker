@@ -13,7 +13,7 @@ using Worker.Objects.Galaxy;
 using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 
-namespace Worker.HttpModule.Clients
+namespace Worker.HttpModule.Clients.OGameClient
 {
     public class OGameHttpClient
     {
@@ -65,8 +65,8 @@ namespace Worker.HttpModule.Clients
         public async Task GetNewMessages(MessageType type)
         {
             var messages = await SendHttpRequest(Builder.BuildFleetMessagesRequest(type));
-            await DataProvider.GetNewMessages(messages.ResponseHtmlDocument, type);
-            var maxPages = await DataProvider.MessagesParser.GetMessageMaxPages(messages.ResponseHtmlDocument);
+            await DataProvider.MessagesProvider.GetNewMessages(messages.ResponseHtmlDocument, type);
+            var maxPages = await DataProvider.MessagesProvider.MessagesParser.GetMessageMaxPages(messages.ResponseHtmlDocument);
             for (var i = 1; i < maxPages; i++)
             {
                 await GetMoreMessages(i+1, type);
@@ -76,26 +76,26 @@ namespace Worker.HttpModule.Clients
         private async Task GetMoreMessages(int page, MessageType type)
         {
             var messages = await SendHttpRequest(Builder.BuildFleetMessagesRequest(type, page));
-            await DataProvider.GetNewMessages(messages.ResponseHtmlDocument, type);
+            await DataProvider.MessagesProvider.GetNewMessages(messages.ResponseHtmlDocument, type);
         }
 
         public async Task ReadMessage(MessageBase messageWrapper)
         {
             var message = await SendHttpRequest(Builder.BuildMessageDetailsRequest(messageWrapper.MessageId));
-            await DataProvider.ReadMessage(message.ResponseHtmlDocument, messageWrapper);
+            await DataProvider.MessagesProvider.ReadMessage(message.ResponseHtmlDocument, messageWrapper);
         }
 
         public async Task RefreshMissions(bool force = false)
         {
             var missionsView = await SendHttpRequest(Builder.BuildEventListRequest(), force);
-            await DataProvider.UpdateMissions(missionsView.ResponseHtmlDocument);
+            await DataProvider.MissionsProvider.UpdateMissions(missionsView.ResponseHtmlDocument);
         }
 
         public async Task RefreshObjectContainer(bool force = false)
         {
             await RefreshMissions(force);
             var initialView = await SendHttpRequest(Builder.BuildOverviewRequest(), force);
-            await DataProvider.UpdatePlayerPlanets(initialView.ResponseHtmlDocument);
+            await DataProvider.PlanetProvider.UpdatePlayerPlanets(initialView.ResponseHtmlDocument);
             foreach (var planet in ObjectContainer.Instance.PlayerPlanets)
             {
                 await RefreshPlanet(planet, force);
@@ -105,17 +105,17 @@ namespace Worker.HttpModule.Clients
         public async Task RefreshPlanet(Planet planet, bool force = false)
         {
             var planetResources = await SendHttpRequest(Builder.BuildResourceRequest(planet.Id), force);
-            await DataProvider.UpdatePlanetResources(planetResources.ResponseHtmlDocument, planet);
-            await DataProvider.UpdatePlanetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
+            await DataProvider.ResourcesProvider.UpdatePlanetResources(planetResources.ResponseHtmlDocument, planet);
+            await DataProvider.BuildingsProvider.UpdatePlanetResourceBuildings(planetResources.ResponseHtmlDocument, planet);
 
             var planetStation = await SendHttpRequest(Builder.BuildStationRequest(planet.Id), force);
-            await DataProvider.UpdatePlanetStationBuildings(planetStation.ResponseHtmlDocument, planet);
+            await DataProvider.BuildingsProvider.UpdatePlanetStationBuildings(planetStation.ResponseHtmlDocument, planet);
 
             var planetTechnologies = await SendHttpRequest(Builder.BuildResearchRequest(planet.Id), force);
-            await DataProvider.UpdatePlanetTechnologies(planetTechnologies.ResponseHtmlDocument, planet);
+            await DataProvider.TechnologiesProvider.UpdatePlanetTechnologies(planetTechnologies.ResponseHtmlDocument, planet);
 
             var planetShipyard = await SendHttpRequest(Builder.BuildShipyardRequest(planet.Id), force);
-            await DataProvider.UpdatePlanetFleet(planetShipyard.ResponseHtmlDocument, planet);
+            await DataProvider.FleetProvider.UpdatePlanetFleet(planetShipyard.ResponseHtmlDocument, planet);
         }
 
         public async Task<MessageContainer> UpgradeResourceBuilding(BuildingType type, Planet planet)
@@ -125,7 +125,7 @@ namespace Worker.HttpModule.Clients
 
             var planetResources = await SendHttpRequest(Builder.BuildResourceRequest(planet.Id));
             var upgradeUrl =
-                await DataProvider.BuildingsParser.GetUpgradeBuildingUrl(planetResources.ResponseHtmlDocument, type);
+                await DataProvider.BuildingsProvider.BuildingsParser.GetUpgradeBuildingUrl(planetResources.ResponseHtmlDocument, type);
             var response = await SendHttpRequest(Builder.BuildUpgradeBuildingRequest(upgradeUrl));
             if (response.StatusCode == HttpStatusCode.OK)
                 await RefreshObjectContainer();
@@ -136,14 +136,14 @@ namespace Worker.HttpModule.Clients
         public async Task ReturnMission(MissionBase mission)
         {
             var movement = await SendHttpRequest(Builder.BuildMovementRequest());
-            var missionReturnId = await DataProvider.GetMissionReturnId(movement.ResponseHtmlDocument, mission);
+            var missionReturnId = await DataProvider.FleetMovementProvider.GetMissionReturnId(movement.ResponseHtmlDocument, mission);
             await SendHttpRequest(Builder.BuildReturnMissionRequest(missionReturnId));
         }
 
         public async Task<List<GalaxyPlanetInfo>> GetGalaxyView(int galaxy, int system)
         {
             var galaxyView = await SendHttpRequest(Builder.BuildGalaxyViewRequest(galaxy, system));
-            return await DataProvider.ReadGalaxyPlanets(galaxyView.ResponseHtmlDocument, galaxy, system);
+            return await DataProvider.GalaxyProvider.ReadGalaxyPlanets(galaxyView.ResponseHtmlDocument, galaxy, system);
         }
 
         public async Task<MessageContainer> SendHttpRequest(HttpRequestMessage request, bool force = false)

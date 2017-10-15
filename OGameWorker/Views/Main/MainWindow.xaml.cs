@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using OGameWorker.Views.Main.Resources;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 
 namespace OGameWorker.Views.Main

@@ -13,6 +13,7 @@ using OGameWorker.Views.Main.TopBar;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;

@@ -12,7 +12,7 @@ using Worker.Objects.Ships.Transport;
 
 namespace Worker.Parser.Ships
 {
-    public class ShipsParser
+    public class FleetParser
     {
         private HtmlNode GetMilitaryShipNode(IEnumerable<HtmlNode> shipsNode, ShipType type)
         {
@@ -100,7 +100,7 @@ namespace Worker.Parser.Ships
             }
         }
 
-        public async Task<List<ShipBase>> GetShips(HtmlDocument document, Planet planet)
+        public async Task<List<ShipBase>> GetFleet(HtmlDocument document, Planet planet)
         {
             return await Task.Run(() =>
             {

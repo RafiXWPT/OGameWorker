@@ -26,15 +26,15 @@
                 Minimum="0"
                 NumberDecimalDigits="0"
                 Value="{Binding Span}" />
-            <telerik:RadButton Command="{Binding LoadGalaxyDataCommand}" />
+            <telerik:RadButton Command="{Binding LoadGalaxyDataCommand}" Content="GET GALAXY DATA" />
             <telerik:RadButton
                 Command="{Binding EnableFarmBoxCommand}"
-                Content="ENABLE FARMING BOT"
-                IsEnabled="{Binding IsEnableFarmBotActive}" />
+                Content="ENABLE SCAN BOT"
+                IsEnabled="{Binding IsEnableScanBotActive}" />
             <telerik:RadButton
-                Command="{Binding DisableFarmBoxCommand}"
-                Content="DISABLE FARMING BOT"
-                IsEnabled="{Binding IsDisableFarmBotActive}" />
+                Command="{Binding DisableScanBoxCommand}"
+                Content="DISABLE SCAN BOT"
+                IsEnabled="{Binding IsDisableScanBotActive}" />
         </StackPanel>
         <telerik:RadGridView
             x:Name="GalaxyGrid"

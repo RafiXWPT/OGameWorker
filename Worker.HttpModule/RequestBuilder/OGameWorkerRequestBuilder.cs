@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.HttpModule.Helpers;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Messages;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
+using Worker.HttpModule.Clients.OGameClient;
 
 namespace OGameWorker.Views.Main.Fleet
 {

@@ -57,7 +57,7 @@ namespace Worker.Objects.Galaxy
             .Where(b => b.BelongsTo.Id == Id && b.CurrentLevel > 0)
             .ToList();
 
-        public List<ShipBase> PlanetShips => ObjectContainer.Instance.PlayerShips
+        public List<ShipBase> PlanetShips => ObjectContainer.Instance.PlayerFleet
             .Where(s => s.BelongsTo.Id == Id && s.Quantity > 0)
             .ToList();
 

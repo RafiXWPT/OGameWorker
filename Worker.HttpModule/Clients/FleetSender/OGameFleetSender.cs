@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;

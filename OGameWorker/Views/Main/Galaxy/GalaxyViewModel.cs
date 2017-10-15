@@ -16,6 +16,7 @@ using OGameWorker.Code.WorkerQueue;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
+using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Messages;
@@ -28,30 +29,30 @@ namespace OGameWorker.Views.Main.Galaxy
         public bool IsSendingProbes { get; set; }
         public bool IsReadingEspionageReport { get; set; }
 
-        private bool _isFarmBotRunning;
-        public bool IsFarmBotRunning
+        private bool _isScanBotRunning;
+        public bool IsScanBotRunning
         {
-            get => _isFarmBotRunning;
+            get => _isScanBotRunning;
             set
             {
-                _isFarmBotRunning = value;
-                IsEnableFarmBotActive = !_isFarmBotRunning;
-                IsDisableFarmBotActive = _isFarmBotRunning;
+                _isScanBotRunning = value;
+                IsEnableScanBotActive = !_isScanBotRunning;
+                IsDisableScanBotActive = _isScanBotRunning;
             }
         }
 
-        private bool _isEnableFarmBotActive;
-        public bool IsEnableFarmBotActive
+        private bool _isEnableScanBotActive;
+        public bool IsEnableScanBotActive
         {
-            get => _isEnableFarmBotActive;
-            set => this.RaiseAndSetIfChanged(ref _isEnableFarmBotActive, value);
+            get => _isEnableScanBotActive;
+            set => this.RaiseAndSetIfChanged(ref _isEnableScanBotActive, value);
         }
 
-        private bool _isDisableFarmBotActive;
-        public bool IsDisableFarmBotActive
+        private bool _isDisableScanBotActive;
+        public bool IsDisableScanBotActive
         {
-            get => _isDisableFarmBotActive;
-            set => this.RaiseAndSetIfChanged(ref _isDisableFarmBotActive, value);
+            get => _isDisableScanBotActive;
+            set => this.RaiseAndSetIfChanged(ref _isDisableScanBotActive, value);
         }
 
         public ObservableCollection<GalaxyPlanetInfo> Planets
@@ -65,8 +66,8 @@ namespace OGameWorker.Views.Main.Galaxy
         public int Span { get; set; }
 
         public ReactiveCommand LoadGalaxyDataCommand { get; protected set; }
-        public ReactiveCommand EnableFarmBoxCommand { get; protected set; }
-        public ReactiveCommand DisableFarmBotCommand { get; protected set; }
+        public ReactiveCommand EnableScanBoxCommand { get; protected set; }
+        public ReactiveCommand DisableScanBotCommand { get; protected set; }
 
         public GalaxyViewModel()
         {
@@ -75,14 +76,14 @@ namespace OGameWorker.Views.Main.Galaxy
 
         public GalaxyViewModel(OGameHttpClient client) : base(client)
         {
-            IsFarmBotRunning = false;
+            IsScanBotRunning = false;
             LoadGalaxyDataCommand = ReactiveCommand.CreateFromTask(t => LoadGalaxyDataTask(Galaxy, System, Span));
-            EnableFarmBoxCommand = ReactiveCommand.CreateFromTask(t => EnableFarmBot());
-            DisableFarmBotCommand = ReactiveCommand.CreateFromTask(t => DisableFarmBot());
+            EnableScanBoxCommand = ReactiveCommand.CreateFromTask(t => EnableScanBot());
+            DisableScanBotCommand = ReactiveCommand.CreateFromTask(t => DisableScanBot());
 
             Observable.Interval(TimeSpan.FromSeconds(10))
                 .Where(i => ObjectContainer.Instance.CurrentSelectedPlanet != null)
-                .Where(i => IsFarmBotRunning && Planets.Any())
+                .Where(i => IsScanBotRunning && Planets.Any())
                 .Where(i => !IsSendingProbes)
                 .SubscribeOnDispatcher()
                 .DelayTask(() => TimeSpan.FromSeconds(Random.Next(0, 10)))
@@ -106,7 +107,7 @@ namespace OGameWorker.Views.Main.Galaxy
                 var fromSystem = startSystem - span;
                 var toSystem = startSystem + span;
                 var inMemoryPlanets = new List<GalaxyPlanetInfo>();
-                for (var i = fromSystem; i < toSystem; i++)
+                for (var i = fromSystem; i <= toSystem; i++)
                 {
                     var galaxyPlanets = await Client.GetGalaxyView(galaxy, i);
                     inMemoryPlanets.AddRange(galaxyPlanets);
@@ -125,15 +126,15 @@ namespace OGameWorker.Views.Main.Galaxy
             });
         }
 
-        public Task EnableFarmBot()
+        public Task EnableScanBot()
         {
-            IsFarmBotRunning = true;
+            IsScanBotRunning = true;
             return Task.CompletedTask;
         }
 
-        public Task DisableFarmBot()
+        public Task DisableScanBot()
         {
-            IsFarmBotRunning = false;
+            IsScanBotRunning = false;
             return Task.CompletedTask;
         }
 
@@ -145,7 +146,10 @@ namespace OGameWorker.Views.Main.Galaxy
                 var notScanned = ObjectContainer.Instance.GalaxyPlanets.FirstOrDefault(
                     p => p.ScanStatus == ScanStatus.NotScanned && p.PlanetType == PlanetType.EnemyInactive);
                 if (notScanned == null)
+                {
+                    await DisableScanBot();
                     return;
+                }
 
                 var mission = await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, Planet.FromGalaxyPlanetInfo(notScanned))
                     .SendFleet();
