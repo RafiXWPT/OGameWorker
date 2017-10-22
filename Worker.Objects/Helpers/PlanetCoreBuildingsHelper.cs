@@ -1,6 +1,7 @@
-﻿using Worker.Objects.Buildings;
-using Worker.Objects.Buildings.Station;
-using Worker.Objects.Galaxy;
+﻿using Worker.Objects.Galaxy;
+using Worker.Objects.Structures;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Buildings.Station;
 
 namespace Worker.Objects.Helpers
 {
@@ -19,6 +20,11 @@ namespace Worker.Objects.Helpers
         public static ResearchLabolatory GetPlanetResearchLabolatory(Planet planet)
         {
             return ObjectContainer.Instance.GetBuilding(planet, BuildingType.ResearchLabolatory) as ResearchLabolatory;
+        }
+
+        public static NaniteFactory GetPlanetNaniteFactory(Planet planet)
+        {
+            return ObjectContainer.Instance.GetBuilding(planet, BuildingType.NaniteFactory) as NaniteFactory;
         }
     }
 }

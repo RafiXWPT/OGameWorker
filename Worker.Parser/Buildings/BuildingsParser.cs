@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
-using Worker.Objects.Buildings;
-using Worker.Objects.Buildings.Resource;
-using Worker.Objects.Buildings.Station;
-using Worker.Objects.Buildings.Warehouse;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Structures;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Buildings.Resource;
+using Worker.Objects.Structures.Buildings.Station;
+using Worker.Objects.Structures.Buildings.Warehouse;
 
 namespace Worker.Parser.Buildings
 {

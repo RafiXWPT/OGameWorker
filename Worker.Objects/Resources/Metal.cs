@@ -2,7 +2,7 @@
 
 namespace Worker.Objects.Resources
 {
-    public class Metal : BasicResource
+    public class Metal : ResourceBase
     {
         public Metal(string amount) : base(amount)
         {

@@ -17,8 +17,6 @@ using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;
-using Worker.Objects.Ships;
-using Worker.Objects.Ships.Fighter;
 
 namespace OGameWorker.Views.Main
 {

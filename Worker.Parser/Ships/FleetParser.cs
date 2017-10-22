@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
-using Worker.Objects.Ships;
-using Worker.Objects.Ships.Fighter;
-using Worker.Objects.Ships.Other;
-using Worker.Objects.Ships.Recycle;
-using Worker.Objects.Ships.Transport;
+using Worker.Objects.Structures;
+using Worker.Objects.Structures.Ships;
+using Worker.Objects.Structures.Ships.Fighter;
+using Worker.Objects.Structures.Ships.Other;
+using Worker.Objects.Structures.Ships.Recycle;
+using Worker.Objects.Structures.Ships.Transport;
 
 namespace Worker.Parser.Ships
 {

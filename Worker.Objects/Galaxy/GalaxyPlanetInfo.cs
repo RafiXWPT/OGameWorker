@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Worker.Objects.Resources;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Ships;
 
 namespace Worker.Objects.Galaxy
 {
@@ -25,6 +27,8 @@ namespace Worker.Objects.Galaxy
         public Metal Metal { get; set; } = new Metal(0);
         public Crystal Crystal { get; set; } = new Crystal(0);
         public Deuterium Deuterium { get; set; } = new Deuterium(0);
+        public List<ShipBase> Fleet { get; set; } = new List<ShipBase>();
+        public List<BuildingBase> Buildings { get; set; } = new List<BuildingBase>();
 
         public string PlanetResources => $"M:{Metal.Amount} C:{Crystal.Amount} D:{Deuterium.Amount}";
 

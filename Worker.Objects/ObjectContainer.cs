@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Objects.Research;
-using Worker.Objects.Ships;
+using Worker.Objects.Structures;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Ships;
 
 namespace Worker.Objects
 {

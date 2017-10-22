@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects;
-using Worker.Objects.Buildings;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Structures;
+using Worker.Objects.Structures.Buildings;
 using Worker.Parser.Buildings;
 
 namespace Worker.HttpModule.Clients.DataProviders.Providers

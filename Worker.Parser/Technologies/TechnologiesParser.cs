@@ -32,6 +32,11 @@ namespace Worker.Parser.Technologies
             if (int.TryParse(levelValueString, out int level))
                 return level;
 
+            if (levelValueString.Contains("undermark") && int.TryParse(levelValueString.Split('<')[0], out level))
+            {
+                return level;
+            }
+
             levelValueString = levelValueString.Split(new[] {"</span>"}, StringSplitOptions.RemoveEmptyEntries)[1]
                 .Trim();
 

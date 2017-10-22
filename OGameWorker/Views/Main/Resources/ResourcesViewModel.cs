@@ -11,11 +11,12 @@ using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
-using Worker.Objects.Buildings;
-using Worker.Objects.Buildings.Resource;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Messages;
 using Worker.Objects.Resources;
+using Worker.Objects.Structures;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Buildings.Resource;
 
 namespace OGameWorker.Views.Main.Resources
 {

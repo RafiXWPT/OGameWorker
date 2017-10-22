@@ -28,7 +28,7 @@
                 Value="{Binding Span}" />
             <telerik:RadButton Command="{Binding LoadGalaxyDataCommand}" Content="GET GALAXY DATA" />
             <telerik:RadButton
-                Command="{Binding EnableFarmBoxCommand}"
+                Command="{Binding EnableScanBoxCommand}"
                 Content="ENABLE SCAN BOT"
                 IsEnabled="{Binding IsEnableScanBotActive}" />
             <telerik:RadButton

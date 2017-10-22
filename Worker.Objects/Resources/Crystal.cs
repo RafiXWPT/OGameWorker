@@ -1,6 +1,6 @@
 ﻿namespace Worker.Objects.Resources
 {
-    public class Crystal : BasicResource
+    public class Crystal : ResourceBase
     {
         public Crystal(string amount) : base(amount)
         {

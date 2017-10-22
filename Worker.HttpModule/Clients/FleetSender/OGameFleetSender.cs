@@ -7,8 +7,8 @@ using Worker.Objects;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Missions;
 using Worker.Objects.Resources;
-using Worker.Objects.Ships;
-using Worker.Objects.Ships.Other;
+using Worker.Objects.Structures.Ships;
+using Worker.Objects.Structures.Ships.Other;
 
 namespace Worker.HttpModule.Clients.FleetSender
 {

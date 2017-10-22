@@ -1,6 +1,6 @@
 ﻿namespace Worker.Objects.Resources
 {
-    public class Energy : BasicResource
+    public class Energy : ResourceBase
     {
         public Energy(string amount) : base(amount)
         {

@@ -86,7 +86,11 @@ namespace Worker.Parser.Galaxy
             return await Task.Run(() =>
             {
                 var planets = new List<GalaxyPlanetInfo>();
-                var galaxyRows = document.DocumentNode.Descendants("table").First().Descendants("tbody").First().Descendants("tr").ToArray();
+                var galaxyTable = document.DocumentNode.Descendants("table").FirstOrDefault();
+                if (galaxyTable == null)
+                    return planets;
+
+                var galaxyRows = galaxyTable.Descendants("tbody").First().Descendants("tr").ToArray();
                 for (var i = 0; i < 15; i++)
                 {
                     planets.Add(ParsePlanet(galaxyRows[i], galaxy, system, i+1));

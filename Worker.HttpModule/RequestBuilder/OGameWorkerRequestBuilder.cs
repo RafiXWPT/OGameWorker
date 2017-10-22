@@ -9,7 +9,7 @@ using Worker.Objects.Galaxy;
 using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Objects.Resources;
-using Worker.Objects.Ships;
+using Worker.Objects.Structures.Ships;
 
 namespace Worker.HttpModule.RequestBuilder
 {

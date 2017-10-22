@@ -2,7 +2,7 @@
 
 namespace Worker.Objects.Resources
 {
-    public class Deuterium : BasicResource
+    public class Deuterium : ResourceBase
     {
         public Deuterium(string amount) : base(amount)
         {

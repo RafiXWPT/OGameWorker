@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Worker.Objects.Buildings;
 using Worker.Objects.Resources;
-using Worker.Objects.Ships;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Ships;
 
 namespace Worker.Objects.Galaxy
 {
