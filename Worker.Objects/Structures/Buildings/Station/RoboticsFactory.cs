@@ -9,7 +9,7 @@ namespace Worker.Objects.Structures.Buildings.Station
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.RoboticsFactory;
+        public override BuildingType Type => BuildingType.RoboticsFactory;
         public override int BaseMetalCost => 400;
         public override int BaseCrystalCost => 120;
         public override int BaseDeuteriumCost => 200;

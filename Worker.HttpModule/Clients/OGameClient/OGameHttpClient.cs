@@ -117,6 +117,9 @@ namespace Worker.HttpModule.Clients.OGameClient
 
             var planetShipyard = await SendHttpRequest(Builder.BuildShipyardRequest(planet.Id), force);
             await DataProvider.FleetProvider.UpdatePlanetFleet(planetShipyard.ResponseHtmlDocument, planet);
+
+            var planetDefense = await SendHttpRequest(Builder.BuildDefenseRequest(planet.Id), force);
+            await DataProvider.DefenseProvider.UpdatePlanetDefense(planetDefense.ResponseHtmlDocument, planet);
         }
 
         public async Task<MessageContainer> UpgradeResourceBuilding(BuildingType type, Planet planet)

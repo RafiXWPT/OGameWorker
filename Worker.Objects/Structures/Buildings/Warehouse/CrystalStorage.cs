@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Buildings.Warehouse
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.CrystalStorage;
+        public override BuildingType Type => BuildingType.CrystalStorage;
 
         public override int BaseMetalCost => 1000;
 

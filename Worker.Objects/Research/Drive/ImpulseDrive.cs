@@ -9,7 +9,7 @@ namespace Worker.Objects.Research.Drive
         {
         }
 
-        public override TechnologyType TechnologyType => TechnologyType.ImpulseDrive;
+        public override TechnologyType Type => TechnologyType.ImpulseDrive;
         public override int BaseMetalCost => 2000;
         public override int BaseCrystalCost => 4000;
         public override int BaseDeuteriumCost => 600;

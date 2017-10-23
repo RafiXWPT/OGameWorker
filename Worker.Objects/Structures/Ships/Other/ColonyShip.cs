@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Ships.Other
         }
 
         public override ShipAssignment ShipAssignment => ShipAssignment.Other;
-        public override ShipType ShipType => ShipType.ColonyShip;
+        public override ShipType Type => ShipType.ColonyShip;
         public override int MetalCost => 10000;
         public override int CrystalCost => 20000;
         public override int DeuteriumCost => 10000;

@@ -8,7 +8,7 @@ namespace Worker.Objects.Structures.Buildings.Station
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.NaniteFactory;
+        public override BuildingType Type => BuildingType.NaniteFactory;
         public override int BaseMetalCost => 1000000;
         public override int BaseCrystalCost => 500000;
         public override int BaseDeuteriumCost => 100000;

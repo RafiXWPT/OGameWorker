@@ -9,7 +9,7 @@ namespace Worker.Objects.Research.Advanced
         {
         }
 
-        public override TechnologyType TechnologyType => TechnologyType.Astrophysics;
+        public override TechnologyType Type => TechnologyType.Astrophysics;
         public override int BaseMetalCost => 4000;
         public override int BaseCrystalCost => 8000;
         public override int BaseDeuteriumCost => 4000;

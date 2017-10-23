@@ -94,15 +94,17 @@ namespace Worker.Parser.Buildings
             var buildingLevel = GetBuildingLevel(buildingNode);
             var canUpgradeStatus = CanUpgradeStatus(buildingNode);
             var techReached = canUpgradeStatus != "off";
-            var canUpgrade = techReached && canUpgradeStatus != "disabled";
+            var canBuild = techReached && canUpgradeStatus != "disabled";
             switch (type)
             {
                 case BuildingType.RoboticsFactory:
-                    return new RoboticsFactory(planet, buildingLevel, techReached, canUpgrade);
+                    return new RoboticsFactory(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.Shipyard:
-                    return new Shipyard(planet, buildingLevel, techReached, canUpgrade);
+                    return new Shipyard(planet, buildingLevel, techReached, canBuild);
                 case BuildingType.ResearchLabolatory:
-                    return new ResearchLabolatory(planet, buildingLevel, techReached, canUpgrade);
+                    return new ResearchLabolatory(planet, buildingLevel, techReached, canBuild);
+                case BuildingType.NaniteFactory:
+                    return new NaniteFactory(planet, buildingLevel, techReached, canBuild);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

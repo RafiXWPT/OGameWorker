@@ -14,7 +14,7 @@ namespace Worker.Objects.Structures.Buildings
             CurrentLevel = currentLevel;
         }
 
-        public abstract BuildingType BuildingType { get; }
+        public abstract BuildingType Type { get; }
         public abstract int BaseMetalCost { get; }
         public abstract int BaseCrystalCost { get; }
         public abstract int BaseDeuteriumCost { get; }

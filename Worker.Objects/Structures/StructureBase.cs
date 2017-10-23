@@ -44,7 +44,8 @@ namespace Worker.Objects.Structures
         {
             BuildingType.RoboticsFactory,
             BuildingType.Shipyard,
-            BuildingType.ResearchLabolatory
+            BuildingType.ResearchLabolatory,
+            BuildingType.NaniteFactory
         };
     }
 
@@ -64,16 +65,33 @@ namespace Worker.Objects.Structures
 
     public enum DefenseType
     {
-        RocketLauncher,
-        LightLaser,
-        HeavyLaser,
-        IonCannon,
-        GaussCannon,
-        PlasmaTurret,
-        SmallShield,
-        LargeShield,
-        AntiBallisticMissile,
-        InterplanetaryMissile
+        RocketLauncher = 401,
+        LightLaser = 402,
+        HeavyLaser = 403,
+        IonCannon = 405,
+        GaussCannon = 404,
+        PlasmaTurret = 406,
+        SmallShield = 407,
+        LargeShield = 408,
+        AntiBallisticMissile = 502,
+        InterplanetaryMissile = 503
+    }
+
+    public static class Defense
+    {
+        public static List<DefenseType> List => new List<DefenseType>
+        {
+            DefenseType.RocketLauncher,
+            DefenseType.LightLaser,
+            DefenseType.HeavyLaser,
+            DefenseType.IonCannon,
+            DefenseType.GaussCannon,
+            DefenseType.PlasmaTurret,
+            DefenseType.SmallShield,
+            DefenseType.LargeShield,
+            //DefenseType.AntiBallisticMissile,
+            //DefenseType.InterplanetaryMissile
+        };
     }
 
     #endregion

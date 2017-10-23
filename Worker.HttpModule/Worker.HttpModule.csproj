@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\DataProviders\Providers\BuildingsProvider.cs" />
+    <Compile Include="Clients\DataProviders\Providers\DefenseProvider.cs" />
     <Compile Include="Clients\DataProviders\Providers\FleetMovementProvider.cs" />
     <Compile Include="Clients\DataProviders\Providers\GalaxyProvider.cs" />
     <Compile Include="Clients\DataProviders\Providers\MessagesProvider.cs" />

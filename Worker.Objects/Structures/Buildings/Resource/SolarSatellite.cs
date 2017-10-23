@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Buildings.Resource
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.SolarSatellite;
+        public override BuildingType Type => BuildingType.SolarSatellite;
         public override int BaseMetalCost => 0;
         public override int BaseCrystalCost => 0;
         public override int BaseDeuteriumCost => 0;

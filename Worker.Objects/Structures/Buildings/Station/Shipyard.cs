@@ -9,7 +9,7 @@ namespace Worker.Objects.Structures.Buildings.Station
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.Shipyard;
+        public override BuildingType Type => BuildingType.Shipyard;
         public override int BaseMetalCost => 400;
         public override int BaseCrystalCost => 200;
         public override int BaseDeuteriumCost => 100;

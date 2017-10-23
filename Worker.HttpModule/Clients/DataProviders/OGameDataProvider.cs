@@ -12,6 +12,7 @@ namespace Worker.HttpModule.Clients.DataProviders
         public GalaxyProvider GalaxyProvider { get; } = new GalaxyProvider();
         public ResourcesProvider ResourcesProvider { get; } = new ResourcesProvider();
         public FleetProvider FleetProvider { get; } = new FleetProvider();
+        public DefenseProvider DefenseProvider { get; } = new DefenseProvider();
         public TechnologiesProvider TechnologiesProvider { get; } = new TechnologiesProvider();
     }
 }

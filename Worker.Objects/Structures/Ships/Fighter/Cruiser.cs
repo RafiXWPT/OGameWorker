@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Ships.Fighter
         }
 
         public override ShipAssignment ShipAssignment => ShipAssignment.Fight;
-        public override ShipType ShipType => ShipType.Cruiser;
+        public override ShipType Type => ShipType.Cruiser;
         public override int MetalCost => 20000;
         public override int CrystalCost => 7000;
         public override int DeuteriumCost => 2000;

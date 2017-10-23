@@ -9,7 +9,7 @@ namespace Worker.Objects.Research.Combat
         {
         }
 
-        public override TechnologyType TechnologyType => TechnologyType.WeaponTechnology;
+        public override TechnologyType Type => TechnologyType.WeaponTechnology;
         public override int BaseMetalCost => 800;
         public override int BaseCrystalCost => 200;
         public override int BaseDeuteriumCost => 0;

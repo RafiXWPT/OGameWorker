@@ -161,7 +161,7 @@ namespace Worker.HttpModule.RequestBuilder
             };
 
             foreach (var ship in ships)
-                values.Add($"am{(int) ship.ShipType}", $"{ship.Quantity}");
+                values.Add($"am{(int) ship.Type}", $"{ship.Quantity}");
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet1");
@@ -185,7 +185,7 @@ namespace Worker.HttpModule.RequestBuilder
             };
 
             foreach (var ship in ships)
-                values.Add($"am{(int)ship.ShipType}", $"{ship.Quantity}");
+                values.Add($"am{(int)ship.Type}", $"{ship.Quantity}");
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet2");
@@ -218,7 +218,7 @@ namespace Worker.HttpModule.RequestBuilder
             };
 
             foreach (var ship in ships)
-                values.Add($"am{(int)ship.ShipType}", $"{ship.Quantity}");
+                values.Add($"am{(int)ship.Type}", $"{ship.Quantity}");
 
             var request = new PostHttpRequest().Create(url, values);
             request.Headers.Referrer = new Uri($"{_client.ServerUrl}/game/index.php?page=fleet3");

@@ -19,7 +19,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
         public async Task UpdatePlanetResourceBuildings(HtmlDocument document, Planet planet)
         {
             ObjectContainer.Instance.PlayerBuildings.RemoveAll(
-                b => b.BelongsTo.Id == planet.Id && ResourceBuildings.List.Contains(b.BuildingType));
+                b => b.BelongsTo.Id == planet.Id && ResourceBuildings.List.Contains(b.Type));
             var planetResourceBuildings = await BuildingsParser.GetResourceBuildings(document, planet);
             ObjectContainer.Instance.PlayerBuildings.AddRange(planetResourceBuildings);
         }
@@ -27,7 +27,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
         public async Task UpdatePlanetStationBuildings(HtmlDocument document, Planet planet)
         {
             ObjectContainer.Instance.PlayerBuildings.RemoveAll(
-                b => b.BelongsTo.Id == planet.Id && StationBuildings.List.Contains(b.BuildingType));
+                b => b.BelongsTo.Id == planet.Id && StationBuildings.List.Contains(b.Type));
             var planetStationBuildings = await BuildingsParser.GetStationBuildings(document, planet);
             ObjectContainer.Instance.PlayerBuildings.AddRange(planetStationBuildings);
         }

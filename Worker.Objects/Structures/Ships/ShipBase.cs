@@ -14,7 +14,7 @@ namespace Worker.Objects.Structures.Ships
         }
 
         public abstract ShipAssignment ShipAssignment { get; }
-        public abstract ShipType ShipType { get; }
+        public abstract ShipType Type { get; }
         public abstract int Capacity { get; }
         public abstract int FuelConsumption { get; }
         public abstract int StructuralIntegrity { get; }

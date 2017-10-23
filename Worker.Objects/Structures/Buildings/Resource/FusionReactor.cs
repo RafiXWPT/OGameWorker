@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Buildings.Resource
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.FusionReactor;
+        public override BuildingType Type => BuildingType.FusionReactor;
         public override int BaseMetalCost => 900;
         public override int BaseCrystalCost => 360;
         public override int BaseDeuteriumCost => 180;

@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Ships.Transport
         }
 
         public override ShipAssignment ShipAssignment => ShipAssignment.Transport;
-        public override ShipType ShipType => ShipType.SmallCargo;
+        public override ShipType Type => ShipType.SmallCargo;
         public override int MetalCost => 2000;
         public override int CrystalCost => 2000;
         public override int DeuteriumCost => 0;

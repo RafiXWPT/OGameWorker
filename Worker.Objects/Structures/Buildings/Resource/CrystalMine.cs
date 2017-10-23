@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Buildings.Resource
         {
         }
 
-        public override BuildingType BuildingType => BuildingType.CrystalMine;
+        public override BuildingType Type => BuildingType.CrystalMine;
         public override int BaseMetalCost => 48;
         public override int BaseCrystalCost => 24;
         public override int BaseDeuteriumCost => 0;

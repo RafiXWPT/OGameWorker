@@ -83,7 +83,7 @@ namespace Worker.Objects.Research
             _canBuild = canBuild;
         }
 
-        public abstract TechnologyType TechnologyType { get; }
+        public abstract TechnologyType Type { get; }
         public abstract int BaseMetalCost { get; }
         public abstract int BaseCrystalCost { get; }
         public abstract int BaseDeuteriumCost { get; }

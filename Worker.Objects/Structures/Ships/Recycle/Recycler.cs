@@ -10,7 +10,7 @@ namespace Worker.Objects.Structures.Ships.Recycle
         }
 
         public override ShipAssignment ShipAssignment => ShipAssignment.Recycle;
-        public override ShipType ShipType => ShipType.Recycler;
+        public override ShipType Type => ShipType.Recycler;
         public override int MetalCost => 10000;
         public override int CrystalCost => 6000;
         public override int DeuteriumCost => 2000;
