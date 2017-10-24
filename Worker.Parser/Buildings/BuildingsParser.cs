@@ -56,7 +56,7 @@ namespace Worker.Parser.Buildings
             return buildingNode?.ParentNode?.Attributes?.First(a => a.OriginalName == "class")?.Value;
         }
 
-        private BuildingBase GetResourceBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
+        private BuildingBase GetResourceBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, PlayerPlanet planet)
         {
             var buildingNode = GetResourceBuildingNode(buildingsNode, type);
             var buildingLevel = GetBuildingLevel(buildingNode);
@@ -88,7 +88,7 @@ namespace Worker.Parser.Buildings
             }
         }
 
-        private BuildingBase GetStationBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
+        private BuildingBase GetStationBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, PlayerPlanet planet)
         {
             var buildingNode = GetStationBuildingNode(buildingsNode, type);
             var buildingLevel = GetBuildingLevel(buildingNode);
@@ -131,7 +131,7 @@ namespace Worker.Parser.Buildings
             });
         }
 
-        public async Task<List<BuildingBase>> GetResourceBuildings(HtmlDocument document, Planet planet)
+        public async Task<List<BuildingBase>> GetResourceBuildings(HtmlDocument document, PlayerPlanet planet)
         {
             return await Task.Run(() =>
             {
@@ -148,7 +148,7 @@ namespace Worker.Parser.Buildings
             });
         }
 
-        public async Task<List<BuildingBase>> GetStationBuildings(HtmlDocument document, Planet planet)
+        public async Task<List<BuildingBase>> GetStationBuildings(HtmlDocument document, PlayerPlanet planet)
         {
             return await Task.Run(() =>
             {

@@ -9,11 +9,6 @@ namespace Worker.Objects.Structures.Buildings
 {
     public abstract class BuildingBase : StructureBase
     {
-        protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, canBuild, techReached)
-        {
-            CurrentLevel = currentLevel;
-        }
-
         public abstract BuildingType Type { get; }
         public abstract int BaseMetalCost { get; }
         public abstract int BaseCrystalCost { get; }
@@ -31,7 +26,13 @@ namespace Worker.Objects.Structures.Buildings
             ? TimeSpan.FromHours((MetalCost + CrystalCost) /
                                  (UniverseSpeed * 2500 *
                                   (1 + PlanetCoreBuildingsHelper.GetPlanetRoboticsFactory(BelongsTo).CurrentLevel) *
-                                  Math.Pow(2, PlanetCoreBuildingsHelper.GetPlanetNaniteFactory(BelongsTo).CurrentLevel)))
+                                  Math.Pow(2,
+                                      PlanetCoreBuildingsHelper.GetPlanetNaniteFactory(BelongsTo).CurrentLevel)))
             : TimeSpan.MaxValue;
+
+        protected BuildingBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo, canBuild, techReached)
+        {
+            CurrentLevel = currentLevel;
+        }
     }
 }

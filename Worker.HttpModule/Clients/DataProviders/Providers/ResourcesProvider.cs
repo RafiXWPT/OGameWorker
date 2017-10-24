@@ -13,7 +13,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
     {
         public ResourcesParser ResourcesParser { get; } = new ResourcesParser();
 
-        public async Task UpdatePlanetResources(HtmlDocument document, Planet planet)
+        public async Task UpdatePlanetResources(HtmlDocument document, PlayerPlanet planet)
         {
             await ResourcesParser.GetPlanetResources(planet, document);
         }

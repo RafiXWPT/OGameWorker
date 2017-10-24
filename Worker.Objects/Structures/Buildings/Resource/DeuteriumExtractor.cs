@@ -17,6 +17,6 @@ namespace Worker.Objects.Structures.Buildings.Resource
         public override int EnergyConsumption => (int) (20 * CurrentLevel * Math.Pow(1.1, CurrentLevel));
         public override double CostIncreaseFactor => 1.5;
 
-        public int DeuteriumProduction => (int) (UniverseSpeed * 10 * CurrentLevel * Math.Pow(1.1, CurrentLevel) * (1.44 - 0.004 * BelongsTo.Temperature.Max));
+        public int DeuteriumProduction => (int) (UniverseSpeed * 10 * CurrentLevel * Math.Pow(1.1, CurrentLevel) * (1.44 - 0.004 * (BelongsTo as PlayerPlanet).Temperature.Max));
     }
 }

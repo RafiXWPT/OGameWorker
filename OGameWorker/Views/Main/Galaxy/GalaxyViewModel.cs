@@ -55,7 +55,7 @@ namespace OGameWorker.Views.Main.Galaxy
             set => this.RaiseAndSetIfChanged(ref _isDisableScanBotActive, value);
         }
 
-        public ObservableCollection<GalaxyPlanetInfo> Planets
+        public ObservableCollection<Planet> Planets
         {
             get => ObjectContainer.Instance.GalaxyPlanets;
             set => ObjectContainer.Instance.GalaxyPlanets = value;
@@ -106,7 +106,7 @@ namespace OGameWorker.Views.Main.Galaxy
 
                 var fromSystem = startSystem - span;
                 var toSystem = startSystem + span;
-                var inMemoryPlanets = new List<GalaxyPlanetInfo>();
+                var inMemoryPlanets = new List<Planet>();
                 for (var i = fromSystem; i <= toSystem; i++)
                 {
                     var galaxyPlanets = await Client.GetGalaxyView(galaxy, i);
@@ -143,15 +143,15 @@ namespace OGameWorker.Views.Main.Galaxy
             IsSendingProbes = true;
             try
             {
-                var notScanned = ObjectContainer.Instance.GalaxyPlanets.FirstOrDefault(
-                    p => p.ScanStatus == ScanStatus.NotScanned && p.PlanetType == PlanetType.EnemyInactive);
+                var notScanned = ObjectContainer.Instance.EnemyGalaxyPlanets.FirstOrDefault(
+                    p => p.ScanStatus == ScanStatus.NotScanned && p.Type == PlanetType.EnemyInactive);
                 if (notScanned == null)
                 {
                     await DisableScanBot();
                     return;
                 }
 
-                var mission = await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, Planet.FromGalaxyPlanetInfo(notScanned))
+                var mission = await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, notScanned)
                     .SendFleet();
                 if (mission == null)
                     return;
@@ -185,9 +185,9 @@ namespace OGameWorker.Views.Main.Galaxy
             IsReadingEspionageReport = false;
         }
 
-        public async Task SendEspionageProbesTask(GalaxyPlanetInfo info)
+        public async Task SendEspionageProbesTask(Planet info)
         {
-            await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, Planet.FromGalaxyPlanetInfo(info)).SendFleet();
+            await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, info).SendFleet();
         }
     }
 }

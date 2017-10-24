@@ -33,7 +33,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
                     if (espionageReport == null)
                         return;
 
-                    var planetToUpdate = ObjectContainer.Instance.GalaxyPlanets.First(p => p.PlanetId == espionageReport.Target.PlanetId);
+                    var planetToUpdate = ObjectContainer.Instance.GetGalaxyPlanet<EnemyPlanet>(espionageReport.Target.Id);
                     planetToUpdate.Metal = espionageReport.Metal;
                     planetToUpdate.Crystal = espionageReport.Crystal;
                     planetToUpdate.Deuterium = espionageReport.Deuterium;

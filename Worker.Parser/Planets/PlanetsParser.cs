@@ -10,7 +10,7 @@ namespace Worker.Parser.Planets
 {
     public class PlanetsParser
     {
-        public async Task<List<Planet>> GetPlayerPlanets(HtmlDocument document)
+        public async Task<List<PlayerPlanet>> GetPlayerPlanets(HtmlDocument document)
         {
             return await Task.Run(() =>
             {
@@ -19,7 +19,7 @@ namespace Worker.Parser.Planets
                     .Where(c => c.Attributes.Any(a => a.Value.Contains("smallplanet")))
                     .ToList();
 
-                var planetList = new List<Planet>();
+                var planetList = new List<PlayerPlanet>();
                 foreach (var planet in playerHtmlPlanets)
                 {
                     var planetId = Convert.ToInt32(planet.Id.Replace("planet-", string.Empty));
@@ -34,7 +34,7 @@ namespace Worker.Parser.Planets
                         .Replace("]", string.Empty)
                         .Split(':');
 
-                    var planetPosition = new Planet.PlanetPosition
+                    var planetPosition = new Position
                     {
                         Galaxy = int.Parse(planetCoordsParts[0]),
                         System = int.Parse(planetCoordsParts[1]),
@@ -48,14 +48,15 @@ namespace Worker.Parser.Planets
                         .Split(';')
                         .Where(v => v.EndsWith("&lt") && v != "&lt")
                         .First(v => v.Contains(" do "));
+
                     var temperatureParts = planetInfoString.Split(new[] {"do"}, StringSplitOptions.RemoveEmptyEntries);
-                    var planetTemperature = new Planet.PlanetTemperature
+                    var planetTemperature = new PlanetTemperature
                     {
                         Min = int.Parse(Regex.Match(temperatureParts[0], @"-?\d+").Value),
                         Max = int.Parse(Regex.Match(temperatureParts[1], @"-?\d+").Value)
                     };
 
-                    planetList.Add(new Planet(planetId, planetName, planetPosition, planetTemperature));
+                    planetList.Add(new PlayerPlanet(planetId, planetName, planetPosition, planetTemperature));
                 }
 
                 return planetList;

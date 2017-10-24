@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Basic
 {
     public class HyperspaceTechnology : TechnologyBase
     {
-        public HyperspaceTechnology(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
+        public HyperspaceTechnology(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
             belongsTo, currentLevel, techReached, canBuild)
         {
         }

@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Drive
 {
     public class ImpulseDrive : TechnologyBase
     {
-        public ImpulseDrive(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+        public ImpulseDrive(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
             currentLevel, techReached, canBuild)
         {
         }

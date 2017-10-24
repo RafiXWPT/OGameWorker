@@ -75,7 +75,7 @@ namespace Worker.Objects.Research
     {
         private bool _canBuild;
 
-        protected TechnologyBase(Planet belongsTo, int currentLevel, bool techReached, bool canBuild)
+        protected TechnologyBase(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild)
         {
             BelongsTo = belongsTo;
             CurrentLevel = currentLevel;
@@ -94,7 +94,7 @@ namespace Worker.Objects.Research
         public int MetalCost => (int) (BaseMetalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
         public int CrystalCost => (int) (BaseCrystalCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
         public int DeuteriumCost => (int) (BaseDeuteriumCost * Math.Pow(CostIncreaseFactor, CurrentLevel));
-        public Planet BelongsTo { get; set; }
+        public PlayerPlanet BelongsTo { get; set; }
 
         public bool TechReached { get; set; }
 

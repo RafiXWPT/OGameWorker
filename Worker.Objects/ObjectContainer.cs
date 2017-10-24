@@ -24,15 +24,17 @@ namespace Worker.Objects
 
         public static ObjectContainer Instance => Lazy.Value;
 
-        public Planet CurrentSelectedPlanet { get; set; }
+        public PlayerPlanet CurrentSelectedPlanet { get; set; }
         public List<MissionBase> Missions { get; set; } = new List<MissionBase>();
-        public List<Planet> PlayerPlanets { get; set; } = new List<Planet>();
+        public List<PlayerPlanet> PlayerPlanets { get; set; } = new List<PlayerPlanet>();
         public List<BuildingBase> PlayerBuildings { get; set; } = new List<BuildingBase>();
         public List<TechnologyBase> PlayerTechnologies { get; set; } = new List<TechnologyBase>();
         public List<ShipBase> PlayerFleet { get; set; } = new List<ShipBase>();
         public List<DefenseBase> PlayerDefense { get; set; } = new List<DefenseBase>();
 
-        public ObservableCollection<GalaxyPlanetInfo> GalaxyPlanets { get; set; } = new ObservableCollection<GalaxyPlanetInfo>();
+        public ObservableCollection<Planet> GalaxyPlanets { get; set; } = new ObservableCollection<Planet>();
+        public List<EnemyPlanet> EnemyGalaxyPlanets => GalaxyPlanets.Cast<EnemyPlanet>().ToList();
+
         public List<MessageBase> Messages { get; set; } = new List<MessageBase>();
 
         public BuildingBase GetBuilding(Planet planet, BuildingType type)
@@ -55,9 +57,14 @@ namespace Worker.Objects
             return PlayerDefense.First(d => d.BelongsTo.Id == planet.Id && d.Type == type);
         }
 
-        public Planet GetPlanet(int planetId)
+        public PlayerPlanet GetPlayerPlanet(int planetId)
         {
             return PlayerPlanets.First(p => p.Id == planetId);
+        }
+
+        public TType GetGalaxyPlanet<TType>(int planetId) where TType: class
+        {
+            return GalaxyPlanets.First(p => p.Id == planetId) as TType;
         }
     }
 }

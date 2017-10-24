@@ -45,7 +45,7 @@ namespace Worker.Parser.Ships
             return shipNode?.ParentNode?.Attributes?.First(a => a.OriginalName == "class")?.Value;
         }
 
-        private ShipBase GetMilitaryShip(ShipType type, IEnumerable<HtmlNode> shipsNode, Planet planet)
+        private ShipBase GetMilitaryShip(ShipType type, IEnumerable<HtmlNode> shipsNode, PlayerPlanet planet)
         {
             var shipNode = GetMilitaryShipNode(shipsNode, type);
             var shipsCount = GetShipsCount(shipNode);
@@ -75,7 +75,7 @@ namespace Worker.Parser.Ships
             }
         }
 
-        private ShipBase GetCivilShip(ShipType type, IEnumerable<HtmlNode> shipsNode, Planet planet)
+        private ShipBase GetCivilShip(ShipType type, IEnumerable<HtmlNode> shipsNode, PlayerPlanet planet)
         {
             var shipNode = GetCivilShipNode(shipsNode, type);
             var shipsCount = GetShipsCount(shipNode);
@@ -101,7 +101,7 @@ namespace Worker.Parser.Ships
             }
         }
 
-        public async Task<List<ShipBase>> GetFleet(HtmlDocument document, Planet planet)
+        public async Task<List<ShipBase>> GetFleet(HtmlDocument document, PlayerPlanet planet)
         {
             return await Task.Run(() =>
             {

@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Advanced
 {
     public class EspionageTechnology : TechnologyBase
     {
-        public EspionageTechnology(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
+        public EspionageTechnology(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
             belongsTo, currentLevel, techReached, canBuild)
         {
         }

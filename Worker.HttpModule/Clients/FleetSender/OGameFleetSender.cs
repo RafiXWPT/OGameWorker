@@ -89,7 +89,7 @@ namespace Worker.HttpModule.Clients.FleetSender
 
             await client.RefreshPlanet(planetToSave);
 
-            var planetShips = planetToSave.PlanetShips;
+            var planetShips = planetToSave.Ships;
             var shipsCapacity = planetShips.Sum(x => x.Capacity*x.Quantity)*0.95;
 
             Metal metalToSave;

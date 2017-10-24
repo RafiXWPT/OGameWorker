@@ -19,10 +19,10 @@ namespace OGameWorker.Views.Main.TopBar
     {
         private readonly ResourcesViewModel _resourcesViewModel;
 
-        public ObservableCollection<Planet> PlayerPlanets { get; set; } = new ObservableCollection<Planet>();
+        public ObservableCollection<PlayerPlanet> PlayerPlanets { get; set; } = new ObservableCollection<PlayerPlanet>();
         public bool ReadOnly { get; set; } = true;
-        private Planet _selectedPlanet;
-        public Planet SelectedPlanet
+        private PlayerPlanet _selectedPlanet;
+        public PlayerPlanet SelectedPlanet
         {
             get => _selectedPlanet;
             set
@@ -46,7 +46,7 @@ namespace OGameWorker.Views.Main.TopBar
             _resourcesViewModel = resourcesViewModel;
         }
        
-        public void UpdatePlayerPlanets(List<Planet> playerPlanets)
+        public void UpdatePlayerPlanets(List<PlayerPlanet> playerPlanets)
         {
             RunOnDispatcher(() =>
             {

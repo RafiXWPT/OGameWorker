@@ -14,7 +14,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
     {
         public TechnologiesParser TechnologiesParser { get; } = new TechnologiesParser();
 
-        public async Task UpdatePlanetTechnologies(HtmlDocument document, Planet planet)
+        public async Task UpdatePlanetTechnologies(HtmlDocument document, PlayerPlanet planet)
         {
             ObjectContainer.Instance.PlayerTechnologies.RemoveAll(t => t.BelongsTo.Id == planet.Id);
             var planetTechnologies = await TechnologiesParser.GetTechnologies(document, planet);

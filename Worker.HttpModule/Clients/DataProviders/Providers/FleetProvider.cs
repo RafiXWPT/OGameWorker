@@ -14,7 +14,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
     {
         public FleetParser FleetParser { get; } = new FleetParser();
 
-        public async Task UpdatePlanetFleet(HtmlDocument document, Planet planet)
+        public async Task UpdatePlanetFleet(HtmlDocument document, PlayerPlanet planet)
         {
             ObjectContainer.Instance.PlayerFleet.RemoveAll(s => s.BelongsTo.Id == planet.Id);
             var planetShips = await FleetParser.GetFleet(document, planet);

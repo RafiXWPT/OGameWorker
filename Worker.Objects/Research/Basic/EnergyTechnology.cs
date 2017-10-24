@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Basic
 {
     public class EnergyTechnology : TechnologyBase
     {
-        public EnergyTechnology(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+        public EnergyTechnology(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
             currentLevel, techReached, canBuild)
         {
         }

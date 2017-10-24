@@ -51,7 +51,7 @@ namespace Worker.Parser.Technologies
             return technologyNode?.ParentNode?.Attributes?.First(a => a.OriginalName == "class")?.Value;
         }
 
-        private TechnologyBase GetTechnology(TechnologyType type, IEnumerable<HtmlNode> technologiesNode, Planet planet)
+        private TechnologyBase GetTechnology(TechnologyType type, IEnumerable<HtmlNode> technologiesNode, PlayerPlanet planet)
         {
             var technologyNode = GetTechnologyNode(technologiesNode, type);
             var technologyLevel = GetTechnologyLevel(technologyNode);
@@ -118,7 +118,7 @@ namespace Worker.Parser.Technologies
             });
         }
 
-        public async Task<List<TechnologyBase>> GetTechnologies(HtmlDocument document, Planet planet)
+        public async Task<List<TechnologyBase>> GetTechnologies(HtmlDocument document, PlayerPlanet planet)
         {
             return await Task.Run(() =>
             {

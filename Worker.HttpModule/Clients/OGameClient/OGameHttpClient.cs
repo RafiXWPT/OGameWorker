@@ -103,7 +103,7 @@ namespace Worker.HttpModule.Clients.OGameClient
             }
         }
 
-        public async Task RefreshPlanet(Planet planet, bool force = false)
+        public async Task RefreshPlanet(PlayerPlanet planet, bool force = false)
         {
             var planetResources = await SendHttpRequest(Builder.BuildResourceRequest(planet.Id), force);
             await DataProvider.ResourcesProvider.UpdatePlanetResources(planetResources.ResponseHtmlDocument, planet);
@@ -122,7 +122,7 @@ namespace Worker.HttpModule.Clients.OGameClient
             await DataProvider.DefenseProvider.UpdatePlanetDefense(planetDefense.ResponseHtmlDocument, planet);
         }
 
-        public async Task<MessageContainer> UpgradeResourceBuilding(BuildingType type, Planet planet)
+        public async Task<MessageContainer> UpgradeResourceBuilding(BuildingType type, PlayerPlanet planet)
         {
             if (!ObjectContainer.Instance.GetBuilding(planet, type).CanBuild)
                 return MessageContainer.Fail();
@@ -144,7 +144,7 @@ namespace Worker.HttpModule.Clients.OGameClient
             await SendHttpRequest(Builder.BuildReturnMissionRequest(missionReturnId));
         }
 
-        public async Task<List<GalaxyPlanetInfo>> GetGalaxyView(int galaxy, int system)
+        public async Task<List<Planet>> GetGalaxyView(int galaxy, int system)
         {
             var galaxyView = await SendHttpRequest(Builder.BuildGalaxyViewRequest(galaxy, system));
             return await DataProvider.GalaxyProvider.ReadGalaxyPlanets(galaxyView.ResponseHtmlDocument, galaxy, system);

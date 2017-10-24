@@ -50,7 +50,7 @@ namespace Worker.Parser.Defenses
             return defenseNode.Attributes.First(a => a.OriginalName == "class").Value;
         }
 
-        private DefenseBase GetDefense(IEnumerable<HtmlNode> defensesNode, DefenseType type, Planet planet)
+        private DefenseBase GetDefense(IEnumerable<HtmlNode> defensesNode, DefenseType type, PlayerPlanet planet)
         {
             var defenseNode = GetDefenseNode(defensesNode, type);
             var defenseAmount = GetDefenseAmount(defenseNode);
@@ -85,7 +85,7 @@ namespace Worker.Parser.Defenses
             }
         }
 
-        public async Task<List<DefenseBase>> GetDefenses(HtmlDocument document, Planet planet)
+        public async Task<List<DefenseBase>> GetDefenses(HtmlDocument document, PlayerPlanet planet)
         {
             return await Task.Run(() =>
             {

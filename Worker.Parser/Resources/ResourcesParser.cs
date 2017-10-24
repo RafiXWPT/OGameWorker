@@ -36,7 +36,7 @@ namespace Worker.Parser.Resources
             }
         }
 
-        public async Task<Planet> GetPlanetResources(Planet planet, HtmlDocument document)
+        public async Task<PlayerPlanet> GetPlanetResources(PlayerPlanet planet, HtmlDocument document)
         {
             planet.Metal = await GetMetal(document);
             planet.Crystal = await GetCrystal(document);

@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Advanced
 {
     public class IntergalacticResearchNetwork : TechnologyBase
     {
-        public IntergalacticResearchNetwork(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
+        public IntergalacticResearchNetwork(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
             belongsTo, currentLevel, techReached, canBuild)
         {
         }

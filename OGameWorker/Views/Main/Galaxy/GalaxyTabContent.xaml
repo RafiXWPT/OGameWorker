@@ -44,11 +44,11 @@
             ItemsSource="{Binding Planets}">
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn
-                    DataMemberBinding="{Binding PlanetPosition}"
+                    DataMemberBinding="{Binding Position}"
                     Header="Position"
                     IsReadOnly="True" />
                 <telerik:GridViewDataColumn
-                    DataMemberBinding="{Binding PlanetName}"
+                    DataMemberBinding="{Binding Name}"
                     Header="Planet Name"
                     IsReadOnly="True" />
                 <telerik:GridViewDataColumn
@@ -56,7 +56,7 @@
                     Header="Player Name"
                     IsReadOnly="True" />
                 <telerik:GridViewDataColumn
-                    DataMemberBinding="{Binding PlanetType}"
+                    DataMemberBinding="{Binding Type}"
                     Header="Planet Type"
                     IsReadOnly="True" />
                 <telerik:GridViewDataColumn

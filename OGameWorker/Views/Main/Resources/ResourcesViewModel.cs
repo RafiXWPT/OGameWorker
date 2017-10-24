@@ -25,7 +25,7 @@ namespace OGameWorker.Views.Main.Resources
         private Metal _metal;
         private Crystal _crystal;
         private Deuterium _deuterium;
-        private Planet _planet;
+        private PlayerPlanet _planet;
 
         public Metal Metal
         {
@@ -45,7 +45,7 @@ namespace OGameWorker.Views.Main.Resources
             set => this.RaiseAndSetIfChanged(ref _deuterium, value);
         }
 
-        public Planet Planet
+        public PlayerPlanet Planet
         {
             get => _planet;
             set => this.RaiseAndSetIfChanged(ref _planet, value);
@@ -64,7 +64,7 @@ namespace OGameWorker.Views.Main.Resources
                 });
         }
 
-        public void Synchronize(Planet currentPlanet)
+        public void Synchronize(PlayerPlanet currentPlanet)
         {
             if (currentPlanet == null)
                 return;

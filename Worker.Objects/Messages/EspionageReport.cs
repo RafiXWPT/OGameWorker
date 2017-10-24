@@ -10,12 +10,12 @@ namespace Worker.Objects.Messages
 {
     public class EspionageReport : MessageBase
     {
-        public GalaxyPlanetInfo Target { get; set; }
+        public EnemyPlanet Target { get; set; }
         public Metal Metal { get; set; }
         public Crystal Crystal { get; set; }
         public Deuterium Deuterium { get; set; }
 
-        public EspionageReport(int messageId, DateTime messageDate, GalaxyPlanetInfo target) : base(messageId, messageDate, MessageType.Espionage, MessageStatus.New)
+        public EspionageReport(int messageId, DateTime messageDate, EnemyPlanet target) : base(messageId, messageDate, MessageType.Espionage, MessageStatus.New)
         {
             Target = target;
         }

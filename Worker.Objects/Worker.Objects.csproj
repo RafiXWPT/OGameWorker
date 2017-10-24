@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Galaxy\GalaxyObject.cs" />
+    <Compile Include="Galaxy\Planet\EnemyPlanet.cs" />
+    <Compile Include="Galaxy\Planet\Planet.cs" />
     <Compile Include="Structures\Buildings\BuildingBase.cs" />
     <Compile Include="Structures\Buildings\Resource\CrystalMine.cs" />
     <Compile Include="Structures\Buildings\Resource\SolarSatellite.cs" />
@@ -67,9 +70,7 @@
     <Compile Include="Structures\Defenses\PassiveDefense\InterplanetaryMissile.cs" />
     <Compile Include="Structures\Defenses\PassiveDefense\LargeShield.cs" />
     <Compile Include="Structures\Defenses\PassiveDefense\SmallShield.cs" />
-    <Compile Include="Galaxy\Moon.cs" />
-    <Compile Include="Galaxy\Planet.cs" />
-    <Compile Include="Galaxy\GalaxyPlanetInfo.cs" />
+    <Compile Include="Galaxy\Planet\PlayerPlanet.cs" />
     <Compile Include="Helpers\PlanetCoreBuildingsHelper.cs" />
     <Compile Include="Messages\EspionageReport.cs" />
     <Compile Include="Messages\MessageBase.cs" />

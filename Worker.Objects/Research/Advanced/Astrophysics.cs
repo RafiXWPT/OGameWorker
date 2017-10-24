@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Advanced
 {
     public class Astrophysics : TechnologyBase
     {
-        public Astrophysics(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
+        public Astrophysics(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(belongsTo,
             currentLevel, techReached, canBuild)
         {
         }

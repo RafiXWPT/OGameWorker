@@ -4,7 +4,7 @@ namespace Worker.Objects.Research.Combat
 {
     public class ShieldingTechnology : TechnologyBase
     {
-        public ShieldingTechnology(Planet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
+        public ShieldingTechnology(PlayerPlanet belongsTo, int currentLevel, bool techReached, bool canBuild) : base(
             belongsTo, currentLevel, techReached, canBuild)
         {
         }

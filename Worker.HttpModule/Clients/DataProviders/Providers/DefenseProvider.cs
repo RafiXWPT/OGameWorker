@@ -10,7 +10,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
     {
         public DefensesParser DefenseParser { get; } = new DefensesParser();
 
-        public async Task UpdatePlanetDefense(HtmlDocument document, Planet planet)
+        public async Task UpdatePlanetDefense(HtmlDocument document, PlayerPlanet planet)
         {
             ObjectContainer.Instance.PlayerDefense.RemoveAll(d => d.BelongsTo.Id == planet.Id);
             var planetDefense = await DefenseParser.GetDefenses(document, planet);

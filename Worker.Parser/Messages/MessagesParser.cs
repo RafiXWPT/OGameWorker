@@ -13,11 +13,11 @@ namespace Worker.Parser.Messages
 {
     public class MessagesParser
     {
-        private GalaxyPlanetInfo GetPlanetOnPosition(Planet.PlanetPosition position)
+        private Planet GetPlanetOnPosition(Position position)
         {
             return ObjectContainer.Instance.GalaxyPlanets.FirstOrDefault(
-                p => p.PlanetPosition.Galaxy == position.Galaxy && p.PlanetPosition.System == position.System &&
-                     p.PlanetPosition.Planet == position.Planet);
+                p => p.Position.Galaxy == position.Galaxy && p.Position.System == position.System &&
+                     p.Position.Planet == position.Planet);
         }
 
         private async Task<MessageBase> GetMessage(HtmlNode messageNode, MessageType type)
@@ -31,7 +31,7 @@ namespace Worker.Parser.Messages
                 var messageDate = DateTime.Parse(messageNode.Descendants("span").First(s => s.GetAttributeValue("class", null).Contains("msg_date")).InnerText);
                 var messagePlanetNamePosition = messageNode.Descendants("a").First().InnerText.Split('[');
                 var messageTargetPositionParts = messagePlanetNamePosition[1].Replace("]", string.Empty).Split(':');
-                var messageTargetPosition = new Planet.PlanetPosition()
+                var messageTargetPosition = new Position()
                 {
                     Galaxy = Convert.ToInt32(messageTargetPositionParts[0]),
                     System = Convert.ToInt32(messageTargetPositionParts[1]),
@@ -43,7 +43,7 @@ namespace Worker.Parser.Messages
                 switch (type)
                 {
                     case MessageType.Espionage:
-                        return new EspionageReport(messageId, messageDate, messageTargetPlanet);
+                        return new EspionageReport(messageId, messageDate, messageTargetPlanet as EnemyPlanet);
                     case MessageType.WarRepor:
                         return null;
                     case MessageType.Transport:

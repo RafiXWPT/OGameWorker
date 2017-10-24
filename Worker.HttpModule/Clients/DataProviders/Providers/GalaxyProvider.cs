@@ -13,7 +13,7 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
     {
         public GalaxyParser GalaxyParser { get; } = new GalaxyParser();
 
-        public async Task<List<GalaxyPlanetInfo>> ReadGalaxyPlanets(HtmlDocument document, int galaxy, int system)
+        public async Task<List<Planet>> ReadGalaxyPlanets(HtmlDocument document, int galaxy, int system)
         {
             return await GalaxyParser.GetPlanets(document, galaxy, system);
         }

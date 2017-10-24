@@ -17,6 +17,6 @@ namespace Worker.Objects.Structures.Buildings.Resource
         public override int EnergyConsumption => 0;
         public override double CostIncreaseFactor => 0;
 
-        public int EnergyProduction => (int) Math.Floor((BelongsTo.Temperature.Average + 160) / 6);
+        public int EnergyProduction => (int) Math.Floor(((BelongsTo as PlayerPlanet).Temperature.Average + 160) / 6);
     }
 }
