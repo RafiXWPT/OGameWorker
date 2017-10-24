@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Parser.Ships;
 
 namespace Worker.HttpModule.Clients.DataProviders.Providers

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Structures;
 using Worker.Objects.Structures.Defenses;
 using Worker.Objects.Structures.Defenses.ActiveDefense;
@@ -81,7 +82,7 @@ namespace Worker.Parser.Defenses
                 case DefenseType.InterplanetaryMissile:
                     return null;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return null;
             }
         }
 

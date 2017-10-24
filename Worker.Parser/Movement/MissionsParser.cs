@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Missions;
 
 namespace Worker.Parser.Movement

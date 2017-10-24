@@ -5,7 +5,7 @@ using Worker.Objects.Structures.Buildings;
 using Worker.Objects.Structures.Defenses;
 using Worker.Objects.Structures.Ships;
 
-namespace Worker.Objects.Galaxy
+namespace Worker.Objects.Galaxy.Planet
 {
     public enum ScanStatus
     {
@@ -54,7 +54,7 @@ namespace Worker.Objects.Galaxy
             Type = PlanetType.EnemyUnknown;
         }
 
-        public void Update(List<BuildingBase> buildings, List<ShipBase> ships, List<DefenseBase> defenses)
+        public void UpdateStructures(List<BuildingBase> buildings, List<ShipBase> ships, List<DefenseBase> defenses)
         {
             _buildings = buildings;
             _ships = ships;

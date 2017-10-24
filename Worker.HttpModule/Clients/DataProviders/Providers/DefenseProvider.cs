@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Parser.Defenses;
 
 namespace Worker.HttpModule.Clients.DataProviders.Providers

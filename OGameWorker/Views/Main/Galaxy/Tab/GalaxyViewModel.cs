@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Net.Http;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
-using Newtonsoft.Json;
 using OGameWorker.Code;
 using OGameWorker.Code.Extensions.Reactive;
 using OGameWorker.Code.WorkerQueue;
 using ReactiveUI;
-using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.FleetSender;
 using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
-using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Messages;
 
-namespace OGameWorker.Views.Main.Galaxy
+namespace OGameWorker.Views.Main.Galaxy.Tab
 {
     public class GalaxyViewModel : OGameWorkerBaseViewModel
     {

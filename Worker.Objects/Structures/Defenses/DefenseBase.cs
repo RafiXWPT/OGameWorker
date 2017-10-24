@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Helpers;
 
 namespace Worker.Objects.Structures.Defenses

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Resources;
 
 namespace Worker.Parser.Resources
@@ -32,7 +33,7 @@ namespace Worker.Parser.Resources
                         .InnerText.Trim()
                         .Replace(".", string.Empty));
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return "0";
             }
         }
 

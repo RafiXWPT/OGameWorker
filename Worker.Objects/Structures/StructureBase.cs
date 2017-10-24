@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 
 namespace Worker.Objects.Structures
 {

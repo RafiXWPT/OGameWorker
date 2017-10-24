@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 
 namespace Worker.Parser.Planets
 {

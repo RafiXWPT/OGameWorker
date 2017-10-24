@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Research;
 using Worker.Objects.Research.Advanced;
 using Worker.Objects.Research.Basic;
@@ -93,7 +94,7 @@ namespace Worker.Parser.Technologies
                 case TechnologyType.HyperspaceDrive:
                     return new HyperspaceDrive(planet, technologyLevel, techReached, canUpgrade);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return null;
             }
         }
 

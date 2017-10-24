@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Worker.Objects.Resources;
 using Worker.Objects.Structures.Buildings;
 using Worker.Objects.Structures.Defenses;
 using Worker.Objects.Structures.Ships;
 
-namespace Worker.Objects.Galaxy
+namespace Worker.Objects.Galaxy.Planet
 {
     public enum PlanetType
     {

@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Resources;
+using Worker.Objects.Structures.Buildings;
+using Worker.Objects.Structures.Defenses;
+using Worker.Objects.Structures.Ships;
 
 namespace Worker.Objects.Messages
 {
@@ -13,7 +17,11 @@ namespace Worker.Objects.Messages
         public EnemyPlanet Target { get; set; }
         public Metal Metal { get; set; }
         public Crystal Crystal { get; set; }
+        public Energy Energy { get; set; }
         public Deuterium Deuterium { get; set; }
+        public List<BuildingBase> Buildings { get; set; }
+        public List<DefenseBase> Defenses { get; set; }
+        public List<ShipBase> Ships { get; set; }
 
         public EspionageReport(int messageId, DateTime messageDate, EnemyPlanet target) : base(messageId, messageDate, MessageType.Espionage, MessageStatus.New)
         {

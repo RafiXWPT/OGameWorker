@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Structures;
 using Worker.Objects.Structures.Ships;
 using Worker.Objects.Structures.Ships.Fighter;
@@ -71,7 +72,7 @@ namespace Worker.Parser.Ships
                 case ShipType.Bomber:
                     return new Bomber(planet, shipsCount, techReached, canCreate);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return null;
             }
         }
 
@@ -97,7 +98,7 @@ namespace Worker.Parser.Ships
                 case ShipType.ColonyShip:
                     return new ColonyShip(planet, shipsCount, techReached, canCreate);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return null;
             }
         }
 

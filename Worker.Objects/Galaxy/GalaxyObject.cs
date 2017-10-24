@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Worker.Objects.Resources;
-using Worker.Objects.Structures.Buildings;
-using Worker.Objects.Structures.Defenses;
-using Worker.Objects.Structures.Ships;
+﻿using Worker.Objects.Resources;
 
 namespace Worker.Objects.Galaxy
 {
@@ -28,6 +20,7 @@ namespace Worker.Objects.Galaxy
         public Metal Metal { get; set; }
         public Crystal Crystal { get; set; }
         public Deuterium Deuterium { get; set; }
+        public Energy Energy { get; set; }
         public int TotalResources => Metal.Amount + Crystal.Amount + Deuterium.Amount;
 
         protected GalaxyObject(int id, string name, Position position) : this(id, name, position, new Metal(0), new Crystal(0), new Deuterium(0)) { }

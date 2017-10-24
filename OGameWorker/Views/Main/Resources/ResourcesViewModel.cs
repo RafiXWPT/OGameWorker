@@ -12,6 +12,7 @@ using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Messages;
 using Worker.Objects.Resources;
 using Worker.Objects.Structures;

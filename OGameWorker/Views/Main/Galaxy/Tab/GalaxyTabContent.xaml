@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="OGameWorker.Views.Main.Galaxy.GalaxyTabContent"
+    x:Class="OGameWorker.Views.Main.Galaxy.Tab.GalaxyTabContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -41,7 +41,8 @@
             MaxHeight="600"
             AutoGenerateColumns="False"
             IsBusy="{Binding IsBusy}"
-            ItemsSource="{Binding Planets}">
+            ItemsSource="{Binding Planets}"
+            MouseDoubleClick="OpenPlanetInfo">
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn
                     DataMemberBinding="{Binding Position}"

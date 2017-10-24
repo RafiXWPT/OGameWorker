@@ -1,11 +1,11 @@
 ﻿using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 
 namespace Worker.Objects.Structures.Ships.Transport
 {
     public class LargeCargo : ShipBase
     {
-        public LargeCargo(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity,
-            techReached, canBuild)
+        public LargeCargo(Planet planet, int quantity, bool techReached, bool canBuild) : base(planet, quantity, techReached, canBuild)
         {
         }
 

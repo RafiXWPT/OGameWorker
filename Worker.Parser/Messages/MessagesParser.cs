@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Messages;
-using Worker.Objects.Resources;
 
 namespace Worker.Parser.Messages
 {
@@ -31,7 +30,7 @@ namespace Worker.Parser.Messages
                 var messageDate = DateTime.Parse(messageNode.Descendants("span").First(s => s.GetAttributeValue("class", null).Contains("msg_date")).InnerText);
                 var messagePlanetNamePosition = messageNode.Descendants("a").First().InnerText.Split('[');
                 var messageTargetPositionParts = messagePlanetNamePosition[1].Replace("]", string.Empty).Split(':');
-                var messageTargetPosition = new Position()
+                var messageTargetPosition = new Position
                 {
                     Galaxy = Convert.ToInt32(messageTargetPositionParts[0]),
                     System = Convert.ToInt32(messageTargetPositionParts[1]),
@@ -51,44 +50,10 @@ namespace Worker.Parser.Messages
                     case MessageType.Other:
                         return null;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                        return null;
                 }
             });
-        }
-
-        private async Task<EspionageReport> ReadEspionageReport(HtmlDocument document, MessageBase message)
-        {
-            return await Task.Run(() =>
-            {
-                var report = message as EspionageReport;
-                if (report == null)
-                    return null;
-
-                var resourceNode = document.DocumentNode.Descendants("ul").First(d => d.GetAttributeValue("data-type", null) == "resources");
-                foreach (var node in resourceNode.Descendants("li"))
-                {
-                    var nodeClassValue = node.Descendants("div").First().GetAttributeValue("class", null);
-                    var nodeResourceValue = node.Descendants("span").First().InnerText.Replace(".", string.Empty);
-                    if (nodeClassValue.Contains("metal"))
-                    {
-                        report.Metal = new Metal(nodeResourceValue);
-                    }
-                    else if (nodeClassValue.Contains("crystal"))
-                    {
-                        report.Crystal = new Crystal(nodeResourceValue);
-                    }
-                    else if (nodeClassValue.Contains("deuterium"))
-                    {
-                        report.Deuterium = new Deuterium(nodeResourceValue);
-                    }
-                    else if (nodeClassValue.Contains("energy"))
-                    {
-                    }
-                }
-
-                return report;
-            });
-        }
+        }       
 
         public async Task<int> GetMessageMaxPages(HtmlDocument document)
         {
@@ -127,7 +92,7 @@ namespace Worker.Parser.Messages
             switch (message.MessageType)
             {
                 case MessageType.Espionage:
-                    return await ReadEspionageReport(document, message);
+                    return await new EspionageReportParser().ReadEspionageReport(message, document);
                 case MessageType.WarRepor:
                     return null;
                 case MessageType.Transport:
@@ -135,7 +100,7 @@ namespace Worker.Parser.Messages
                 case MessageType.Other:
                     return null;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    return null;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 
 namespace Worker.Objects.Structures.Buildings.Warehouse
 {

@@ -8,6 +8,7 @@ using OGameWorker.Code;
 using OGameWorker.Code.Extensions.Reactive;
 using OGameWorker.Code.WorkerQueue;
 using OGameWorker.Views.Main.Galaxy;
+using OGameWorker.Views.Main.Galaxy.Tab;
 using OGameWorker.Views.Main.Resources;
 using OGameWorker.Views.Main.TopBar;
 using ReactiveUI;

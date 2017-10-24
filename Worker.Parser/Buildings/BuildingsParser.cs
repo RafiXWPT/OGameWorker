@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Structures;
 using Worker.Objects.Structures.Buildings;
 using Worker.Objects.Structures.Buildings.Resource;
@@ -56,7 +57,7 @@ namespace Worker.Parser.Buildings
             return buildingNode?.ParentNode?.Attributes?.First(a => a.OriginalName == "class")?.Value;
         }
 
-        private BuildingBase GetResourceBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, PlayerPlanet planet)
+        private BuildingBase GetResourceBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
         {
             var buildingNode = GetResourceBuildingNode(buildingsNode, type);
             var buildingLevel = GetBuildingLevel(buildingNode);
@@ -75,20 +76,20 @@ namespace Worker.Parser.Buildings
                     return new SolarPowerPlant(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.FusionReactor:
                     return new FusionReactor(planet, buildingLevel, techReached, canUpgrade);
-                case BuildingType.SolarSatellite:
-                    return new SolarSatellite(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.MetalStorage:
                     return new MetalStorage(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.CrystalStorage:
                     return new CrystalStorage(planet, buildingLevel, techReached, canUpgrade);
                 case BuildingType.DeuteriumTank:
                     return new DeuteriumTank(planet, buildingLevel, techReached, canUpgrade);
+                case BuildingType.SolarSatellite:
+                    return null;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return null;
             }
         }
 
-        private BuildingBase GetStationBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, PlayerPlanet planet)
+        private BuildingBase GetStationBuilding(BuildingType type, IEnumerable<HtmlNode> buildingsNode, Planet planet)
         {
             var buildingNode = GetStationBuildingNode(buildingsNode, type);
             var buildingLevel = GetBuildingLevel(buildingNode);
@@ -106,7 +107,7 @@ namespace Worker.Parser.Buildings
                 case BuildingType.NaniteFactory:
                     return new NaniteFactory(planet, buildingLevel, techReached, canBuild);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    return null;
             }
         }
 
@@ -138,11 +139,21 @@ namespace Worker.Parser.Buildings
                 var planetBuildings = new List<BuildingBase>();
                 var buildingsNode = document.GetElementbyId("building").Descendants("div");
                 foreach (var buildingType in ResourceBuildings.List)
-                    planetBuildings.Add(GetResourceBuilding(buildingType, buildingsNode, planet));
+                {
+                    var building = GetResourceBuilding(buildingType, buildingsNode, planet);
+                    if(building != null)
+                        planetBuildings.Add(building);
+                }
+
 
                 var storageNode = document.GetElementbyId("storage").Descendants("div");
                 foreach (var buildingType in StorageBuildings.List)
-                    planetBuildings.Add(GetResourceBuilding(buildingType, storageNode, planet));
+                {
+                    var building = GetResourceBuilding(buildingType, storageNode, planet);
+                    if(building != null)
+                        planetBuildings.Add(building);
+                }
+
 
                 return planetBuildings;
             });

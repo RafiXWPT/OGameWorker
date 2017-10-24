@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:OGameWorker.Views.Main"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resourcesContent="clr-namespace:OGameWorker.Views.Main.Resources"
+    xmlns:tab="clr-namespace:OGameWorker.Views.Main.Galaxy.Tab"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     Title="MainWindow"
     Width="525"
@@ -35,7 +36,7 @@
                     </telerik:RadTabItem>
                     <telerik:RadTabItem DataContext="{Binding GalaxyViewModel}" Header="Galaxy">
                         <telerik:RadTabItem.Content>
-                            <galaxyTabContent:GalaxyTabContent DataContext="{Binding}" />
+                            <tab:GalaxyTabContent DataContext="{Binding}" />
                         </telerik:RadTabItem.Content>
                     </telerik:RadTabItem>
                     <telerik:RadTabItem Header="TMP">

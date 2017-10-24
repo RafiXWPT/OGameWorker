@@ -9,6 +9,7 @@ using Worker.HttpModule.Exceptions;
 using Worker.HttpModule.RequestBuilder;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Objects.Structures;

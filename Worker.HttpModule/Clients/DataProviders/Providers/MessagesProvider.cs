@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Messages;
 using Worker.Parser.Messages;
 
@@ -37,6 +38,8 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
                     planetToUpdate.Metal = espionageReport.Metal;
                     planetToUpdate.Crystal = espionageReport.Crystal;
                     planetToUpdate.Deuterium = espionageReport.Deuterium;
+                    planetToUpdate.Energy = espionageReport.Energy;
+                    planetToUpdate.UpdateStructures(espionageReport.Buildings, espionageReport.Ships, espionageReport.Defenses);
                     planetToUpdate.ScanStatus = ScanStatus.Scanned;
                     messageWrapper.MessageStatus = MessageStatus.Readed;
 
@@ -47,8 +50,6 @@ namespace Worker.HttpModule.Clients.DataProviders.Providers
                     return;
                 case MessageType.Other:
                     return;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(messageWrapper.MessageType), messageWrapper.MessageType, null);
             }
 
         }

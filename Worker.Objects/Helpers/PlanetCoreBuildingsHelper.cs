@@ -1,4 +1,5 @@
 ﻿using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Structures;
 using Worker.Objects.Structures.Buildings;
 using Worker.Objects.Structures.Buildings.Station;

@@ -120,17 +120,25 @@
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\Fleet\FleetViewModel.cs" />
-    <Compile Include="Views\Main\Galaxy\GalaxyTabContent.xaml.cs">
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\GalaxyPlanetInfo.xaml.cs">
+      <DependentUpon>GalaxyPlanetInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\GalaxyPlanetInfoViewModel.cs" />
+    <Compile Include="Views\Main\Galaxy\Tab\GalaxyTabContent.xaml.cs">
       <DependentUpon>GalaxyTabContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\Galaxy\GalaxyViewModel.cs" />
+    <Compile Include="Views\Main\Galaxy\Tab\GalaxyViewModel.cs" />
     <Compile Include="Views\Main\MainWindowViewModel.cs" />
     <Compile Include="Views\Main\Resources\ResourcesContent.xaml.cs">
       <DependentUpon>ResourcesContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\Resources\ResourcesViewModel.cs" />
     <Compile Include="Views\Main\TopBar\TopBarViewModel.cs" />
-    <Page Include="Views\Main\Galaxy\GalaxyTabContent.xaml">
+    <Page Include="Views\Main\Galaxy\PlanetInfo\GalaxyPlanetInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Galaxy\Tab\GalaxyTabContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

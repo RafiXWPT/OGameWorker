@@ -6,6 +6,7 @@ using Worker.HttpModule.Clients.FleetSender;
 using Worker.HttpModule.Clients.OGameClient;
 using Worker.HttpModule.Helpers;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Messages;
 using Worker.Objects.Missions;
 using Worker.Objects.Resources;

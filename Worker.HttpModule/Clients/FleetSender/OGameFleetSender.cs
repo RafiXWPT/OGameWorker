@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Worker.HttpModule.Clients.OGameClient;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 using Worker.Objects.Missions;
 using Worker.Objects.Resources;
 using Worker.Objects.Structures.Ships;

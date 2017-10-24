@@ -5,7 +5,7 @@ using Worker.Objects.Structures.Buildings;
 using Worker.Objects.Structures.Defenses;
 using Worker.Objects.Structures.Ships;
 
-namespace Worker.Objects.Galaxy
+namespace Worker.Objects.Galaxy.Planet
 {
     public struct PlanetTemperature
     {
@@ -16,11 +16,6 @@ namespace Worker.Objects.Galaxy
 
     public class PlayerPlanet : Planet
     {
-        /*public static Planet FromGalaxyPlanetInfo(GalaxyPlanetInfo info)
-        {
-            return new Planet(info.PlanetName, info.PlanetPosition);
-        }*/
-
         public PlayerPlanet(int id, string name, Position position) : this(id, name, position, new PlanetTemperature()) { }
 
         public PlayerPlanet(int id, string name, Position position, PlanetTemperature temperature) : this(id, name, position, temperature, new Metal(0), new Crystal(0), new Deuterium(0)) { }

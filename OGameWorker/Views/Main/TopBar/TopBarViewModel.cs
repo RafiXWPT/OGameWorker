@@ -12,6 +12,7 @@ using OGameWorker.Views.Main.Resources;
 using ReactiveUI;
 using Worker.Objects;
 using Worker.Objects.Galaxy;
+using Worker.Objects.Galaxy.Planet;
 
 namespace OGameWorker.Views.Main.TopBar
 {

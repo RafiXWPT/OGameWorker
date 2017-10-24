@@ -46,7 +46,6 @@
     <Compile Include="Galaxy\Planet\Planet.cs" />
     <Compile Include="Structures\Buildings\BuildingBase.cs" />
     <Compile Include="Structures\Buildings\Resource\CrystalMine.cs" />
-    <Compile Include="Structures\Buildings\Resource\SolarSatellite.cs" />
     <Compile Include="Structures\Buildings\Station\NaniteFactory.cs" />
     <Compile Include="Structures\Buildings\Warehouse\CrystalStorage.cs" />
     <Compile Include="Structures\Buildings\Resource\DeuteriumExtractor.cs" />
