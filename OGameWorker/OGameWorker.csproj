@@ -116,11 +116,15 @@
     <Compile Include="Code\LogOutWrapper.cs" />
     <Compile Include="Code\OGameWorkerBaseViewModel.cs" />
     <Compile Include="Code\WorkerQueue\QueueAction.cs" />
-    <Compile Include="Code\WorkerQueue\WorkerQueue.cs" />
+    <Compile Include="Code\WorkerQueue\WorkerQueueActionRunner.cs" />
     <Compile Include="Views\LogIn\LogInViewModel.cs" />
     <Compile Include="Views\LogIn\LogInWindow.xaml.cs">
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Main\Buildings\BuildingsContent.xaml.cs">
+      <DependentUpon>BuildingsContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Buildings\BuildingsViewModel.cs" />
     <Compile Include="Views\Main\Fleet\FleetViewModel.cs" />
     <Compile Include="Views\Main\Galaxy\PlanetInfo\BaseInfo\GalaxyPlanetBaseInfo.xaml.cs">
       <DependentUpon>GalaxyPlanetBaseInfo.xaml</DependentUpon>
@@ -153,6 +157,10 @@
     </Compile>
     <Compile Include="Views\Main\Resources\ResourcesViewModel.cs" />
     <Compile Include="Views\Main\TopBar\TopBarViewModel.cs" />
+    <Page Include="Views\Main\Buildings\BuildingsContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Main\Galaxy\PlanetInfo\BaseInfo\GalaxyPlanetBaseInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

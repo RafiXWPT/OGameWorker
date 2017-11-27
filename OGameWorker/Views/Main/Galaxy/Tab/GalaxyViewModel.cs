@@ -136,27 +136,24 @@ namespace OGameWorker.Views.Main.Galaxy.Tab
             IsSendingProbes = true;
             try
             {
-                var notScanned = ObjectContainer.Instance.EnemyGalaxyPlanets.FirstOrDefault(
-                    p => p.ScanStatus == ScanStatus.NotScanned && p.Type == PlanetType.EnemyInactive);
+                var notScanned = ObjectContainer.Instance.EnemyGalaxyPlanets.FirstOrDefault(p => p.ScanStatus == ScanStatus.NotScanned && p.Type == PlanetType.EnemyInactive);
                 if (notScanned == null)
                 {
                     await DisableScanBot();
                     return;
                 }
 
-                var mission = await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, notScanned)
-                    .SendFleet();
+                var mission = await OGameFleetSender.Espionage(Client, ObjectContainer.Instance.CurrentSelectedPlanet, notScanned).SendFleet();
                 if (mission == null)
                     return;
 
-                WorkerQueue.QueueAction(new QueueAction
+                WorkerQueueActionRunner.QueueAction(new TimeExecutionAction(ActionTarget.ReadEspionageReport)
                 {
-                    MissionId = mission.MissionId,
-                    ExecutionTime = mission.ArrivalTime.AddSeconds(5),
                     Action = async () =>
                     {
                         await Client.GetNewMessages(MessageType.Espionage);
-                    }
+                    },
+                    ExecutionTime = mission.ArrivalTime.AddSeconds(5)
                 });
 
                 notScanned.ScanStatus = ScanStatus.Scanning;

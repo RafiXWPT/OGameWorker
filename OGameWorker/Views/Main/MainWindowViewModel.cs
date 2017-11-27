@@ -43,10 +43,10 @@ namespace OGameWorker.Views.Main
 
             Observable.Interval(TimeSpan.FromMinutes(1))
                 .SubscribeOnDispatcher()
-                .Where(i => WorkerQueue.QueueActions.Any())
+                .Where(i => WorkerQueueActionRunner.ExecutionQueue.Any())
                 .Subscribe(token =>
                 {
-                    WorkerQueue.CheckQueue();
+                    WorkerQueueActionRunner.CheckQueue();
                 });
 
             Init();
@@ -79,19 +79,17 @@ namespace OGameWorker.Views.Main
             
             foreach (var mission in hostileMissions)
             {
-                if (WorkerQueue.QueueActions.All(a => a.MissionId != mission.MissionId))
+                if (WorkerQueueActionRunner.ExecutionQueue.All(a => a.ActionId != mission.MissionId))
                 {
-                    WorkerQueue.QueueAction(new QueueAction
+                    WorkerQueueActionRunner.QueueAction(new TimeExecutionAction(mission.MissionId, ActionTarget.FleetSave)
                     {
-                        MissionId = mission.MissionId,
                         Action = async () =>
                         {
                             var fleetSaveMission = await OGameFleetSender.SaveFleet(Client, mission.DestinationId ?? 0);
                             if (fleetSaveMission != null)
                             {
-                                WorkerQueue.QueueAction(new QueueAction
+                                WorkerQueueActionRunner.QueueAction(new TimeExecutionAction(ActionTarget.ReturnFleet)
                                 {
-                                    MissionId = fleetSaveMission.MissionId,
                                     Action = async () =>
                                     {
                                         await SafeHttpTask(() => Client.ReturnMission(fleetSaveMission));

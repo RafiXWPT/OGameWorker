@@ -38,34 +38,18 @@ namespace Worker.Objects
 
         public List<MessageBase> Messages { get; set; } = new List<MessageBase>();
 
-        public BuildingBase GetBuilding(Planet planet, BuildingType type)
-        {
-            return PlayerBuildings.First(b => b.BelongsTo.Id == planet.Id && b.Type == type);
-        }
+        public BuildingBase GetBuilding(Planet planet, BuildingType type) => GetBuilding(planet.Id, type);
+        public BuildingBase GetBuilding(int planetId, BuildingType type) => PlayerBuildings.First(b => b.BelongsTo.Id == planetId && b.Type == type);
 
-        public TechnologyBase GetTechnology(Planet planet, TechnologyType type)
-        {
-            return PlayerTechnologies.First(t => t.BelongsTo.Id == planet.Id && t.Type == type);
-        }
 
-        public ShipBase GetShip(Planet planet, ShipType type)
-        {
-            return PlayerFleet.First(s => s.BelongsTo.Id == planet.Id && s.Type == type);
-        }
+        public TechnologyBase GetTechnology(Planet planet, TechnologyType type) => PlayerTechnologies.First(t => t.BelongsTo.Id == planet.Id && t.Type == type);
 
-        public DefenseBase GetDefense(Planet planet, DefenseType type)
-        {
-            return PlayerDefense.First(d => d.BelongsTo.Id == planet.Id && d.Type == type);
-        }
+        public ShipBase GetShip(Planet planet, ShipType type) => PlayerFleet.First(s => s.BelongsTo.Id == planet.Id && s.Type == type);
 
-        public PlayerPlanet GetPlayerPlanet(int planetId)
-        {
-            return PlayerPlanets.First(p => p.Id == planetId);
-        }
+        public DefenseBase GetDefense(Planet planet, DefenseType type) => PlayerDefense.First(d => d.BelongsTo.Id == planet.Id && d.Type == type);
 
-        public TType GetGalaxyPlanet<TType>(int planetId) where TType: class
-        {
-            return GalaxyPlanets.First(p => p.Id == planetId) as TType;
-        }
+        public PlayerPlanet GetPlayerPlanet(int planetId) => PlayerPlanets.First(p => p.Id == planetId);
+
+        public TType GetGalaxyPlanet<TType>(int planetId) where TType: class => GalaxyPlanets.First(p => p.Id == planetId) as TType;
     }
 }

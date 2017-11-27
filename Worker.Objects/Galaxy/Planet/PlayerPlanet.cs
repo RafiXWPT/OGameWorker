@@ -39,5 +39,7 @@ namespace Worker.Objects.Galaxy.Planet
         public override List<DefenseBase> Defenses => ObjectContainer.Instance.PlayerDefense
             .Where(d => d.BelongsTo.Id == Id && d.Amount > 0)
             .ToList();
+
+        public List<BuildingBase> BuildingQueue { get; set; } = new List<BuildingBase>();
     }
 }
