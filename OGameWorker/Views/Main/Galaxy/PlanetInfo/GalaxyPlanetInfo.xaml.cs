@@ -13,6 +13,7 @@ namespace OGameWorker.Views.Main.Galaxy.PlanetInfo
         {
             ViewModel = new GalaxyPlanetInfoViewModel(planet);
             InitializeComponent();
+            DataContext = ViewModel;
         }
     }
 }

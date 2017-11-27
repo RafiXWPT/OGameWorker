@@ -38,7 +38,7 @@ namespace OGameWorker.Views.Main
             Observable.Interval(TimeSpan.FromMinutes(5))
                 .SubscribeOnDispatcher()
                 .DelayTask(() => TimeSpan.FromMinutes(Random.Next(10, 20)))
-                .Select(i => SafeHttpTask(RefreshObjectContainerTask(false)))
+                .Select(i => SafeHttpTask(() => RefreshObjectContainerTask(false)))
                 .Subscribe();
 
             Observable.Interval(TimeSpan.FromMinutes(1))
@@ -57,7 +57,7 @@ namespace OGameWorker.Views.Main
             Task.Run(async () =>
             {
                 await Client.ClearMessages(true);
-                await SafeHttpTask(RefreshObjectContainerTask(true));
+                await SafeHttpTask(() => RefreshObjectContainerTask(true));
                 ObjectContainer.Instance.Initialized = true;
                 TopBarViewModel.ReadOnly = false;
             });
@@ -94,7 +94,7 @@ namespace OGameWorker.Views.Main
                                     MissionId = fleetSaveMission.MissionId,
                                     Action = async () =>
                                     {
-                                        await SafeHttpTask(Client.ReturnMission(fleetSaveMission));
+                                        await SafeHttpTask(() => Client.ReturnMission(fleetSaveMission));
                                     },
                                     ExecutionTime = DateTime.Now.AddMinutes(10)
                                 });

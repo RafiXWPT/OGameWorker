@@ -1,6 +1,7 @@
 ﻿using System;
 using Worker.Objects.Galaxy;
 using Worker.Objects.Galaxy.Planet;
+using Worker.Objects.Helpers;
 
 namespace Worker.Objects.Structures.Buildings.Resource
 {
@@ -18,7 +19,7 @@ namespace Worker.Objects.Structures.Buildings.Resource
         public override int EnergyConsumption => 0;
         public override double CostIncreaseFactor => 1.8;
 
-        public int EnergyProduction => (int) (30 * CurrentLevel * Math.Pow(1.05 * (0.01 * 1), CurrentLevel));
+        public int EnergyProduction => (int) (30 * CurrentLevel * Math.Pow(1.05 * (0.01 * PlanetCoreBuildingsHelper.GetEnergyTechnology().CurrentLevel), CurrentLevel));
         public int DeuteriumConsumption => (int) (10 * CurrentLevel * Math.Pow(1.1, CurrentLevel));
     }
 }

@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -110,6 +111,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Code\ConfigurationHelper\OGameConfigurationReader.cs" />
+    <Compile Include="Code\Converters\TrueToVisibleConverter.cs" />
     <Compile Include="Code\Extensions\Reactive\ReactiveExtensions.cs" />
     <Compile Include="Code\LogOutWrapper.cs" />
     <Compile Include="Code\OGameWorkerBaseViewModel.cs" />
@@ -120,10 +122,27 @@
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\Fleet\FleetViewModel.cs" />
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\BaseInfo\GalaxyPlanetBaseInfo.xaml.cs">
+      <DependentUpon>GalaxyPlanetBaseInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\BuildingsInfo\GalaxyPlanetBuildingsInfo.xaml.cs">
+      <DependentUpon>GalaxyPlanetBuildingsInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\BuildingsInfo\GalaxyPlanetBuildingsInfoViewModel.cs" />
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\DefenseInfo\GalaxyPlanetDefenseInfo.xaml.cs">
+      <DependentUpon>GalaxyPlanetDefenseInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\DefenseInfo\GalaxyPlanetDefenseInfoViewModel.cs" />
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\FleetInfo\GalaxyPlanetFleetInfo.xaml.cs">
+      <DependentUpon>GalaxyPlanetFleetInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\FleetInfo\GalaxyPlanetFleetInfoViewModel.cs" />
     <Compile Include="Views\Main\Galaxy\PlanetInfo\GalaxyPlanetInfo.xaml.cs">
       <DependentUpon>GalaxyPlanetInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\Galaxy\PlanetInfo\GalaxyPlanetInfoViewModel.cs" />
+    <Compile Include="Code\ImageHelper.cs" />
+    <Compile Include="Views\Main\Galaxy\PlanetInfo\BaseInfo\GalaxyPlanetBaseInfoViewModel.cs" />
     <Compile Include="Views\Main\Galaxy\Tab\GalaxyTabContent.xaml.cs">
       <DependentUpon>GalaxyTabContent.xaml</DependentUpon>
     </Compile>
@@ -134,6 +153,22 @@
     </Compile>
     <Compile Include="Views\Main\Resources\ResourcesViewModel.cs" />
     <Compile Include="Views\Main\TopBar\TopBarViewModel.cs" />
+    <Page Include="Views\Main\Galaxy\PlanetInfo\BaseInfo\GalaxyPlanetBaseInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Galaxy\PlanetInfo\BuildingsInfo\GalaxyPlanetBuildingsInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Galaxy\PlanetInfo\DefenseInfo\GalaxyPlanetDefenseInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Galaxy\PlanetInfo\FleetInfo\GalaxyPlanetFleetInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Main\Galaxy\PlanetInfo\GalaxyPlanetInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -167,7 +202,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -177,7 +212,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="Resources\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -211,6 +246,182 @@
       <Project>{79DF72A5-BA22-43B8-B7C2-49BE83B453D2}</Project>
       <Name>Worker.Parser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Resources\Crystal.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Resources\Deuterium.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Resources\Metal.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Buildings\Resource\CrystalMine.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Resource\DeuteriumExtractor.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Resource\FusionReactor.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Resource\MetalMine.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Resource\SolarPowerPlant.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\AllianceDepot.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\MissileSilo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\NaniteFactory.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\ResearchLab.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\RoboticsFactory.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\Shipyard.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Station\Terraformer.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Warehouse\CrystalStorage.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Warehouse\DeuteriumTank.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Buildings\Warehouse\MetalStorage.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\Battlecruiser.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\BattleShip.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\Bomber.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\Cruiser.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\DeathStar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\Destroyer.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\HeavyFighter.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Fighter\LightFighter.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Other\ColonyShip.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Other\EspionageProbe.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Other\SolarSatellite.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Recycle\Recycler.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Transport\LargeCargo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Ships\Transport\SmallCargo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Research\Advanced\Astrophysics.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Advanced\ComputerTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Advanced\EspionageTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Advanced\GravitonTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Advanced\IntergalacticResearchNetwork.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Basic\EnergyTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Basic\HyperspaceTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Basic\IonTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Basic\LaserTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Basic\PlasmaTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Combat\ArmourTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Combat\ShieldingTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Combat\WeaponTechnology.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Drive\CombustionDrive.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Drive\HyperspaceDrive.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Research\Drive\ImpulseDrive.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Defenses\GaussCannon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\HeavyLaser.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\IonCannon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\LargeShield.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\LightLaser.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\PlasmaTurret.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\RocketLauncher.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Defenses\SmallShield.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

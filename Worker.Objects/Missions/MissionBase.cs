@@ -42,7 +42,7 @@ namespace Worker.Objects.Missions
         public abstract MovementType MovementType { get; }
         public MissionType MissionType { get; }
         public int ArrivalTimestamp { get; }
-        public DateTime ArrivalTime => new DateTime(1970, 1, 1, 0, 0, 0, 0).AddHours(2).AddSeconds(ArrivalTimestamp);
+        public DateTime ArrivalTime => new DateTime(1970, 1, 1, 0, 0, 0, 0).AddHours(1).AddSeconds(ArrivalTimestamp);
         public Planet Source { get; }
         public int? SourceId => ObjectContainer.Instance.PlayerPlanets.FirstOrDefault(p => p.Name == Source.Name)?.Id;
         public Planet Destination { get; }

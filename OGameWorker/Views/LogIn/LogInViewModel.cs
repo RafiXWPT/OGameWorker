@@ -1,9 +1,15 @@
-﻿using System.Net;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using OGameWorker.Code;
 using OGameWorker.Code.ConfigurationHelper;
 using OGameWorker.Views.Main;
+using OGameWorker.Views.Main.Galaxy.PlanetInfo;
 using ReactiveUI;
 using Worker.HttpModule.Clients;
 using Worker.HttpModule.Clients.OGameClient;

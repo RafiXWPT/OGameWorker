@@ -19,9 +19,9 @@ namespace Worker.Objects.Messages
         public Crystal Crystal { get; set; }
         public Energy Energy { get; set; }
         public Deuterium Deuterium { get; set; }
-        public List<BuildingBase> Buildings { get; set; }
-        public List<DefenseBase> Defenses { get; set; }
-        public List<ShipBase> Ships { get; set; }
+        public List<BuildingBase> Buildings { get; set; } = new List<BuildingBase>();
+        public List<DefenseBase> Defenses { get; set; } = new List<DefenseBase>();
+        public List<ShipBase> Ships { get; set; } = new List<ShipBase>();
 
         public EspionageReport(int messageId, DateTime messageDate, EnemyPlanet target) : base(messageId, messageDate, MessageType.Espionage, MessageStatus.New)
         {

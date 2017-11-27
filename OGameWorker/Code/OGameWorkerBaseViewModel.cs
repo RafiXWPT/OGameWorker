@@ -23,12 +23,12 @@ namespace OGameWorker.Code
             Client = client;
         }
 
-        public async Task SafeHttpTask(Task action)
+        public async Task SafeHttpTask(Func<Task> task)
         {
             HANDLE:
             try
             {
-                await action;
+                await task();
             }
             catch (OgameWorkerLoggedOutException)
             {

@@ -1,0 +1,67 @@
+﻿<UserControl
+    x:Class="OGameWorker.Views.Main.Galaxy.PlanetInfo.BaseInfo.GalaxyPlanetBaseInfo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBox
+                    Margin="5"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    IsReadOnly="True"
+                    Text="{Binding PlayerName, Mode=OneWay}" />
+                <TextBox
+                    Margin="5"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    IsReadOnly="True"
+                    Text="{Binding PlanetName, Mode=OneWay}" />
+                <TextBox
+                    Margin="5"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    IsReadOnly="True"
+                    Text="{Binding PlanetPosition, Mode=OneWay}" />
+            </StackPanel>
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <StackPanel Margin="1,0,1,0" Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="20"
+                        Source="{Binding MetalImage}" />
+                    <TextBox
+                        BorderThickness="0"
+                        IsReadOnly="True"
+                        Text="{Binding MetalAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="1,0,1,0" Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="20"
+                        Source="{Binding CrystalImage}" />
+                    <TextBox
+                        BorderThickness="0"
+                        IsReadOnly="True"
+                        Text="{Binding CrystalAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="1,0,1,0" Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="20"
+                        Source="{Binding DeuteriumImage}" />
+                    <TextBox
+                        BorderThickness="0"
+                        IsReadOnly="True"
+                        Text="{Binding DeuteriumAmount, Mode=OneWay}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,5 +1,8 @@
-﻿using Worker.Objects.Galaxy;
+﻿using System.Linq;
+using Worker.Objects.Galaxy;
 using Worker.Objects.Galaxy.Planet;
+using Worker.Objects.Research;
+using Worker.Objects.Research.Basic;
 using Worker.Objects.Structures;
 using Worker.Objects.Structures.Buildings;
 using Worker.Objects.Structures.Buildings.Station;
@@ -26,6 +29,11 @@ namespace Worker.Objects.Helpers
         public static NaniteFactory GetPlanetNaniteFactory(Planet planet)
         {
             return ObjectContainer.Instance.GetBuilding(planet, BuildingType.NaniteFactory) as NaniteFactory;
+        }
+
+        public static EnergyTechnology GetEnergyTechnology()
+        {
+            return ObjectContainer.Instance.PlayerTechnologies.First(t => t.Type == TechnologyType.EnergyTechnology) as EnergyTechnology;
         }
     }
 }

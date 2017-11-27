@@ -1,0 +1,106 @@
+﻿<UserControl
+    x:Class="OGameWorker.Views.Main.Galaxy.PlanetInfo.FleetInfo.GalaxyPlanetFleetInfo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:OGameWorker.Code.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:TrueToVisibleConverter x:Key="TrueToVisibleConverter" />
+        <converters:FalseToVisibleConverter x:Key="FalseToVisibleConverter" />
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="25" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="IsReadOnly" Value="True" />
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <TextBox
+            Width="auto"
+            Margin="10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            BorderThickness="0"
+            FontSize="20"
+            IsReadOnly="True"
+            Text="No fleet data"
+            TextAlignment="Center"
+            Visibility="{Binding HasData, Converter={StaticResource FalseToVisibleConverter}, Mode=OneWay}" />
+        <StackPanel
+            Margin="10,10,0,10"
+            HorizontalAlignment="Left"
+            Orientation="Vertical"
+            Visibility="{Binding HasData, Converter={StaticResource TrueToVisibleConverter}, Mode=OneWay}">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding SmallCargoImage, Mode=OneWay}" />
+                    <TextBox Width="25" Text="{Binding SmallCargoAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding LargeCargoImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding LargeCargoAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding RecyclerImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding RecyclerAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding SolarSatelliteImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding SolarSatelliteAmount, Mode=OneWay}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding ColonyShipImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding ColonyShipAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding EspionageProbeImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding EspionageProbeAmount, Mode=OneWay}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding LightFighterImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding LightFighterAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding HeavyFighterImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding HeavyFighterAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding CruiserImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding CruiserAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding BattleshipImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding BattleshipAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding BattlecruiserImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding BattlecruiserAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding BomberImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding BomberAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding DestroyerImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding DestroyerAmount, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Source="{Binding DeathstarImage, Mode=OneWay}" />
+                    <TextBox Text="{Binding DeathstarAmount, Mode=OneWay}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

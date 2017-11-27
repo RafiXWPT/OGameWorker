@@ -73,6 +73,11 @@ namespace Worker.Parser.Messages
             var ships = new List<ShipBase>();
             foreach (var node in fleetNode.Descendants("li"))
             {
+                if (node.GetAttributeValue("class", null) == "detail_list_fail")
+                {
+                    return;
+                }
+
                 var shipType = (ShipType)Convert.ToInt32(node.Descendants("img")
                     .First(i => i.GetAttributeValue("class", null).Contains("tech"))
                     .GetAttributeValue("class", null)
@@ -137,6 +142,11 @@ namespace Worker.Parser.Messages
             var defenses = new List<DefenseBase>();
             foreach (var node in fleetNode.Descendants("li"))
             {
+                if (node.GetAttributeValue("class", null) == "detail_list_fail")
+                {
+                    return;
+                }
+
                 var defenseType = (DefenseType)Convert.ToInt32(node.Descendants("img")
                     .First(i => i.GetAttributeValue("class", null).Contains("defense"))
                     .GetAttributeValue("class", null)
@@ -184,6 +194,11 @@ namespace Worker.Parser.Messages
             var buildings = new List<BuildingBase>();
             foreach (var node in fleetNode.Descendants("li"))
             {
+                if (node.GetAttributeValue("class", null) == "detail_list_fail")
+                {
+                    return;
+                }
+
                 var buildingType = (BuildingType)Convert.ToInt32(node.Descendants("img")
                     .First(i => i.GetAttributeValue("class", null).Contains("building"))
                     .GetAttributeValue("class", null)
